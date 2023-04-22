@@ -40,6 +40,6 @@ class RestaurantImage(db.Model):
             'url':self.url,
             'userId':self.user_id,
             'restaurantId':self.restaurant_id,
-            'created_at': self.created_at,
-            'updated_at': self.updated_at,
+            'createdAt': self.created_at,
+            'updatedAt': self.updated_at,
         }

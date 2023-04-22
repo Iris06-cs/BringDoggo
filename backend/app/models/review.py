@@ -41,6 +41,6 @@ class Review(db.Model):
             'review':self.review,
             'restaurantId':self.restaurant_id,
             'authorId':self.author_id,
-            'created_at': self.created_at,
-            'updated_at': self.updated_at,
+            'createdAt': self.created_at,
+            'updatedAt': self.updated_at,
         }

@@ -17,7 +17,7 @@ class User(db.Model, UserMixin):
     lastname=db.Column(db.String(100),nullable=False)
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
-    profileImage=db.Column(db.String(255))
+    profileImage=db.Column(db.String(255),)
     hashed_password = db.Column(db.String(255), nullable=False)
     created_at = db.Column(
         db.DateTime, nullable=False, default=datetime.utcnow()
@@ -28,7 +28,7 @@ class User(db.Model, UserMixin):
     # relationship
     user_reviews=db.relationship("Review",back_populates="users")
     user_favorites=db.relationship("Favorite",back_populates="users")
-    user_restaurant_images=db.relationship("RestaurantImages",back_populates="users")
+    user_restaurant_images=db.relationship("RestaurantImage",back_populates="users")
 
     @property
     def password(self):
@@ -55,6 +55,6 @@ class User(db.Model, UserMixin):
             'firstname':self.firstname,
             'lastname':self.lastname,
             'profileImage': self.profileImage,
-            'created_at': self.created_at,
-            'updated_at': self.updated_at,
+            'createdAt': self.created_at,
+            'updatedAt': self.updated_at,
         }
