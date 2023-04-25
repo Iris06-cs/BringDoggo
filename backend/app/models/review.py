@@ -29,8 +29,8 @@ class Review(db.Model):
     # relationship
     user=db.relationship("User",back_populates="user_reviews")
     reviewed_restaurants=db.relationship("Restaurant",back_populates="restaurant_reviews")
-    # images=db.relationship("ReviewImage",back_populates="image_review")
-    images=db.relationship("ReviewImage",backref="image_review")
+    images=db.relationship("ReviewImage",back_populates="image_review")
+    # images=db.relationship("ReviewImage",backref="image_review")
 
 
     def to_dict(self):
@@ -40,7 +40,7 @@ class Review(db.Model):
         return{
             'id':self.id,
             'stars':self.stars,
-            'review':self.review,
+            'reviewDetail':self.review_detail,
             'restaurantId':self.restaurant_id,
             'authorId':self.author_id,
             'user':self.user.to_dict(),
