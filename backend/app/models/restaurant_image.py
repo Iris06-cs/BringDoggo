@@ -25,7 +25,7 @@ class RestaurantImage(db.Model):
     restaurant_id=db.Column(db.String,db.ForeignKey(add_prefix_for_prod("restaurants.id")),nullable=False)
 
     # relationship
-    users=db.relationship("User",back_populates="user_restaurant_images")
+    user=db.relationship("User",back_populates="user_restaurant_images")
 
     restaurants=db.relationship("Restaurant",back_populates="restaurant_images")
 
