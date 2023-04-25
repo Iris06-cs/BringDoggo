@@ -13,7 +13,7 @@ class Review(db.Model):
 
     id=db.Column(db.Integer,primary_key=True)
     stars=db.Column(db.Integer,nullable=False)
-    review=db.Column(db.String(1000),nullable=False)
+    review_detail=db.Column(db.String(1000),nullable=False)
     created_at = db.Column(
         db.DateTime, nullable=False, default=datetime.utcnow()
     )
