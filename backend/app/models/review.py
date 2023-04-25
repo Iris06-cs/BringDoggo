@@ -8,8 +8,13 @@ class Review(db.Model):
     """
     __tablename__="reviews"
 
-    if environment == "production":
-        __table_args__ = {'schema': SCHEMA}
+    __table_args__ = (
+    CheckConstraint("stars >= 1 AND stars <= 5", name="check_stars_range"),
+    {'schema': SCHEMA} if environment == "production" else None,
+    )
+
+    # if environment == "production":
+    #     __table_args__ = {'schema': SCHEMA}
 
     id=db.Column(db.Integer,primary_key=True)
     stars=db.Column(db.Integer,nullable=False)
@@ -23,9 +28,9 @@ class Review(db.Model):
     author_id=db.Column(db.Integer,db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
     restaurant_id=db.Column(db.String,db.ForeignKey(add_prefix_for_prod("restaurants.id")),nullable=False)
 
-    __table_args__ = (
-        CheckConstraint("stars >= 1 AND stars <= 5", name="check_stars_range"),
-    )
+    # __table_args__ = (
+    #     CheckConstraint("stars >= 1 AND stars <= 5", name="check_stars_range"),
+    # )
     # relationship
     user=db.relationship("User",back_populates="user_reviews")
     reviewed_restaurants=db.relationship("Restaurant",back_populates="restaurant_reviews")
