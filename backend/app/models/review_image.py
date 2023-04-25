@@ -26,9 +26,9 @@ class ReviewImage(db.Model):
     review_id=db.Column(db.Integer,db.ForeignKey(add_prefix_for_prod("reviews.id")),nullable=False)
 
     # relationship
-    user=db.relationship("User",back_populates="user_review_images",primaryjoin="ReviewImage.user_id == User.id")
+    user=db.relationship("User",back_populates="user_review_images")
 
-    image_review=db.relationship("Review",back_populates="images",primaryjoin="ReviewImage.review_id == Review.id")
+    image_review=db.relationship("Review",back_populates="images")
 
 
     def to_dict(self):
