@@ -2,7 +2,7 @@ import os
 import requests
 from ..config import Config
 from flask import Blueprint, jsonify,request
-from ..models import Restaurant,db,Review
+from ..models import Restaurant,db,Review,RestaurantImage
 from datetime import datetime, timedelta
 from flask_login import login_required,current_user
 from ..forms import ReviewForm,RestaurantImageForm
@@ -186,10 +186,14 @@ def add_image_to_restaurant(restaurantId):
     form=RestaurantImageForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit:
-        restaurant_image=RestaurantImageForm(
+        restaurant_image=RestaurantImage(
             caption=form.data['caption'],
             url=form.data['url'],
-            preview=form.data['preview']
+            preview=form.data['preview'],
+            created_at=datetime.utcnow(),
+            updated_at=datetime.utcnow(),
+            user_id=current_user.id,
+            restaurant_id=restaurantId
         )
         db.session.add(restaurant_image)
         db.session.commit()

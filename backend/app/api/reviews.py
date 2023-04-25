@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify,request
-from ..models import Review,db
+from ..models import Review,db,ReviewImage
 from flask_login import current_user,login_required
 from ..utils.error_handler import ValidationError,NotFoundError,ForbiddenError,validation_errors_to_error_messages
 from ..forms import ReviewForm,ReviewImageForm
@@ -77,10 +77,15 @@ def add_image_to_review(reviewId):
     form=ReviewImageForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit:
-        review_image=ReviewImageForm(
+        review_image=ReviewImage(
             caption=form.data['caption'],
             url=form.data['url'],
-            preview=form.data['preview']
+            preview=form.data['preview'],
+            user_id=current_user.id,
+            created_at=datetime.utcnow(),
+            updated_at=datetime.utcnow(),
+            review_id=reviewId
+
         )
         db.session.add(review_image)
         db.session.commit()
