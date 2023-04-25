@@ -23,7 +23,7 @@ class Favorite(db.Model):
     # relationship
     user=db.relationship("User",back_populates="user_favorites")
 
-    restaurants=db.relationship('Restaurant',secondary='favorite_restaurants',back_populates='favorite_restaurants')
+    fav_restaurants=db.relationship('Restaurant',secondary='favorite_restaurants',back_populates='favs')
 
     def to_dict(self):
         """
