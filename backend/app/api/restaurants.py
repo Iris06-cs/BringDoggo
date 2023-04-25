@@ -1,9 +1,12 @@
 import os
 import requests
 from ..config import Config
-from flask import Blueprint, jsonify
-from ..models import Restaurant,db
+from flask import Blueprint, jsonify,request
+from ..models import Restaurant,db,Review
 from datetime import datetime, timedelta
+from flask_login import login_required,current_user
+from ..forms import ReviewForm,RestaurantImageForm
+from ..utils.error_handler import ValidationError,NotFoundError,ForbiddenError,validation_errors_to_error_messages
 
 
 restaurant_routes=Blueprint('restaurants',__name__)
@@ -88,7 +91,7 @@ def all_restaurants():
     db.session.commit()
 
     updated_restaurants = Restaurant.query.all()
-    return jsonify([restaurant.to_dict() for restaurant in updated_restaurants])
+    return jsonify([restaurant.to_dict() for restaurant in updated_restaurants]),200
 
 
 @restaurant_routes.route("/<restaurant_Id>")
@@ -118,4 +121,78 @@ def get_restaurant_detail(restaurant_Id):
 
         db.session.commit()
     updated_restaurant=Restaurant.query.filter_by(id=restaurant_Id).first()
-    return jsonify(updated_restaurant.to_dict())
+    return jsonify(updated_restaurant.to_dict()),200
+
+
+# get restaurant's reviews
+@restaurant_routes.route("/<restaurantId>/reviews")
+def get_restaurant_reviews(restaurantId):
+    """
+    Query for all reviews of restaurant by id
+    """
+    # Check if the restaurant exists
+    restaurant = Restaurant.query.get(restaurantId)
+    if not restaurant:
+        raise NotFoundError(f"Restaurant with ID {restaurantId} not found")
+    reviews=Review.query.filter(Review.restaurant_id==restaurantId).all()
+    review_list=[review.to_dict() for review in reviews]
+    return jsonify({"Reviews":review_list}),200
+
+# create review
+@restaurant_routes.route("/<restaurantId>/reviews",methods=["POST"])
+@login_required
+def write_review(restaurantId):
+    """
+    Write a review to a restaurant by id
+    """
+    # Check if the restaurant exists
+    restaurant = Restaurant.query.get(restaurantId)
+    if not restaurant:
+        raise NotFoundError(f"Restaurant with ID {restaurantId} not found")
+    # Check if the user has already reviewed this restaurant
+    existing_review=Review.query.filter_by(author_id=current_user.id,restaurant_id=restaurantId).first()
+    if existing_review:
+        raise ForbiddenError("User has already reviewed this restaurant")
+
+    form=ReviewForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        review=Review(
+            review=form.data['review'],
+            stars=form.data['stars'],
+            created_at=datetime.utcnow(),
+            updated_at=datetime.utcnow(),
+            author_id=current_user.id,
+            restaurant_id=restaurantId
+        )
+        db.session.add(review)
+        db.session.commit()
+        return jsonify(review.to_dict()),201
+    # Handle 400 ValidationError
+
+    raise ValidationError(f"Validation Error: {validation_errors_to_error_messages(form.errors)}")
+
+
+# add image to a restaurant
+@restaurant_routes.route("/<restaurantId>/images",methods=["POST"])
+@login_required
+def add_image_to_restaurant(restaurantId):
+    """
+    Add image to restaurant by id
+    """
+    restaurant = Restaurant.query.get(restaurantId)
+    if not restaurant:
+        raise NotFoundError(f"Restaurant with ID {restaurantId} not found")
+    form=RestaurantImageForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit:
+        restaurant_image=RestaurantImageForm(
+            caption=form.data['caption'],
+            url=form.data['url'],
+            preview=form.data['preview']
+        )
+        db.session.add(restaurant_image)
+        db.session.commit()
+        return jsonify(restaurant_image.to_dict()),201
+    # Handle 400 ValidationError
+    raise ValidationError(f"Validation Error: {validation_errors_to_error_messages(form.errors)}")

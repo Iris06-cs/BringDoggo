@@ -14,6 +14,7 @@ class ReviewImage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     caption=db.Column(db.String(100),nullable=False)
     url=db.Column(db.String,nullable=False)
+    preview=db.Column(db.Boolean,nullable=False)
     created_at = db.Column(
         db.DateTime, nullable=False, default=datetime.utcnow()
     )
@@ -38,6 +39,7 @@ class ReviewImage(db.Model):
             'id': self.id,
             'caption':self.caption,
             'url':self.url,
+            'preview':self.preview,
             'userId':self.user_id,
             'reviewId':self.review_id,
             'createdAt': self.created_at,

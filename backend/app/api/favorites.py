@@ -127,6 +127,6 @@ def delete_favorite_collection(favoriteId):
     if existing_favorite.user_id!=current_user.id:
         raise ForbiddenError("Only owner can delete restaurants from favorties")
 
-    existing_favorite.delete()
+    db.session.delete(existing_favorite)
     db.session.commit()
     return {"message": "Favorite collection successfully deleted"}, 200
