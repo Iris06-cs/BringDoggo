@@ -1,18 +1,16 @@
 """initial migration
 
-Revision ID: 71966ac9bce3
-Revises:
-Create Date: 2023-04-25 12:02:36.347068
+Revision ID: 373e86572de1
+Revises: 
+Create Date: 2023-04-25 13:35:06.938303
 
 """
 from alembic import op
 import sqlalchemy as sa
 
-# import os
-# environment = os.getenv("FLASK_ENV")
-# SCHEMA = os.environ.get("SCHEMA")
+
 # revision identifiers, used by Alembic.
-revision = '71966ac9bce3'
+revision = '373e86572de1'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -112,9 +110,6 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-
-    # if environment == "production":
-    #     op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
     # ### end Alembic commands ###
 
 
