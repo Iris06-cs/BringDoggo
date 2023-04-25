@@ -31,7 +31,7 @@ class Restaurant(db.Model):
 
 
     # relationship
-    restaurant_images=db.relationship("RestaurantImage",back_populates="restaurants")
+    restaurant_images=db.relationship("RestaurantImage",back_populates="restaurant")
     restaurant_reviews=db.relationship("Review",back_populates="reviewed_restaurants")
 
     favorite_restaurants=db.relationship('Favorite',secondary='favorite_restaurants',back_populates='restaurants')

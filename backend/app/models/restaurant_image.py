@@ -28,7 +28,7 @@ class RestaurantImage(db.Model):
     # relationship
     user=db.relationship("User",back_populates="user_restaurant_images")
 
-    restaurants=db.relationship("Restaurant",back_populates="restaurant_images")
+    restaurant=db.relationship("Restaurant",back_populates="restaurant_images")
 
 
     def to_dict(self):
