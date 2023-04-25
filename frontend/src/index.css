@@ -1,1 +1,16 @@
 /* TODO Add site wide styles */
+:root {
+  --theme-color: #0db9f5;
+  --container-background-color: #eeeeee;
+  --main-background-color: #ffffff;
+  --error-background-color: #ff9b9b;
+  --error-text-color: #dd0a35;
+  --button-text-color: #ffffff;
+  --button-background-color: #0db9f5;
+  --button-background-hover-color: #1281ac;
+  --rating-icon-color: #ffc107;
+  --title-text-color: #1c1c1c;
+  --title-text-hover-color: #0db9f5;
+  --subtitle-text-color: #757575;
+  --content-text-color: #616161;
+}
