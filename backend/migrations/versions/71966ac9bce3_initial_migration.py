@@ -1,8 +1,8 @@
 """initial migration
 
-Revision ID: 505aecdd9f60
+Revision ID: 71966ac9bce3
 Revises:
-Create Date: 2023-04-25 11:46:02.639542
+Create Date: 2023-04-25 12:02:36.347068
 
 """
 from alembic import op
@@ -12,7 +12,7 @@ import os
 environment = os.getenv("FLASK_ENV")
 SCHEMA = os.environ.get("SCHEMA")
 # revision identifiers, used by Alembic.
-revision = '505aecdd9f60'
+revision = '71966ac9bce3'
 down_revision = None
 branch_labels = None
 depends_on = None

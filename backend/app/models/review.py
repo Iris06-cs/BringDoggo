@@ -28,7 +28,7 @@ class Review(db.Model):
     )
     # relationship
     user=db.relationship("User",back_populates="user_reviews")
-    images=db.relationship("ReviewImage",back_populates="image_review")
+    images=db.relationship("ReviewImage",back_populates="image_review",primaryjoin="ReviewImage.review_id == Review.id")
     reviewed_restaurants=db.relationship("Restaurant",back_populates="restaurant_reviews")
 
     def to_dict(self):
