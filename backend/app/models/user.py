@@ -29,6 +29,7 @@ class User(db.Model, UserMixin):
     user_reviews=db.relationship("Review",back_populates="user")
     user_favorites=db.relationship("Favorite",back_populates="user")
     user_restaurant_images=db.relationship("RestaurantImage",back_populates="user")
+    user_review_images=db.relationship("ReviewImage",back_populates="user")
 
     @property
     def password(self):
