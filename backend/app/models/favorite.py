@@ -21,7 +21,7 @@ class Favorite(db.Model):
     user_id=db.Column(db.Integer,db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
 
     # relationship
-    users=db.relationship("User",back_populates="user_favorites")
+    user=db.relationship("User",back_populates="user_favorites")
 
     restaurants=db.relationship('Restaurant',secondary='favorite_restaurants',back_populates='favorite_restaurants')
 

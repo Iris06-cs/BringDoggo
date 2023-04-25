@@ -26,9 +26,10 @@ class User(db.Model, UserMixin):
         db.DateTime, nullable=False, default=datetime.utcnow(), onupdate=datetime.utcnow
     )
     # relationship
-    user_reviews=db.relationship("Review",back_populates="users")
-    user_favorites=db.relationship("Favorite",back_populates="users")
-    user_restaurant_images=db.relationship("RestaurantImage",back_populates="users")
+    user_reviews=db.relationship("Review",back_populates="user")
+    user_favorites=db.relationship("Favorite",back_populates="user")
+    user_restaurant_images=db.relationship("RestaurantImage",back_populates="user")
+    user_review_images=db.relationship("ReviewImage",back_populates="user")
 
     @property
     def password(self):

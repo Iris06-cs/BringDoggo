@@ -8,8 +8,12 @@ from .models import db, User
 from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
 from .api.restaurants import restaurant_routes
+from .api.reviews import review_routes
+from .api.favorites import favorite_routes
 from .seeds import seed_commands
 from .config import Config
+from .utils.error_handler import ValidationError,NotFoundError,ForbiddenError,UnauthorizedError,error_handler
+
 
 app = Flask(__name__, static_folder='../../frontend/build', static_url_path='/')
 
@@ -30,6 +34,13 @@ app.config.from_object(Config)
 app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(restaurant_routes, url_prefix='/api/restaurants')
+app.register_blueprint(review_routes, url_prefix='/api/reviews')
+app.register_blueprint(favorite_routes,url_prefix='/api/favorites')
+app.register_error_handler(ValidationError, error_handler)
+app.register_error_handler(NotFoundError, error_handler)
+app.register_error_handler(ForbiddenError, error_handler)
+app.register_error_handler(UnauthorizedError, error_handler)
+
 db.init_app(app)
 Migrate(app, db)
 

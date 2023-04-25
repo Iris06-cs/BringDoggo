@@ -27,8 +27,8 @@ class Review(db.Model):
         CheckConstraint("stars >= 1 AND stars <= 5", name="check_stars_range"),
     )
     # relationship
-    users=db.relationship("User",back_populates="user_reviews")
-
+    user=db.relationship("User",back_populates="user_reviews")
+    review_images=db.relationship("ReviewImage",back_populates="reviews")
     reviewed_restaurants=db.relationship("Restaurant",back_populates="restaurant_reviews")
 
     def to_dict(self):
@@ -41,6 +41,7 @@ class Review(db.Model):
             'review':self.review,
             'restaurantId':self.restaurant_id,
             'authorId':self.author_id,
+            'user':self.user.to_dict(),
             'createdAt': self.created_at,
             'updatedAt': self.updated_at,
         }

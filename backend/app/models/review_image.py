@@ -2,11 +2,11 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
 
 
-class RestaurantImage(db.Model):
+class ReviewImage(db.Model):
     """
-    RestaurantImage model representing restaurant images in the application.
+    ReviewImage model representing review images in the application.
     """
-    __tablename__='restaurant_images'
+    __tablename__='review_images'
 
     if environment == 'production':
         __table_args__ = {'schema': SCHEMA}
@@ -23,17 +23,17 @@ class RestaurantImage(db.Model):
     )
     user_id=db.Column(db.Integer,db.ForeignKey(add_prefix_for_prod("users.id")), nullable=False)
 
-    restaurant_id=db.Column(db.String,db.ForeignKey(add_prefix_for_prod("restaurants.id")),nullable=False)
+    review_id=db.Column(db.String,db.ForeignKey(add_prefix_for_prod("reviews.id")),nullable=False)
 
     # relationship
-    user=db.relationship("User",back_populates="user_restaurant_images")
+    user=db.relationship("User",back_populates="user_review_images")
 
-    restaurants=db.relationship("Restaurant",back_populates="restaurant_images")
+    reviews=db.relationship("Review",back_populates="review_images")
 
 
     def to_dict(self):
         """
-        Convert the RestaurantImage object to a dictionary representation.
+        Convert the ReviewImage object to a dictionary representation.
         """
         return {
             'id': self.id,
@@ -41,7 +41,7 @@ class RestaurantImage(db.Model):
             'url':self.url,
             'preview':self.preview,
             'userId':self.user_id,
-            'restaurantId':self.restaurant_id,
+            'reviewId':self.review_id,
             'createdAt': self.created_at,
             'updatedAt': self.updated_at,
         }
