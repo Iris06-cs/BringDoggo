@@ -29,7 +29,10 @@ class Review(db.Model):
     # relationship
     user=db.relationship("User",back_populates="user_reviews")
     reviewed_restaurants=db.relationship("Restaurant",back_populates="restaurant_reviews")
-    images=db.relationship("ReviewImage",back_populates="image_review")
+    # images=db.relationship("ReviewImage",back_populates="image_review")
+    images=db.relationship("ReviewImage",backref="image_review")
+
+
     def to_dict(self):
         """
         Convert the Review object to a dictionary representation.
