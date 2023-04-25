@@ -25,7 +25,7 @@ markupsafe = "==2.1.2"
 sqlalchemy = "==1.4.46"
 werkzeug = "==2.2.2"
 wtforms = "==3.0.1"
-requests = "*"
+requests = "==2.26.0"
 
 [dev-packages]
 
