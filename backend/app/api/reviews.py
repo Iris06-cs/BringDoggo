@@ -36,7 +36,7 @@ def edit_review_by_id(reviewId):
         form=ReviewForm()
         form['csrf_token'].data = request.cookies['csrf_token']
         if form.validate_on_submit():
-            existing_review.review=form.data['review']
+            existing_review.review_detail=form.data['review_detail']
             existing_review.stars=form.data['stars']
             existing_review.updated_at=datetime.utcnow()
 

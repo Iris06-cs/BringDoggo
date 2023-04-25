@@ -158,7 +158,7 @@ def write_review(restaurantId):
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         review=Review(
-            review=form.data['review'],
+            review_detail=form.data['review_detail'],
             stars=form.data['stars'],
             created_at=datetime.utcnow(),
             updated_at=datetime.utcnow(),
