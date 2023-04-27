@@ -13,7 +13,7 @@ def validation_errors_to_error_messages(validation_errors):
     errorMessages = []
     for field in validation_errors:
         for error in validation_errors[field]:
-            errorMessages.append(f'{field} : {error}')
+            errorMessages.append(f'{error}')
     return errorMessages
 
 
@@ -23,7 +23,7 @@ def authenticate():
     Authenticates a user.
     """
     if current_user.is_authenticated:
-        return current_user.to_dict()
+        return {"user":current_user.to_dict()}
     return {'errors': ['Unauthorized']}
 
 
@@ -40,7 +40,7 @@ def login():
         # Add the user to the session, we are logged in!
         user = User.query.filter(User.email == form.data['email']).first()
         login_user(user)
-        return user.to_dict()
+        return {"user":user.to_dict()}
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 
@@ -71,7 +71,7 @@ def sign_up():
         db.session.add(user)
         db.session.commit()
         login_user(user)
-        return user.to_dict()
+        return {"user":user.to_dict()}
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 

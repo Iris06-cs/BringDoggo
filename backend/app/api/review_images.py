@@ -15,7 +15,7 @@ def delete_review_image(review_image_id):
     """
     Delete review image by id
     """
-    review_image=ReviewImage.query.filter_by(id=review_image_id)
+    review_image=ReviewImage.query.filter_by(id=review_image_id).first()
     if not review_image:
         raise NotFoundError(f"Review image with ID {review_image_id} not found")
     if review_image.user_id!=current_user.id:
