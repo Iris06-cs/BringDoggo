@@ -91,7 +91,7 @@ def all_restaurants():
     db.session.commit()
 
     updated_restaurants = Restaurant.query.all()
-    return jsonify([restaurant.to_dict() for restaurant in updated_restaurants]),200
+    return jsonify({"restaurants":[restaurant.to_dict() for restaurant in updated_restaurants]}),200
 
 
 @restaurant_routes.route("/<restaurant_Id>")

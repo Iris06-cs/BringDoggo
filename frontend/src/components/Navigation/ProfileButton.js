@@ -4,6 +4,7 @@ import { logout } from "../../store/session";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
+import { login } from "../../store/session";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -33,9 +34,16 @@ function ProfileButton({ user }) {
     e.preventDefault();
     dispatch(logout());
   };
-
-  const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
   const closeMenu = () => setShowMenu(false);
+  const demoUserLogin = () => {
+    const credential = {
+      email: "demo@aa.io",
+      password: "password",
+    };
+    dispatch(login(credential));
+    closeMenu();
+  };
+  const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
   return (
     <>
@@ -53,17 +61,25 @@ function ProfileButton({ user }) {
           </>
         ) : (
           <>
+            {/* <li className="button-container"> */}
             <OpenModalButton
               buttonText="Log In"
               onItemClick={closeMenu}
               modalComponent={<LoginFormModal />}
             />
-
-            <OpenModalButton
-              buttonText="Sign Up"
-              onItemClick={closeMenu}
-              modalComponent={<SignupFormModal />}
-            />
+            {/* </li> */}
+            <li className="button-container">
+              <OpenModalButton
+                buttonText="Sign Up"
+                onItemClick={closeMenu}
+                modalComponent={<SignupFormModal />}
+              />
+            </li>
+            <li className="button-container">
+              <button className="modalButton" onClick={demoUserLogin}>
+                DemoUser
+              </button>
+            </li>
           </>
         )}
       </ul>

@@ -15,7 +15,7 @@ def delete_restaurant_image(restaurant_image_id):
     """
     Delete restaurant image by id
     """
-    restaurant_image=RestaurantImage.query.filter_by(id=restaurant_image_id)
+    restaurant_image=RestaurantImage.query.filter_by(id=restaurant_image_id).first()
     if not restaurant_image:
         raise NotFoundError(f"Restaurant image with ID {restaurant_image_id} not found")
     if restaurant_image.user_id!=current_user.id:

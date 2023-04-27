@@ -1,0 +1,55 @@
+.row-input-container {
+  display: flex;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  width: 100%;
+  align-items: center;
+}
+.row-input-container.name,
+.row-input-container.email {
+  border-bottom: 1px solid rgba(97, 97, 97, 0.4);
+}
+.input-container {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
+}
+.input-container input {
+  order: 2;
+  box-sizing: border-box;
+  border: none;
+  font-size: 14px;
+  font-weight: 300;
+  padding: 5px 10px;
+  width: 100%;
+}
+
+.input-container label {
+  order: 1;
+  opacity: 0;
+  box-sizing: border-box;
+  border: none;
+  font-size: 12px;
+  font-weight: 300;
+  text-align: left;
+  padding: 3px 10px;
+  width: 100%;
+  transition: opacity 0.2s ease;
+}
+.input-container input:focus + label,
+.input-container input:not(:placeholder-shown) + label {
+  box-sizing: border-box;
+  border: none;
+  font-size: 12px;
+  font-weight: 300;
+  text-align: left;
+  padding: 3px 10px;
+  width: 100%;
+  opacity: 1;
+}
+.form-error-msg.signup.red {
+  font-size: 12px;
+  margin-top: 0;
+}

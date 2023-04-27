@@ -10,6 +10,8 @@ from .api.auth_routes import auth_routes
 from .api.restaurants import restaurant_routes
 from .api.reviews import review_routes
 from .api.favorites import favorite_routes
+from .api.restaurant_images import restaurant_images_routes
+from .api.review_images import review_images_routes
 from .seeds import seed_commands
 from .config import Config
 from .utils.error_handler import ValidationError,NotFoundError,ForbiddenError,UnauthorizedError,error_handler
@@ -36,6 +38,8 @@ app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(restaurant_routes, url_prefix='/api/restaurants')
 app.register_blueprint(review_routes, url_prefix='/api/reviews')
 app.register_blueprint(favorite_routes,url_prefix='/api/favorites')
+app.register_blueprint(restaurant_images_routes,url_prefix='/api/restaurant-images')
+app.register_blueprint(review_images_routes,url_prefix='/api/review-images')
 app.register_error_handler(ValidationError, error_handler)
 app.register_error_handler(NotFoundError, error_handler)
 app.register_error_handler(ForbiddenError, error_handler)

@@ -5,3 +5,19 @@
 .hidden {
   display: none;
 }
+.main-logo {
+  width: 250px;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 300px;
+  padding-right: 300px;
+}
+.nav-left-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
