@@ -23,7 +23,8 @@
   gap: 20px;
 }
 .nav-middle-section {
-  width: 50%;
+  flex-grow: 1;
+  margin: 10px 5%;
 }
 .login-signup-demo-btn-container {
   display: flex;
