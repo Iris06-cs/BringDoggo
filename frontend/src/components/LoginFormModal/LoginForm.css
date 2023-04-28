@@ -103,9 +103,10 @@
   gap: 5px;
   color: white;
   font-size: 20px;
+  transition: background-color 0.8s ease;
 }
 .login-signup-btn:hover {
-  color: #1281ac;
+  background-color: #1281ac;
 }
 .close-modal-button {
   position: absolute;
@@ -114,9 +115,9 @@
   background-color: transparent;
   border: none;
 }
-.close-modal-button i {
+.close-modal-btn-icon {
   color: var(--theme-color);
 }
-.close-modal-button i:hover {
+.close-modal-btn-icon:hover {
   color: var(--button-background-hover-color);
 }

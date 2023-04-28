@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { signUp } from "../../store/session";
 import "./SignupForm.css";
 import sublogo from "../../image/sublogo.png";
@@ -56,7 +56,10 @@ function SignupFormModal() {
       <div className="modal-content-left-section">
         <div className="title-container">
           <button onClick={closeModal} className="close-modal-button">
-            <i className="fas fa-times-circle"></i>
+            <FontAwesomeIcon
+              icon="fa-solid fa-square-xmark"
+              className="close-modal-btn-icon"
+            />
           </button>
           <img alt="my-dog" src={haru} className="dog-icon" />
           <h1>Sign Up</h1>
@@ -154,7 +157,7 @@ function SignupFormModal() {
               inputValidate.map((error, idx) => (
                 <li key={idx}>
                   <span style={{ color: "#dd0a35", padding: "5px" }}>
-                    <i className="fas fa-exclamation-circle"></i>
+                    <FontAwesomeIcon icon="fa-solid fa-circle-exclamation" />
                   </span>
                   {error}
                 </li>
@@ -163,7 +166,7 @@ function SignupFormModal() {
               errors.map((error, idx) => (
                 <li key={idx}>
                   <span style={{ color: "#dd0a35", padding: "5px" }}>
-                    <i className="fas fa-exclamation-circle"></i>
+                    <FontAwesomeIcon icon="fa-solid fa-circle-exclamation" />
                   </span>
                   {error}
                 </li>
@@ -172,7 +175,7 @@ function SignupFormModal() {
 
           <button type="submit" className="login-signup-btn">
             <span id="login-text">Submit</span>
-            <i className="fas fa-bone"></i>
+            <FontAwesomeIcon icon="fa-solid fa-bone" />
           </button>
         </form>
       </div>
