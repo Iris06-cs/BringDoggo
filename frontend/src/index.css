@@ -22,7 +22,25 @@ body {
   font-family: "Nunito", sans-serif;
   color: var(--content-text-color);
 }
+a {
+  text-decoration: none;
+}
+a:visited {
+  color: var(--content-text-color);
+}
 ul {
   list-style-type: none;
   padding: 5px;
+}
+button {
+  border-radius: 5px;
+  border: 1px solid var(--button-background-color);
+  background-color: var(--button-background-color);
+  color: white;
+  font-size: 15px;
+  padding: 5px;
+  transition: background-color 0.8s ease;
+}
+button:hover {
+  background-color: var(--button-background-hover-color);
 }

@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
-import { logout } from "../../store/session";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
-import { login } from "../../store/session";
+import { login, logout } from "../../store/session";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -20,7 +20,7 @@ function ProfileButton({ user }) {
     if (!showMenu) return;
 
     const closeMenu = (e) => {
-      if (!ulRef.current.contains(e.target)) {
+      if (ulRef.current && !ulRef.current.contains(e.target)) {
         setShowMenu(false);
       }
     };
@@ -29,6 +29,11 @@ function ProfileButton({ user }) {
 
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
+
+  useEffect(() => {
+    // after user login make sure drop down menu close
+    if (user) setShowMenu(false);
+  }, [user]);
 
   const handleLogout = (e) => {
     e.preventDefault();
@@ -47,28 +52,46 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button onClick={openMenu}>
-        <i className="fas fa-user-circle" />
-      </button>
-      <ul className={ulClassName} ref={ulRef}>
-        {user ? (
-          <>
-            <li>{user.username}</li>
-            <li>{user.email}</li>
+      {user ? (
+        <>
+          <button onClick={openMenu} id="user-profile-btn">
+            {user.profileImage ? (
+              <img
+                alt="user-profile"
+                src={user.profileImage}
+                id="user-profile-icon"
+              />
+            ) : (
+              <i className="fas fa-user-circle default-user-icon" />
+            )}
+          </button>
+          <ul className={ulClassName} ref={ulRef} id="dropdown-menu">
             <li>
-              <button onClick={handleLogout}>Log Out</button>
+              {user.firstname} {user.lastname[0]}.
             </li>
-          </>
-        ) : (
-          <>
-            {/* <li className="button-container"> */}
-            <OpenModalButton
-              buttonText="Log In"
-              onItemClick={closeMenu}
-              modalComponent={<LoginFormModal />}
-            />
-            {/* </li> */}
-            <li className="button-container">
+            <li>{user.email}</li>
+            <li>About me</li>
+            <li>Favorites</li>
+            <li>Reviews</li>
+            <li id="logout-btn-container">
+              <button onClick={handleLogout} id="logout-btn">
+                <FontAwesomeIcon icon="fa-solid fa-arrow-right-from-bracket" />
+                Log Out
+              </button>
+            </li>
+          </ul>
+        </>
+      ) : (
+        <>
+          <ul className="login-signup-demo-btn-container">
+            <li className="button-container login">
+              <OpenModalButton
+                buttonText="Log In"
+                onItemClick={closeMenu}
+                modalComponent={<LoginFormModal />}
+              />
+            </li>
+            <li className="button-container signup">
               <OpenModalButton
                 buttonText="Sign Up"
                 onItemClick={closeMenu}
@@ -77,12 +100,13 @@ function ProfileButton({ user }) {
             </li>
             <li className="button-container">
               <button className="modalButton" onClick={demoUserLogin}>
-                DemoUser
+                Demo
+                <FontAwesomeIcon icon="fa-solid fa-bone" />
               </button>
             </li>
-          </>
-        )}
-      </ul>
+          </ul>
+        </>
+      )}
     </>
   );
 }

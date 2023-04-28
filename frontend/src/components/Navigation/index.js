@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
+import SearchBar from "./SearchBar";
 import "./Navigation.css";
 import logo from "../../image/logonav.png";
 
@@ -23,7 +24,9 @@ function Navigation({ isLoaded }) {
           </NavLink>
         </div>
       </div>
-      <div className="nav-middle-section">searchbar</div>
+      <div className="nav-middle-section">
+        <SearchBar />
+      </div>
       {isLoaded && (
         <div className="nav-right-section">
           <ProfileButton user={sessionUser} />
