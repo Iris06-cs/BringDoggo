@@ -22,6 +22,10 @@ body {
   font-family: "Nunito", sans-serif;
   color: var(--content-text-color);
 }
+main {
+  margin-left: 10%;
+  margin-right: 10%;
+}
 a {
   text-decoration: none;
 }
@@ -32,7 +36,7 @@ ul {
   list-style-type: none;
   padding: 5px;
 }
-button {
+.general-button {
   border-radius: 5px;
   border: 1px solid var(--button-background-color);
   background-color: var(--button-background-color);
@@ -41,6 +45,6 @@ button {
   padding: 5px;
   transition: background-color 0.8s ease;
 }
-button:hover {
+.general-button:hover {
   background-color: var(--button-background-hover-color);
 }

@@ -25,7 +25,8 @@ export const getAllRestaurants = createAsyncThunk(
     if (!response.ok) return rejectWithValue(data);
     // restaurants array
     let res = {};
-    data.restaurants.foreach((restaurant) => {
+
+    data.restaurants.forEach((restaurant) => {
       res[restaurant.id] = restaurant;
     });
     return res;

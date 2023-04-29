@@ -115,9 +115,9 @@
   background-color: transparent;
   border: none;
 }
-.close-modal-btn-icon {
+.close-modal-button .close-modal-btn-icon {
   color: var(--theme-color);
 }
-.close-modal-btn-icon:hover {
+.close-modal-button .close-modal-btn-icon:hover {
   color: var(--button-background-hover-color);
 }

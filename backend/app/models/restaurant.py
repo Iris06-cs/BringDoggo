@@ -40,6 +40,11 @@ class Restaurant(db.Model):
         """
         Convert the Restaurant object to a dictionary representation.
         """
+        reviews=self.restaurant_reviews
+        avg_rating=0
+        if reviews:
+            avg_rating=sum(review.stars for review in reviews)/len(reviews)
+
         return {
             'id': self.id,
             'name':self.name,
@@ -59,4 +64,7 @@ class Restaurant(db.Model):
             'categories':self.categories,
             'hours':self.hours,
             'fetchedAt': self.fetched_at,
+            'dogReviewCount':len(self.restaurant_reviews),
+            'avgRating':avg_rating
+
         }
