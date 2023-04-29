@@ -28,6 +28,7 @@ class Restaurant(db.Model):
     fetched_at=db.Column(
         db.DateTime, nullable=False, default=datetime.utcnow()
     )
+    total_api_results=db.Column(db.Integer)
 
 
     # relationship
@@ -65,6 +66,7 @@ class Restaurant(db.Model):
             'hours':self.hours,
             'fetchedAt': self.fetched_at,
             'dogReviewCount':len(self.restaurant_reviews),
-            'avgRating':avg_rating
+            'avgRating':avg_rating,
+            'totalApiResults':self.total_api_results
 
         }

@@ -28,6 +28,7 @@ main {
 }
 a {
   text-decoration: none;
+  color: var(--content-text-color);
 }
 a:visited {
   color: var(--content-text-color);

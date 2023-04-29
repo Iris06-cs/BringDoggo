@@ -18,8 +18,11 @@ def get_dog_friendly_restaurants_sd(page=1):
         "Authorization": f"Bearer {Config.YELP_API_KEY}"
     }
     if page<1:
-        return
-    limit=40
+        return [],0
+    if page>24:
+        # only show first 24 pages(480 resutls)
+        page=24
+    limit=20
     offset=limit * (page-1)
     params = {
         "term": "dog allowed",
@@ -51,13 +54,15 @@ def get_restaurant_by_id(id):
 @restaurant_routes.route("/")
 def all_restaurants():
     page = int(request.args.get("page", 1))
-    # limit 40
-    need_fetch_count=page*40
+    limit=20
+    need_fetch_count=page*limit
     restaurant_db_count=Restaurant.query.count()
     # cached data is not enough
     if restaurant_db_count<need_fetch_count:
-        for i in range(restaurant_db_count//41,page+1):
+        for i in range(restaurant_db_count//(limit+1),page+1):
             fetched_restaurants,total_results=get_dog_friendly_restaurants_sd(i)
+            if total_results>480:
+                total_results=480
             for restaurant in fetched_restaurants:
                 restaurant_field={
                     'id':restaurant['id'],
@@ -82,11 +87,12 @@ def all_restaurants():
                 existing_restaurant = Restaurant.query.filter_by(id=restaurant_field['id']).first()
                 if not existing_restaurant:
                 # If it doesn't exist, create a new Restaurant object and add it to the database
-                    new_restaurant = Restaurant(**restaurant_field)
+                    new_restaurant = Restaurant(**restaurant_field,fetched_at=datetime.now(),total_api_results=total_results)
                     db.session.add(new_restaurant)
                 else:
                 # cached data over 24hrs, request from api
                     if datetime.utcnow()-existing_restaurant.fetched_at>timedelta(hours=24):
+                        # print("update")
                         existing_restaurant.name=restaurant_field['name']
                         existing_restaurant.is_closed=restaurant_field['is_closed']
                         existing_restaurant.url=restaurant_field['url']
@@ -104,17 +110,17 @@ def all_restaurants():
                         existing_restaurant.lng=restaurant_field['lng']
                         existing_restaurant.distance=restaurant_field['distance']
                         existing_restaurant.fetched_at=datetime.utcnow()
+                        existing_restaurant.total_api_results=total_results
         db.session.commit()
-        if total_results>1000:
-            # yelp max response returned
-            total_results=1000
-        updated_restaurants = Restaurant.query.all()
+        offset=limit*(page-1)
+        updated_restaurants = Restaurant.query.offset(offset).limit(limit).all()
         return jsonify({"restaurants":[restaurant.to_dict() for restaurant in updated_restaurants],"totalResults":total_results}),200
     else:
         # database cached enough data
-        offset=40*(page-1)
-        restaurants = Restaurant.query.offset(offset).limit(40).all()
-        return jsonify({"restaurants": [restaurant.to_dict() for restaurant in restaurants]}), 200
+        offset=limit*(page-1)
+        restaurants = Restaurant.query.offset(offset).limit(limit).all()
+        total_api_results = restaurants[0].total_api_results if restaurants else 0
+        return jsonify({"restaurants": [restaurant.to_dict() for restaurant in restaurants],"totalResults":total_api_results}), 200
 
 
 
@@ -224,3 +230,12 @@ def add_image_to_restaurant(restaurantId):
         return jsonify(restaurant_image.to_dict()),201
     # Handle 400 ValidationError
     raise ValidationError(f"Validation Error: {validation_errors_to_error_messages(form.errors)}")
+
+
+@restaurant_routes.route("/clear_cache", methods=["DELETE"])
+def clear_cache():
+    # Delete all records in the Restaurant table
+    db.session.query(Restaurant).delete()
+    db.session.commit()
+
+    return jsonify({"message": "Cache cleared successfully"}), 200
