@@ -1,0 +1,43 @@
+.restaurant-card-container {
+  width: 49%;
+  position: relative;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+.restaurant-info-container {
+  box-sizing: border-box;
+  position: absolute;
+  z-index: 1;
+  color: white;
+  font-weight: bold;
+  bottom: 10px;
+  font-size: 25px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+.restaurant-info-container a {
+  color: white;
+  font-weight: bold;
+  padding-left: 10px; /* Add left padding */
+  padding-right: 10px; /* Add right padding */
+  margin-top: 10px; /* Add margin on the top */
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  display: inline-block;
+}
+.restaurant-info-container a:visited {
+  color: white;
+}
+.restaurant-price {
+  color: #ffc107;
+}
+.restaurant-info-container p {
+  padding-left: 10px; /* Add left padding */
+  padding-right: 10px; /* Add right padding */
+  margin-top: 10px; /* Add margin on the top */
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+.rating-count-container {
+  display: flex;
+  align-items: center;
+}

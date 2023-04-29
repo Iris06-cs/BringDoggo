@@ -1,12 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
-const PageNumbers = ({
-  pageNumber,
-  onPageChange,
-  currentPage,
-  startNum,
-  setStartNum,
-}) => {
+const PageNumbers = ({ pageNumber, onPageChange, currentPage }) => {
+  const [startNum, setStartNum] = useState(1);
   const showPages = 8;
   let endNum = Math.min(
     pageNumber,
