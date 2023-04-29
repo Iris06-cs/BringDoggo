@@ -1,0 +1,11 @@
+.rating-icon-img {
+  width: 100px;
+  object-position: top;
+  object-fit: cover;
+  height: 22px;
+}
+.rating-icon-img-container {
+  width: 100px;
+  height: 22px;
+  overflow: hidden;
+}
