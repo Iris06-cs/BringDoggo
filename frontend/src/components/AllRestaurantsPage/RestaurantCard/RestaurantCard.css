@@ -1,8 +1,9 @@
 .restaurant-card-container {
-  width: 49%;
+  flex: 1 0 calc(50% - 15px);
+  max-width: 350px;
   position: relative;
   box-sizing: border-box;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 .restaurant-info-container {
   box-sizing: border-box;
