@@ -17,10 +17,13 @@
   --title-text-hover-color: #0db9f5;
   --subtitle-text-color: #757575;
   --content-text-color: #616161;
+  --border-light-color: #616161;
 }
 body {
   font-family: "Nunito", sans-serif;
   color: var(--content-text-color);
+  margin: 0;
+  padding: 0;
 }
 main {
   margin-left: 10%;

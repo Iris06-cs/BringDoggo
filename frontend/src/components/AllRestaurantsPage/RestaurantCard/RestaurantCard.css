@@ -13,7 +13,7 @@
 .restaurant-info-container {
   box-sizing: border-box;
   position: absolute;
-  z-index: 1;
+  /* z-index: 1; */
   color: white;
   font-weight: bold;
   bottom: 10px;

@@ -24,6 +24,11 @@
   justify-content: space-between;
   max-width: 715px;
   font-size: 18px;
+  border-top: 1px solid rgb(225, 223, 223);
+  border-bottom: 1px solid rgb(225, 223, 223);
+
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 .page-btn {
   display: flex;

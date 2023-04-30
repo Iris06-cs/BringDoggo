@@ -17,6 +17,7 @@ const RestaurantCard = ({ restaurant, idx }) => {
           height: "100%",
           objectFit: "fill",
           objectPosition: "top",
+          zIndex: "-1",
         }}
       />
       <div className="restaurant-info-container">
