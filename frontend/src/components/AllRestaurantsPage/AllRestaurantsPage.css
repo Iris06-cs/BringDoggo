@@ -18,3 +18,35 @@
   column-gap: 15px;
   box-sizing: border-box;
 }
+.pagination-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 715px;
+  font-size: 18px;
+}
+.page-btn {
+  display: flex;
+  justify-content: space-between;
+  width: 240px;
+}
+.pagination-container button {
+  background-color: transparent;
+  border: none;
+  font-size: 18px;
+  color: var(--content-text-color);
+  padding: 0;
+  margin: 0;
+  text-align: left;
+}
+.pagination-container button:disabled {
+  color: rgb(225, 223, 223);
+}
+.pagination-container button:not(:disabled):hover {
+  color: black;
+  transition: background-color 0.5s ease;
+}
+.pagination-container .active {
+  color: black;
+  font-weight: bold;
+}
