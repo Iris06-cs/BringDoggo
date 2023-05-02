@@ -1,29 +1,33 @@
-import React, { useState } from "react";
+import React from "react";
 
 const PageNumbers = ({ pageNumber, onPageChange, currentPage }) => {
-  const [startNum, setStartNum] = useState(1);
-  const showPages = 8;
-  let endNum = Math.min(
-    pageNumber,
-    Math.ceil(startNum / showPages) * showPages
-  );
-
+  const showPages = 9;
   const handlePageNumClick = (pageNum) => {
     // get the results for corresponding page num,also update currentpage
     onPageChange(pageNum);
   };
+
   const handlePrev = () => {
-    if (startNum > 1) setStartNum((prev) => prev - showPages);
+    // onPageChange will set current page to prev page, fetch prev page
+    if (currentPage > 1) onPageChange(currentPage - 1);
   };
+
   const handleNext = () => {
-    if (endNum <= pageNumber) setStartNum((prev) => prev + showPages);
+    // onPageChange will set current page to nexy page, fetch next page
+    if (currentPage < pageNumber) onPageChange(currentPage + 1);
   };
-
   const pageRange = () => {
-    let res = [];
+    const pageRanges = [];
+    let startPage = Math.max(1, currentPage - Math.floor(showPages / 2));
+    let endPage = Math.min(pageNumber, startPage + showPages - 1);
 
-    for (let i = startNum; i <= endNum; i++) {
-      res.push(
+    // Adjust the startPage if the endPage goes beyond the last page
+    if (endPage - startPage + 1 < showPages && startPage > 1) {
+      startPage = Math.max(1, endPage - showPages + 1);
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      pageRanges.push(
         <button
           key={i}
           onClick={() => handlePageNumClick(i)}
@@ -33,21 +37,22 @@ const PageNumbers = ({ pageNumber, onPageChange, currentPage }) => {
         </button>
       );
     }
-    return res;
+    return pageRanges;
   };
-
   return (
-    <div>
-      <button onClick={handlePrev} disabled={startNum === 1}>
-        {"<"}
-      </button>
-      {pageRange()}
-      <button onClick={handleNext} disabled={endNum === pageNumber}>
-        {">"}
-      </button>
-      <span>
+    <div className="pagination-container">
+      <div className="page-btn">
+        <button onClick={handlePrev} disabled={currentPage === 1}>
+          {"<"}
+        </button>
+        {pageRange()}
+        <button onClick={handleNext} disabled={currentPage === pageNumber}>
+          {">"}
+        </button>
+      </div>
+      <div>
         {currentPage}/{pageNumber}
-      </span>
+      </div>
     </div>
   );
 };

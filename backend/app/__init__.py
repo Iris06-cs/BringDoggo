@@ -21,13 +21,18 @@ app = Flask(__name__, static_folder='../../frontend/build', static_url_path='/')
 
 # Setup login manager
 login = LoginManager(app)
-login.login_view = 'auth.unauthorized'
-
+# login.login_view = 'auth.unauthorized'
+login.login_view = 'auth.login'
 
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))
-
+@login.unauthorized_handler
+def unauthorized_handler():
+    """
+    Returns unauthorized JSON when flask-login authentication fails
+    """
+    return {'errors': ['Unauthorized']}, 401
 
 # Tell flask about our seed commands
 app.cli.add_command(seed_commands)
