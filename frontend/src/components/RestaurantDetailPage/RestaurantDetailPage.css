@@ -1,0 +1,66 @@
+.page-container.detail-page {
+  display: flex;
+  flex-direction: column;
+}
+/* top section */
+.page-top-section {
+  height: 250px;
+  box-sizing: border-box;
+  position: relative;
+  background-color: rgba(97, 97, 97, 0.5);
+}
+.restaurant-detail-info-container {
+  box-sizing: border-box;
+  position: absolute;
+  /* z-index: 1; */
+  color: white;
+  font-weight: bold;
+  bottom: 10px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+.info-row-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.page-content-container {
+  display: flex;
+}
+/* content left section */
+.page-content-left-container {
+  width: calc(2 / 3 * 100%);
+  box-sizing: border-box;
+}
+
+.func-btns-container {
+  padding: 25px 0;
+  border-bottom: 1px solid var(--border-light-color);
+  display: flex;
+}
+.func-btns-container button {
+  width: 200px;
+  font-size: 20px;
+  padding: 10px 0;
+  margin-right: 10px;
+  background-color: transparent;
+  border: none;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f7f5f5;
+  border: 1px solid #dbd7d7;
+  gap: 5px;
+  color: var(--content-text-color);
+  transition: background-color 0.8s ease;
+}
+.func-btns-container button:hover {
+  background-color: rgba(213, 212, 212, 0.6);
+}
+.func-btns-container .write-review-btn {
+  background-color: var(--theme-color);
+  color: white;
+}
+.func-btns-container .write-review-btn:hover {
+  background-color: var(--button-background-hover-color);
+}

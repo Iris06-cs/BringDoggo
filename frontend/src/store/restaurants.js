@@ -13,7 +13,6 @@ export const restaurantsSlice = createSlice({
       .addCase(getAllRestaurants.fulfilled, (state, action) => {
         // restaurants array
         let res = {};
-
         action.payload.restaurants.forEach((restaurant) => {
           res[restaurant.id] = restaurant;
         });
@@ -26,6 +25,18 @@ export const restaurantsSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(getAllRestaurants.rejected, (state, action) => {
+        state.error = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(getRestaurantById.pending, (state, action) => {
+        state.error = action.payload;
+        state.isLoading = true;
+      })
+      .addCase(getRestaurantById.fulfilled, (state, action) => {
+        state.restaurants[action.payload.id] = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(getRestaurantById.rejected, (state, action) => {
         state.error = action.payload;
         state.isLoading = false;
       });
@@ -41,5 +52,13 @@ export const getAllRestaurants = createAsyncThunk(
     return data;
   }
 );
-
+export const getRestaurantById = createAsyncThunk(
+  "restaurants/getRestaurantById",
+  async (restaurantId, { rejectWithValue }) => {
+    const response = await fetch(`/api/restaurants/${restaurantId}`);
+    const data = await response.json();
+    if (!response.ok) return rejectWithValue(data);
+    return data;
+  }
+);
 export default restaurantsSlice.reducer;

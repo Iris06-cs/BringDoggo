@@ -17,17 +17,26 @@
   --title-text-hover-color: #0db9f5;
   --subtitle-text-color: #757575;
   --content-text-color: #616161;
-  --border-light-color: #616161;
+  --border-light-color: rgb(225, 223, 223);
 }
+html,
 body {
   font-family: "Nunito", sans-serif;
   color: var(--content-text-color);
   margin: 0;
   padding: 0;
+  height: 100%;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 main {
   margin-left: 10%;
   margin-right: 10%;
+  flex-grow: 1;
 }
 a {
   text-decoration: none;
