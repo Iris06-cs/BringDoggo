@@ -33,7 +33,7 @@ const RestaurantDetailPage = () => {
       <div className="page-content-container">
         <div className="page-content-left-container">
           <FunctionBtns />
-          <ReviewOverview />
+          <ReviewOverview restaurantDetail={restaurantDetail} />
           <Reviews />
         </div>
         <ContactLocationCard />
