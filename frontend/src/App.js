@@ -9,6 +9,7 @@ import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import AllRestaurantsPage from "./components/AllRestaurantsPage";
 import Footer from "./components/Footer";
+import RestaurantDetailPage from "./components/RestaurantDetailPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -28,6 +29,9 @@ function App() {
             </Route>
             <Route path="/signup">
               <SignupFormPage />
+            </Route>
+            <Route path="/restaurants/:restaurantId">
+              <RestaurantDetailPage />
             </Route>
             <Route path="/restaurants">
               <AllRestaurantsPage />
