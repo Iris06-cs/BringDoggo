@@ -7,7 +7,9 @@ import "./RestaurantDetailPage.css";
 import FunctionBtns from "./FunctionBtns";
 import ContactLocationCard from "./ContactLocationCard";
 import ReviewOverview from "./ReviewOverview";
-import Reviews from "../Reviews";
+import Reviews from "./Reviews";
+import FilterSorter from "./FilterSorter";
+
 const RestaurantDetailPage = () => {
   const dispatch = useDispatch();
   const { restaurantId } = useParams();
@@ -33,7 +35,8 @@ const RestaurantDetailPage = () => {
       <div className="page-content-container">
         <div className="page-content-left-container">
           <FunctionBtns />
-          <ReviewOverview />
+          <ReviewOverview restaurantDetail={restaurantDetail} />
+          <FilterSorter />
           <Reviews />
         </div>
         <ContactLocationCard />
