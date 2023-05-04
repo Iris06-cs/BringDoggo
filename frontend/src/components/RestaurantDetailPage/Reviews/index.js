@@ -1,22 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-// import { getReviewsByRestaurantId } from "../../../store/reviews";
+import React from "react";
+import { useSelector } from "react-redux";
 import dateFormater from "../../../utils/dateFormater";
 import Ratings from "../../AllRestaurantsPage/Ratings/Ratings";
 import "./Reviews.css";
 import placeHolderImg from "../../../image/user-icon.png";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-const Reviews = ({ restaurantDetail }) => {
-  const { restaurantId } = useParams();
-  const currentUser = useSelector((state) => state.session.user);
-  const reviews = useSelector((state) => state.reviews.reviewsById);
-  const restaurantReviewIds = useSelector(
-    (state) => state.reviews.reviewIdsByRestaurantId
-  );
-  const loadingReviews = useSelector((state) => state.reviews.loading);
 
-  if (loadingReviews || !reviews) return <p>loading...</p>;
+import RatingTooltip from "./RatingTooltip";
+const Reviews = ({ restaurantDetail }) => {
+  const currentUser = useSelector((state) => state.session.user);
+  const reviews = restaurantDetail.reviews;
+
+  if (!reviews) return <p>loading...</p>;
   // no login user==>render write review component
   //has login user==> user has exisiting review==>top review with edit delete button
   //has login user==>user has no exisiting review==> render add review component
@@ -38,45 +32,7 @@ const Reviews = ({ restaurantDetail }) => {
             </div>
           </div>
           <div>
-            {/* hover over to show rating ratio,onclick=>add review page/login */}
-            <div className="rating-bone-container">
-              <div className="single-bone-container">
-                <FontAwesomeIcon
-                  icon="fa-solid fa-bone"
-                  style={{ transform: "rotate(135deg)" }}
-                />
-                <span className="tooltip-text">Great</span>
-              </div>
-              <div className="single-bone-container">
-                <FontAwesomeIcon
-                  icon="fa-solid fa-bone"
-                  style={{ transform: "rotate(135deg)" }}
-                />
-                <span className="tooltip-text">Good</span>
-              </div>
-              <div className="single-bone-container">
-                <FontAwesomeIcon
-                  icon="fa-solid fa-bone"
-                  style={{ transform: "rotate(135deg)" }}
-                />
-                <span className="tooltip-text">Ok</span>
-              </div>
-              <div className="single-bone-container">
-                <FontAwesomeIcon
-                  icon="fa-solid fa-bone"
-                  style={{ transform: "rotate(135deg)" }}
-                />
-                <span className="tooltip-text">Not Good</span>
-              </div>
-              <div className="single-bone-container">
-                <FontAwesomeIcon
-                  icon="fa-solid fa-bone"
-                  style={{ transform: "rotate(135deg)" }}
-                />
-                <span className="tooltip-text">Bad</span>
-              </div>
-            </div>
-
+            <RatingTooltip restaurantName={restaurantDetail.name} />
             <p>
               Start your review of{" "}
               <span id="review-restaurant-name">{restaurantDetail.name}</span>
@@ -84,8 +40,8 @@ const Reviews = ({ restaurantDetail }) => {
           </div>
         </div>
       )}
-      {restaurantReviewIds[restaurantId] &&
-        restaurantReviewIds[restaurantId].map((reviewId, idx) => (
+      {reviews &&
+        reviews.map((review, idx) => (
           <div className="review-card-container" key={idx}>
             <div className="review-author-container">
               <div>
@@ -97,17 +53,16 @@ const Reviews = ({ restaurantDetail }) => {
               </div>
               <div className="review-author-info-container">
                 <p>
-                  {reviews[reviewId].user.firstname}{" "}
-                  {reviews[reviewId].user.lastname[0]}.
+                  {review.user.firstname} {review.user.lastname[0]}.
                 </p>
-                <p>{dateFormater(reviews[reviewId].updatedAt)}</p>
+                <p>{dateFormater(review.updatedAt)}</p>
               </div>
             </div>
             <div className="review-detail-container">
-              <p>{reviews[reviewId].reviewDetail}</p>
+              <p>{review.reviewDetail}</p>
             </div>
             <div className="review-rating-container">
-              <Ratings avgRating={reviews[reviewId].stars} />
+              <Ratings avgRating={review.stars} />
               {/* edit/delete funtionality */}
               <button className="edit-review-btn">
                 &middot;&middot;&middot;

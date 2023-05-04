@@ -10,13 +10,14 @@ import Navigation from "./components/Navigation";
 import AllRestaurantsPage from "./components/AllRestaurantsPage";
 import Footer from "./components/Footer";
 import RestaurantDetailPage from "./components/RestaurantDetailPage";
-
+import AddReviewPage from "./components/AddReviewPage";
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     dispatch(authenticate()).then(() => setIsLoaded(true));
   }, [dispatch]);
+
   library.add(fas);
   return (
     <>
@@ -29,6 +30,9 @@ function App() {
             </Route>
             <Route path="/signup">
               <SignupFormPage />
+            </Route>
+            <Route path="/restaurants/:restaurantId/reviews/new">
+              <AddReviewPage />
             </Route>
             <Route path="/restaurants/:restaurantId">
               <RestaurantDetailPage />
