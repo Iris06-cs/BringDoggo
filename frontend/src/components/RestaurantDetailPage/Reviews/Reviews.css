@@ -48,12 +48,20 @@
   flex-direction: row-reverse;
 }
 .rating-bone-container .single-bone-container {
-  font-size: 20px;
   color: #bdbdbd;
+  font-size: 20px;
   margin-right: 5px;
   transition: color 0.3s;
   position: relative;
   text-align: center;
+}
+.bone-btn-link {
+  color: inherit;
+  font-size: inherit;
+}
+.bone-btn-link:visited {
+  color: inherit;
+  font-size: inherit;
 }
 .rating-bone-container .single-bone-container:hover,
 .rating-bone-container .single-bone-container:hover ~ .single-bone-container {

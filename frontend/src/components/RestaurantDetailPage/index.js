@@ -9,17 +9,13 @@ import ContactLocationCard from "./ContactLocationCard";
 import ReviewOverview from "./ReviewOverview";
 import Reviews from "./Reviews";
 import FilterSorter from "./FilterSorter";
-import { authenticate } from "../../store/session";
-import { getReviewsByRestaurantId } from "../../store/reviews";
+
 const RestaurantDetailPage = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.session.user);
   const { restaurantId } = useParams();
   const allRestaurants = useSelector((state) => state.restaurants.restaurants);
-  const reviews = useSelector((state) => state.reviews.reviewsById);
-  const restaurantReviewIds = useSelector(
-    (state) => state.reviews.reviewIdsByRestaurantId
-  );
+
   const [currentUserReview, setCurrentUserReview] = useState();
   const [hasReview, setHasReview] = useState(false);
   const [restaurantDetail, setRestaurantDetail] = useState();
@@ -28,39 +24,30 @@ const RestaurantDetailPage = () => {
   useEffect(() => {
     if (restaurantId) {
       dispatch(getRestaurantById(restaurantId));
-      dispatch(getReviewsByRestaurantId(restaurantId));
     }
-    dispatch(authenticate());
+    // dispatch(authenticate());
     setIsFetched(true);
   }, [dispatch, restaurantId]);
 
   useEffect(() => {
     if (isFetched && allRestaurants) {
       setRestaurantDetail(allRestaurants[restaurantId]);
-
-      if (reviews && restaurantReviewIds[restaurantId]) {
-        const reviewIds = restaurantReviewIds[restaurantId];
-
-        reviewIds.forEach((id) => {
-          // check whether current user has review for the restaurant
-          console.log(reviews[id]);
-          const review = reviews[id];
-          if (review && currentUser && review.authorId === currentUser.id)
-            setCurrentUserReview(reviews[id]);
+    }
+  }, [isFetched, allRestaurants, restaurantId]);
+  useEffect(() => {
+    if (restaurantDetail) {
+      const reviews = restaurantDetail.reviews;
+      if (reviews.length) {
+        reviews.forEach((review) => {
+          if (currentUser && review.id === currentUser.id)
+            setCurrentUserReview(review);
           setHasReview(true);
         });
       }
     }
     // reset hasReview
     if (isFetched && !currentUser) setHasReview(false);
-  }, [
-    isFetched,
-    allRestaurants,
-    restaurantId,
-    reviews,
-    currentUser,
-    restaurantReviewIds,
-  ]);
+  }, [currentUser, restaurantDetail, isFetched]);
 
   if (!restaurantDetail) return <h1>Loading...</h1>;
 
