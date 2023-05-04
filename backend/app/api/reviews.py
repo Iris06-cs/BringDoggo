@@ -92,3 +92,13 @@ def add_image_to_review(reviewId):
         return jsonify(review_image.to_dict()),201
     # Handle 400 ValidationError
     raise ValidationError(f"Validation Error: {validation_errors_to_error_messages(form.errors)}")
+
+
+@review_routes.route("/")
+def get_all_reviews():
+    """
+    Get all Reviews
+    """
+    all_reviews=Review.query.all()
+
+    return {"Reviews":[review.to_dict() for review in all_reviews]},200
