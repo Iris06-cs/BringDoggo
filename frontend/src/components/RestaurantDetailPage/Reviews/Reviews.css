@@ -1,8 +1,14 @@
-.review-card-container {
+.review-card-container,
+.add-review-card-container {
   display: flex;
   align-items: flex-start;
   gap: 20px;
   justify-content: space-between;
+}
+.add-review-card-container {
+  padding: 15px;
+  box-shadow: 0 0 14px rgba(97, 97, 97, 0.5);
+  border-radius: 5px;
 }
 .review-author-container {
   display: flex;
@@ -33,4 +39,53 @@
 }
 .edit-review-btn:hover {
   background-color: rgba(213, 212, 212, 0.6);
+}
+#review-restaurant-name {
+  font-weight: bold;
+}
+.rating-bone-container {
+  display: flex;
+  flex-direction: row-reverse;
+}
+.rating-bone-container .single-bone-container {
+  font-size: 20px;
+  color: #bdbdbd;
+  margin-right: 5px;
+  transition: color 0.3s;
+  position: relative;
+  text-align: center;
+}
+.rating-bone-container .single-bone-container:hover,
+.rating-bone-container .single-bone-container:hover ~ .single-bone-container {
+  color: #ffc107;
+}
+.tooltip-text {
+  visibility: hidden;
+  position: absolute;
+  z-index: 2;
+  /* make content not wrapping */
+  white-space: nowrap;
+  color: white;
+  font-size: 12px;
+  background-color: var(--content-text-color);
+  border-radius: 5px;
+  padding: 8px;
+  top: -40px;
+  left: 50%;
+  /* move horizontally ->left 50% of its width */
+  transform: translateX(-50%);
+  box-sizing: border-box;
+}
+.tooltip-text::before {
+  content: "";
+  position: absolute;
+  transform: rotate(45deg) translateX(-50%);
+  background-color: var(--content-text-color);
+  padding: 6px;
+  z-index: 1;
+  top: 85%;
+  left: 50%;
+}
+.rating-bone-container .single-bone-container:hover .tooltip-text {
+  visibility: visible;
 }
