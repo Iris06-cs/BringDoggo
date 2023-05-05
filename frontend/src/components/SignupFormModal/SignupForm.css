@@ -53,3 +53,28 @@
   font-size: 12px;
   margin-top: 0;
 }
+.signup-confirm-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.signup-confirm-text p {
+  display: inline-block;
+}
+.signup-confirm-text .open-modal-btn {
+  background-color: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: inherit;
+  font-weight: bold;
+  color: #085878;
+}
+.signup-confirm-text .open-modal-btn:hover {
+  text-decoration: underline;
+}
+.signup-confirm-text .open-modal-btn .fa-bone {
+  display: none;
+}
