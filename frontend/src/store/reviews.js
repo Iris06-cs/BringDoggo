@@ -192,4 +192,17 @@ export const deleteReview = createAsyncThunk(
     return reviewId;
   }
 );
+// selectors
+export const selectAllReviews = (state) => state.reviews.reviewsById;
+
+export const selectCurrentUserReviews = (state) => {
+  const currentUserReviewIds = state.reviews.currentUserReviewIds;
+  const reviewsById = state.reviews.reviewsById;
+  return currentUserReviewIds.map((reviewId) => reviewsById[reviewId]);
+};
+export const selectReviewsByUserId = (state, userId) => {
+  const userReviewIds = state.reviews.reviewIdsByUserId[userId] || [];
+  const reviewsById = state.reviews.reviewsById;
+  return userReviewIds.map((reviewId) => reviewsById[reviewId]);
+};
 export default reviewsSlice.reducer;
