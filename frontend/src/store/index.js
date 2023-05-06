@@ -4,7 +4,7 @@ import loadingReducer from "./loadingMiddleware";
 import sessionReducer from "./session";
 import restaurantsReducer from "./restaurants";
 import reviewsReducer from "./reviews";
-
+import favoritesReducer from "./favorites";
 const middleware = [loadingMiddleware];
 
 if (process.env.NODE_ENV === "development") {
@@ -17,6 +17,7 @@ const store = configureStore({
     session: sessionReducer,
     restaurants: restaurantsReducer,
     reviews: reviewsReducer,
+    favorites: favoritesReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(middleware),
