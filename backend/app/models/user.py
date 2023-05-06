@@ -58,4 +58,5 @@ class User(db.Model, UserMixin):
             'profileImage': self.profileImage,
             'createdAt': self.created_at,
             'updatedAt': self.updated_at,
+            "favorites":[favorite.id for favorite in self.user_favorites]
         }
