@@ -37,13 +37,38 @@
   width: 60%;
   max-width: 700px;
 }
-.post-btn-container .general-button {
+.post-btn-container .open-modal-btn {
+  border-radius: 5px;
+  border: 1px solid var(--button-background-color);
+  background-color: var(--button-background-color);
+  color: white;
+  font-size: 15px;
+  padding: 5px;
+  transition: background-color 0.8s ease;
+}
+.post-btn-container .open-modal-btn .fa-bone {
+  display: none;
+}
+.post-btn-container .open-modal-btn:hover {
+  background-color: var(--button-background-hover-color);
+}
+.post-btn-container .general-button,
+.post-btn-container .open-modal-btn {
   width: 30%;
   font-size: 20px;
 }
 @media screen and (max-width: 900px) {
-  .post-btn-container .general-button {
+  .post-btn-container .general-button,
+  .post-btn-container .open-modal-btn {
     width: 150px;
     font-size: 15px;
   }
+}
+.single-bone-container.selected .fa-bone {
+  color: #ffc107;
+}
+.update-alter-msg {
+  align-self: start;
+  margin: 0 20%;
+  color: #dd0a35;
 }
