@@ -4,7 +4,6 @@ const ReviewOverview = ({ restaurantDetail }) => {
   const { avgRating, dogReviewCount, reviewCount, rating, name } =
     restaurantDetail;
 
-  console.log(restaurantDetail, dogReviewCount);
   return (
     <div className="review-overview-container">
       <h2>Overall Rating</h2>

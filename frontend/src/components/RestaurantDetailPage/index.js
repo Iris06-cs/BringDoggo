@@ -9,13 +9,14 @@ import ContactLocationCard from "./ContactLocationCard";
 import ReviewOverview from "./ReviewOverview";
 import Reviews from "./Reviews";
 import FilterSorter from "./FilterSorter";
+import LoadingSpinner from "../LoadingSpinner";
 
 const RestaurantDetailPage = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.session.user);
   const { restaurantId } = useParams();
   const allRestaurants = useSelector((state) => state.restaurants.restaurants);
-
+  const isLoading = useSelector((state) => state.restaurants.isLoading);
   const [currentUserReview, setCurrentUserReview] = useState();
   const [hasReview, setHasReview] = useState(false);
   const [restaurantDetail, setRestaurantDetail] = useState();
@@ -39,24 +40,29 @@ const RestaurantDetailPage = () => {
       const reviews = restaurantDetail.reviews;
       if (reviews.length) {
         reviews.forEach((review) => {
-          if (currentUser && review.id === currentUser.id)
+          if (currentUser && review.authorId === currentUser.id)
             setCurrentUserReview(review);
           setHasReview(true);
         });
       }
     }
+
     // reset hasReview
     if (isFetched && !currentUser) setHasReview(false);
   }, [currentUser, restaurantDetail, isFetched]);
 
-  if (!restaurantDetail) return <h1>Loading...</h1>;
+  if (!restaurantDetail) return <LoadingSpinner />;
 
   return (
     <div className="page-container detail-page">
       <TopSection restaurantDetail={restaurantDetail} />
       <div className="page-content-container">
         <div className="page-content-left-container">
-          <FunctionBtns hasReview={hasReview} />
+          <FunctionBtns
+            hasReview={hasReview}
+            name={restaurantDetail.name}
+            currentUserReview={currentUserReview}
+          />
           <ReviewOverview restaurantDetail={restaurantDetail} />
           <FilterSorter />
           <Reviews restaurantDetail={restaurantDetail} />

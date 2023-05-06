@@ -63,6 +63,7 @@
   color: inherit;
   font-size: inherit;
 }
+
 .rating-bone-container .single-bone-container:hover,
 .rating-bone-container .single-bone-container:hover ~ .single-bone-container {
   color: #ffc107;
