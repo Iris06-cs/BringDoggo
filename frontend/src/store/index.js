@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { loadingMiddleware } from "./loadingMiddleware";
+import loadingReducer from "./loadingMiddleware";
 import sessionReducer from "./session";
 import restaurantsReducer from "./restaurants";
 import reviewsReducer from "./reviews";
@@ -12,6 +13,7 @@ if (process.env.NODE_ENV === "development") {
 }
 const store = configureStore({
   reducer: {
+    loader: loadingReducer,
     session: sessionReducer,
     restaurants: restaurantsReducer,
     reviews: reviewsReducer,

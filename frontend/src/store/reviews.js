@@ -6,6 +6,7 @@ export const reviewsSlice = createSlice({
     reviewsById: {},
     currentUserReviewIds: [],
     reviewIdsByUserId: {},
+    reviewIdsByRestaurantId: {},
     error: null,
     isLoading: false,
   },
@@ -109,15 +110,15 @@ export const getAllReviews = createAsyncThunk(
     return data.Reviews;
   }
 );
-// export const getReviewsByRestaurantId = createAsyncThunk(
-//   "reviews/getReviewsByRestaurantId",
-//   async (restaurantId, { rejectWithValue }) => {
-//     const response = await fetch(`/api/restaurants/${restaurantId}/reviews`);
-//     const data = await response.json();
-//     if (!response.ok) return rejectWithValue(data);
-//     return data.Reviews;
-//   }
-// );
+export const getReviewsByRestaurantId = createAsyncThunk(
+  "reviews/getReviewsByRestaurantId",
+  async (restaurantId, { rejectWithValue }) => {
+    const response = await fetch(`/api/restaurants/${restaurantId}/reviews`);
+    const data = await response.json();
+    if (!response.ok) return rejectWithValue(data);
+    return data.Reviews;
+  }
+);
 export const getCurrentUserReviews = createAsyncThunk(
   "reviews/getCurrentUserReviews",
   async (_, { rejectWithValue }) => {
@@ -196,9 +197,16 @@ export const deleteReview = createAsyncThunk(
 export const selectAllReviews = (state) => state.reviews.reviewsById;
 
 export const selectCurrentUserReviews = (state) => {
-  const currentUserReviewIds = state.reviews.currentUserReviewIds;
   const reviewsById = state.reviews.reviewsById;
-  return currentUserReviewIds.map((reviewId) => reviewsById[reviewId]);
+  const currentUserReviewIds = state.reviews.currentUserReviewIds;
+  const res = {};
+  currentUserReviewIds.forEach((id) => {
+    if (reviewsById[id]) {
+      res[id] = reviewsById[id];
+    }
+  });
+
+  return res;
 };
 export const selectReviewsByUserId = (state, userId) => {
   const userReviewIds = state.reviews.reviewIdsByUserId[userId] || [];
