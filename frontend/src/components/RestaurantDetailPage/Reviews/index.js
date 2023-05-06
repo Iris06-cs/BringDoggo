@@ -6,14 +6,17 @@ import "./Reviews.css";
 import placeHolderImg from "../../../image/user-icon.png";
 
 import RatingTooltip from "./RatingTooltip";
+
 const Reviews = ({ restaurantDetail }) => {
   const currentUser = useSelector((state) => state.session.user);
+
   const reviews = restaurantDetail.reviews;
 
   if (!reviews) return <p>loading...</p>;
   // no login user==>render write review component
   //has login user==> user has exisiting review==>top review with edit delete button
   //has login user==>user has no exisiting review==> render add review component
+
   return (
     <div className="reviews-section-container">
       {!currentUser && (

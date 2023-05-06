@@ -7,7 +7,7 @@ import Map from "./Map";
 import RestaurantCard from "./RestaurantCard/RestaurantCard";
 import PageNumbers from "./PageNumbers";
 import "./AllRestaurantsPage.css";
-
+import LoadingSpinner from "../LoadingSpinner";
 const AllRestaurantsPage = () => {
   const dispatch = useDispatch();
   const allRestaurants = useSelector((state) => state.restaurants.restaurants);
@@ -33,7 +33,7 @@ const AllRestaurantsPage = () => {
   const displayRestaurantIdx = (idx) => {
     return idx + 1 + (currentPage - 1) * 20;
   };
-  if (!allRestaurants || loadingRestaurants) return <h1>Loading...</h1>;
+  if (!allRestaurants || loadingRestaurants) return <LoadingSpinner />;
 
   return (
     <div className="page-container">

@@ -8,7 +8,8 @@ import sublogo from "../../image/sublogo.png";
 import haru from "../../image/haru.png";
 import douding from "../../image/douding.png";
 import validateInput from "../../utils/validateInput";
-
+import OpenModalButton from "../OpenModalButton";
+import LoginFormModal from "../LoginFormModal";
 function SignupFormModal() {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
@@ -178,6 +179,14 @@ function SignupFormModal() {
             <FontAwesomeIcon icon="fa-solid fa-bone" />
           </button>
         </form>
+        <div className="signup-confirm-text">
+          <p>Already on BringDoggo?</p>
+          <OpenModalButton
+            buttonText="Log In"
+            // onItemClick={closeMenu}
+            modalComponent={<LoginFormModal />}
+          />
+        </div>
       </div>
       <div className="modal-contect-right-section">
         <img alt="sublogo" src={sublogo} />

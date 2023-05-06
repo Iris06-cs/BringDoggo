@@ -57,11 +57,13 @@
 .func-btns-container button:hover {
   background-color: rgba(213, 212, 212, 0.6);
 }
-.func-btns-container .write-review-btn {
+.func-btns-container .write-review-btn,
+.func-btns-container .open-modal-btn {
   background-color: var(--theme-color);
   color: white;
 }
-.func-btns-container .write-review-btn:hover {
+.func-btns-container .write-review-btn:hover,
+.func-btns-container .open-modal-btn:hover {
   background-color: var(--button-background-hover-color);
 }
 .review-overview-container {
