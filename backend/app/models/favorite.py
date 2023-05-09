@@ -35,7 +35,7 @@ class Favorite(db.Model):
             'description':self.description,
             'isPublic':self.is_public,
             'userId':self.user_id,
-            'restaurants':[restaurant.to_dict() for restaurant in self.fav_restaurants],
+            'restaurants':{restaurant.id:restaurant.to_dict() for restaurant in self.fav_restaurants},
             'createdAt': self.created_at,
             'updatedAt': self.updated_at,
         }
