@@ -104,12 +104,12 @@ def remove_restaurant_from_favorite(favoriteId,restaurantId):
     restaurant = Restaurant.query.get(restaurantId)
     if not restaurant:
         raise NotFoundError(f"Restaurant with ID {restaurantId} not found")
-    if restaurant not in existing_favorite.restaurants:
+    if restaurant not in existing_favorite.fav_restaurants:
         raise NotFoundError(f"Restaurant with ID {restaurantId} not found in the collection")
     if existing_favorite.user_id!=current_user.id:
         raise ForbiddenError("Only owner can delete restaurants from favorties")
 
-    existing_favorite.restaurants.remove(restaurant)
+    existing_favorite.fav_restaurants.remove(restaurant)
     db.session.commit()
     return {"message": "Restaurant successfully removed from favorite collection"}, 200
 

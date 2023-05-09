@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useHistory, useParams } from "react-router-dom";
 import OpenModalButton from "../OpenModalButton";
 import SignupFormModal from "../SignupFormModal";
+import FavoriteCollectionModal from "../FavoriteCollectionModal";
 const FunctionBtns = ({ hasReview, name, currentUserReview, isFav }) => {
   const { restaurantId } = useParams();
   const history = useHistory();
@@ -21,6 +22,12 @@ const FunctionBtns = ({ hasReview, name, currentUserReview, isFav }) => {
       : `?name=${name}`;
 
     history.push(path + param);
+  };
+  const handleAddFav = (e) => {
+    e.preventDefault();
+  };
+  const handleUpdateFav = (e) => {
+    e.preventDefault();
   };
   return (
     <div className="func-btns-container">
@@ -75,11 +82,28 @@ const FunctionBtns = ({ hasReview, name, currentUserReview, isFav }) => {
           modalComponent={<SignupFormModal />}
         />
       )}
-      {currentUser && (
+      {currentUser && !isFav && (
         <button>
           <FontAwesomeIcon icon="fa-solid fa-heart" />
           Favorite
         </button>
+      )}
+      {isFav && (
+        <OpenModalButton
+          buttonText={
+            <>
+              <FontAwesomeIcon
+                icon="fa-solid fa-heart"
+                className="display-bone"
+              />
+              Added Favorite
+            </>
+          }
+          // onItemClick={closeMenu}
+          modalComponent={
+            <FavoriteCollectionModal restaurantId={restaurantId} />
+          }
+        />
       )}
     </div>
   );
