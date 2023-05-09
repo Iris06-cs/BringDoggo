@@ -1,6 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import "./FavoriteCollectionModal.css";
-import { addFav, selectCurrUserFavs } from "../../store/favorites";
+import {
+  addRestaurantToFav,
+  removeRestaurantFromFav,
+  selectCurrUserFavs,
+} from "../../store/favorites";
 import OpenModalButton from "../OpenModalButton";
 import NewFavoriteCollectionForm from "../NewFavoriteCollectionForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,8 +15,15 @@ const FavoriteCollectionModal = ({ restaurantId }) => {
     useSelector((state) => selectCurrUserFavs(state))
   );
   const currUser = useSelector((state) => state.session.user);
-  console.log(currUserFavs);
-  console.log(restaurantId);
+
+  const onClickRemove = async (e, favId) => {
+    e.preventDefault();
+    await dispatch(removeRestaurantFromFav({ favId, restaurantId }));
+  };
+  const onClickSave = async (e, favId) => {
+    e.preventDefault();
+    await dispatch(addRestaurantToFav({ favId, restaurantId }));
+  };
   return (
     <div className="modal-content-container favorite">
       <div className="fav-collection-container">
@@ -35,10 +46,18 @@ const FavoriteCollectionModal = ({ restaurantId }) => {
                   <div className="remove-btn-contaner">
                     <FontAwesomeIcon icon="fa-solid fa-check" />
                     <p>Added</p>
-                    <button className="remove-from-fav-btn">Remove</button>
+                    <button
+                      onClick={(e) => onClickRemove(e, fav.id)}
+                      className="remove-from-fav-btn"
+                    >
+                      Remove
+                    </button>
                   </div>
                 ) : (
-                  <button className="general-button save-to-fav-btn">
+                  <button
+                    onClick={(e) => onClickSave(e, fav.id)}
+                    className="general-button save-to-fav-btn"
+                  >
                     Save
                   </button>
                 )}
