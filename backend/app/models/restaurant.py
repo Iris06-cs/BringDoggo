@@ -44,7 +44,7 @@ class Restaurant(db.Model):
         reviews=self.restaurant_reviews
         avg_rating=0
         if reviews:
-            avg_rating=sum(review.stars for review in reviews)/len(reviews)
+            avg_rating=round(sum(review.stars for review in reviews)/len(reviews),1)
 
         return {
             'id': self.id,
