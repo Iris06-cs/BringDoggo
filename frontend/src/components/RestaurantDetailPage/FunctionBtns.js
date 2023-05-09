@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useHistory, useParams } from "react-router-dom";
 import OpenModalButton from "../OpenModalButton";
 import SignupFormModal from "../SignupFormModal";
-const FunctionBtns = ({ hasReview, name, currentUserReview }) => {
+const FunctionBtns = ({ hasReview, name, currentUserReview, isFav }) => {
   const { restaurantId } = useParams();
   const history = useHistory();
   const currentUser = useSelector((state) => state.session.user);
@@ -27,7 +27,15 @@ const FunctionBtns = ({ hasReview, name, currentUserReview }) => {
       {/* if has login user && without review||no login user */}
       {!currentUser && (
         <OpenModalButton
-          buttonText="Write a review"
+          buttonText={
+            <>
+              <FontAwesomeIcon
+                icon="fa-solid fa-bone"
+                className="display-bone"
+              />
+              Write a review
+            </>
+          }
           // onItemClick={closeMenu}
           modalComponent={<SignupFormModal />}
         />
@@ -45,14 +53,34 @@ const FunctionBtns = ({ hasReview, name, currentUserReview }) => {
           Update review
         </button>
       )}
-      <button>
+      <button id="add-photo-btn">
         <FontAwesomeIcon icon="fa-solid fa-camera-retro" />
         Add photo
       </button>
-      <button>
-        <FontAwesomeIcon icon="fa-solid fa-heart" />
-        Favorite
-      </button>
+      {/* no login user，on click login popup */}
+      {/* user logged in, has not added to fav, onclick popup add to/create collection popup */}
+      {/* user logged in,already added to fav,button added fav, onclick remove or change to other collection, or create new collection */}
+      {!currentUser && (
+        <OpenModalButton
+          buttonText={
+            <>
+              <FontAwesomeIcon
+                icon="fa-solid fa-heart"
+                className="display-bone"
+              />
+              Favorite
+            </>
+          }
+          // onItemClick={closeMenu}
+          modalComponent={<SignupFormModal />}
+        />
+      )}
+      {currentUser && (
+        <button>
+          <FontAwesomeIcon icon="fa-solid fa-heart" />
+          Favorite
+        </button>
+      )}
     </div>
   );
 };
