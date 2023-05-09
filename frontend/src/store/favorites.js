@@ -56,6 +56,46 @@ export const favoritesSlice = createSlice({
       .addCase(getUserPublicFavs.rejected, (state, action) => {
         state.error = action.payload;
         state.isLoading = false;
+      })
+      .addCase(addFav.pending, (state, action) => {
+        state.error = action.payload;
+        state.isLoading = true;
+      })
+      .addCase(addFav.fulfilled, (state, action) => {
+        const newFav = action.payload;
+        state.favoritesById[newFav.id] = newFav;
+        state.currentUserFavoritesId.push(newFav.id);
+      })
+      .addCase(addFav.rejected, (state, action) => {
+        state.error = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(updateFav.pending, (state, action) => {
+        state.error = action.payload;
+        state.isLoading = true;
+      })
+      .addCase(updateFav.fulfilled, (state, action) => {
+        const updatedFav = action.payload;
+        state.favoritesById[updatedFav.id] = updatedFav;
+      })
+      .addCase(updateFav.rejected, (state, action) => {
+        state.error = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(deleteFav.fulfilled, (state, action) => {
+        const favId = action.payload;
+        delete state.favoritesById[favId];
+        state.currentUserFavoritesId = state.currentUserFavoritesId.filter(
+          (id) => id !== favId
+        );
+        state.userPublicFavsId = state.userPublicFavsId.filter(
+          (id) => id !== favId
+        );
+        state.isLoading = false;
+      })
+      .addCase(deleteFav.rejected, (state, action) => {
+        state.error = action.payload;
+        state.isLoading = false;
       });
   },
 });
@@ -145,4 +185,19 @@ export const deleteFav = createAsyncThunk(
     return favId;
   }
 );
+// selectors
+export const selectAllFavs = (state) => state.favorites.favoritesById;
+export const selectCurrUserFavs = (state) => {
+  const favsById = state.favorites.favoritesById;
+  const currUserFavIds = state.favorites.currentUserFavoritesId;
+  const res = {};
+  currUserFavIds.forEach((id) => {
+    if (favsById[id]) {
+      res[id] = favsById[id];
+    }
+  });
+
+  return res;
+};
+
 export default favoritesSlice.reducer;
