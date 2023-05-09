@@ -37,7 +37,8 @@
   border-bottom: 1px solid var(--border-light-color);
   display: flex;
 }
-.func-btns-container button {
+.func-btns-container button,
+.func-btns-container #add-photo-btn + button {
   width: 200px;
   font-size: 20px;
   padding: 10px 0;
@@ -54,6 +55,11 @@
   color: var(--content-text-color);
   transition: background-color 0.8s ease;
 }
+
+.func-btns-container .display-bone + .fa-bone {
+  display: none;
+}
+
 .func-btns-container button:hover {
   background-color: rgba(213, 212, 212, 0.6);
 }
