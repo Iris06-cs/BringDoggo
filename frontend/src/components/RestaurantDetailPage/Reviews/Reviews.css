@@ -25,6 +25,7 @@
   display: flex;
   align-items: flex-start;
   margin-top: 16px;
+  position: relative;
 }
 .edit-review-btn {
   background-color: transparent;
@@ -97,4 +98,26 @@
 }
 .rating-bone-container .single-bone-container:hover .tooltip-text {
   visibility: visible;
+}
+.modify-review-dropdown {
+  position: absolute;
+  box-sizing: border-box;
+  left: 30px;
+  top: 25px;
+  width: 120px;
+  background-color: var(--main-background-color);
+  font-size: 13px;
+  padding: 0;
+  border-radius: 5px;
+  box-shadow: 0 0 14px rgba(97, 97, 97, 0.5);
+  z-index: 1;
+}
+.modify-review-dropdown li {
+  padding: 5px 10px;
+  margin: 0;
+  border-radius: 5px;
+}
+.modify-review-dropdown li:hover {
+  background-color: var(--theme-color);
+  color: white;
 }
