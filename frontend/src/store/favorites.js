@@ -57,16 +57,16 @@ export const favoritesSlice = createSlice({
         state.error = action.payload;
         state.isLoading = false;
       })
-      .addCase(addFav.pending, (state, action) => {
+      .addCase(createFav.pending, (state, action) => {
         state.error = action.payload;
         state.isLoading = true;
       })
-      .addCase(addFav.fulfilled, (state, action) => {
+      .addCase(createFav.fulfilled, (state, action) => {
         const newFav = action.payload;
         state.favoritesById[newFav.id] = newFav;
         state.currentUserFavoritesId.push(newFav.id);
       })
-      .addCase(addFav.rejected, (state, action) => {
+      .addCase(createFav.rejected, (state, action) => {
         state.error = action.payload;
         state.isLoading = false;
       })
@@ -96,6 +96,31 @@ export const favoritesSlice = createSlice({
       .addCase(deleteFav.rejected, (state, action) => {
         state.error = action.payload;
         state.isLoading = false;
+      })
+      .addCase(removeRestaurantFromFav.fulfilled, (state, action) => {
+        const { favId, restaurantId } = action.payload;
+        const targetFav = state.favoritesById[favId];
+        if (targetFav.restaurants[restaurantId])
+          delete targetFav.restaurants[restaurantId];
+        state.isLoading = false;
+      })
+      .addCase(removeRestaurantFromFav.rejected, (state, action) => {
+        state.error = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(addRestaurantToFav.pending, (state, action) => {
+        state.error = action.payload;
+        state.isLoading = true;
+      })
+      .addCase(addRestaurantToFav.fulfilled, (state, action) => {
+        const { favId, data } = action.payload;
+        const targetFav = state.favoritesById[favId];
+        if (targetFav) state.favoritesById[favId] = data;
+        state.isLoading = false;
+      })
+      .addCase(addRestaurantToFav.rejected, (state, action) => {
+        state.error = action.payload;
+        state.isLoading = true;
       });
   },
 });
@@ -126,13 +151,11 @@ export const getUserPublicFavs = createAsyncThunk(
     return data.Favorites;
   }
 );
-export const addFav = createAsyncThunk(
-  "favorites/addFav",
-  async (
-    { title, description, is_public, restaurantId },
-    { rejectWithValue }
-  ) => {
-    const response = await fetch(`/api/restaurants/${restaurantId}/favorites`, {
+// create fav
+export const createFav = createAsyncThunk(
+  "favorites/createFav",
+  async ({ title, description, is_public }, { rejectWithValue }) => {
+    const response = await fetch(`/api/favorites/current`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -148,6 +171,51 @@ export const addFav = createAsyncThunk(
     return data;
   }
 );
+// add restaurant to fav
+export const addRestaurantToFav = createAsyncThunk(
+  "favorites/addRestaurantToFav",
+  async ({ favId, restaurantId }, { rejectWithValue }) => {
+    const response = await fetch(
+      `/api/favorites/${favId}/restaurants/${restaurantId}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+
+    if (!response.ok) {
+      return rejectWithValue(data);
+    }
+
+    return { favId, data };
+  }
+);
+// remove restaurant from fav
+export const removeRestaurantFromFav = createAsyncThunk(
+  "favorites/removeRestaurantFromFav",
+  async ({ favId, restaurantId }, { rejectWithValue }) => {
+    const response = await fetch(
+      `/api/favorites/${favId}/restaurants/${restaurantId}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+
+    if (!response.ok) {
+      return rejectWithValue(data);
+    }
+
+    return { favId, restaurantId };
+  }
+);
+// update fav
 export const updateFav = createAsyncThunk(
   "favorites/updateFav",
   async ({ title, description, is_public, favId }, { rejectWithValue }) => {
@@ -167,6 +235,7 @@ export const updateFav = createAsyncThunk(
     return data;
   }
 );
+// delete fav
 export const deleteFav = createAsyncThunk(
   "favorites/deleteFav",
   async (favId, { rejectWithValue }) => {
