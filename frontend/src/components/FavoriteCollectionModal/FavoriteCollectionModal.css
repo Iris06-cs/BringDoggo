@@ -2,7 +2,7 @@
   flex-grow: 1;
   height: fit-content;
   width: 600px;
-  padding: 20px;
+  padding: 40px;
 }
 .modal-content-container.favorite .open-modal-btn {
   width: fit-content;
@@ -76,4 +76,17 @@
 }
 .remove-from-fav-btn:hover {
   text-decoration: underline;
+}
+.general-button.save-to-fav-btn {
+  width: 60px;
+  padding: 10px 0;
+}
+.title-section-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.title-section-container h2 {
+  margin: 0;
+  padding-bottom: 20px;
 }

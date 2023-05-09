@@ -8,8 +8,10 @@ import {
 import OpenModalButton from "../OpenModalButton";
 import NewFavoriteCollectionForm from "../NewFavoriteCollectionForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useModal } from "../../context/Modal";
 
 const FavoriteCollectionModal = ({ restaurantId }) => {
+  const { closeModal } = useModal();
   const dispatch = useDispatch();
   const currUserFavs = Object.values(
     useSelector((state) => selectCurrUserFavs(state))
@@ -27,7 +29,18 @@ const FavoriteCollectionModal = ({ restaurantId }) => {
   return (
     <div className="modal-content-container favorite">
       <div className="fav-collection-container">
-        <h2>Add to Favorite collection</h2>
+        <div className="title-section-container">
+          <h2>Add to Favorite collection</h2>
+          <button
+            onClick={closeModal}
+            className="add-fav-form-close-modal-button"
+          >
+            <FontAwesomeIcon
+              icon="fa-solid fa-square-xmark"
+              className="add-fav-form-close-btn"
+            />
+          </button>
+        </div>
         {currUserFavs.length && (
           <ul className="fav-cards-container">
             {currUserFavs.map((fav, idx) => (
@@ -76,7 +89,9 @@ const FavoriteCollectionModal = ({ restaurantId }) => {
             </>
           }
           // onItemClick={closeMenu}
-          modalComponent={<NewFavoriteCollectionForm />}
+          modalComponent={
+            <NewFavoriteCollectionForm restaurantId={restaurantId} />
+          }
         />
       </div>
     </div>
