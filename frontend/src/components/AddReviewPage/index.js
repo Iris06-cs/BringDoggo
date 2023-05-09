@@ -13,7 +13,6 @@ import {
 import OpenModalButton from "../OpenModalButton";
 import SignupFormModal from "../SignupFormModal";
 import LoadingSpinner from "../LoadingSpinner";
-import { authenticate } from "../../store/session";
 
 const AddReviewPage = () => {
   const history = useHistory();
@@ -35,18 +34,11 @@ const AddReviewPage = () => {
   );
 
   const [selectedRating, setSelctedRating] = useState(initialRating);
-  const [reviewInput, setReviewInput] = useState();
+  const [reviewInput, setReviewInput] = useState("");
   const [reviewId, setReviewId] = useState();
   const [isUpdate, setIsUpdate] = useState(false);
   const [hasFetchedReviews, setHasFetchedReviews] = useState(false);
-
-  useEffect(() => {
-    const fetchCurrUser = async () => {
-      await dispatch(authenticate());
-    };
-    fetchCurrUser();
-  }, [dispatch]);
-
+  const [isExistingReview, setIsExistingReview] = useState(false);
   useEffect(() => {
     const fetchReviews = async () => {
       if (currentUser) {
@@ -59,8 +51,9 @@ const AddReviewPage = () => {
   }, [dispatch, currentUser]);
 
   useEffect(() => {
-    if (hasFetchedReviews) {
+    if (hasFetchedReviews && !isExistingReview) {
       const reviews = Object.values(currentUserReview);
+      // current user review
       if (currentUser && reviews.length > 0) {
         reviews.forEach((review) => {
           if (review.restaurantId === restaurantId) {
@@ -71,7 +64,13 @@ const AddReviewPage = () => {
         });
       }
     }
-  }, [currentUserReview, restaurantId, currentUser, hasFetchedReviews]);
+  }, [
+    currentUserReview,
+    restaurantId,
+    currentUser,
+    hasFetchedReviews,
+    isExistingReview,
+  ]);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -95,7 +94,8 @@ const AddReviewPage = () => {
 
     history.push(`/restaurants/${restaurantId}`);
   };
-  //   if (isLoading) return <LoadingSpinner />;
+  if (isLoading) return <LoadingSpinner />;
+  console.log(reviewInput);
   return (
     <div className="add-review-form-container">
       <h1>{decodedRestaurantName}</h1>
@@ -110,7 +110,10 @@ const AddReviewPage = () => {
             className="review-input-area"
             name="review_detail"
             value={reviewInput}
-            onChange={(e) => setReviewInput(e.target.value)}
+            onChange={(e) => {
+              setIsExistingReview(true);
+              setReviewInput(e.target.value);
+            }}
           ></textarea>
         </div>
         <div className="post-btn-container">

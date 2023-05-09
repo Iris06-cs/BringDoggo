@@ -58,7 +58,7 @@ def add_restaurant_to_favorite(restaurantId,favoriteId):
     restaurant=Restaurant.query.filter(Restaurant.id==restaurantId).first()
     if not restaurant:
         raise NotFoundError(f"Restaurant with ID {restaurantId} not found")
-    existing_favorite.restaurants.append(restaurant)
+    existing_favorite.fav_restaurants.append(restaurant)
     db.session.commit()
     return jsonify(existing_favorite.to_dict()),200
 
@@ -130,3 +130,12 @@ def delete_favorite_collection(favoriteId):
     db.session.delete(existing_favorite)
     db.session.commit()
     return {"message": "Favorite collection successfully deleted"}, 200
+
+@favorite_routes.route("/")
+def get_all_reviews():
+    """
+    Get all favs
+    """
+    all_favs=Favorite.query.all()
+
+    return {"Favorites":[favorite.to_dict() for favorite in all_favs]},200
