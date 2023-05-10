@@ -17,6 +17,8 @@
   flex-wrap: wrap;
   column-gap: 15px;
   box-sizing: border-box;
+  padding-top: 30px;
+  padding-bottom: 15px;
 }
 .pagination-container {
   display: flex;
@@ -27,8 +29,8 @@
   border-top: 1px solid rgb(225, 223, 223);
   border-bottom: 1px solid rgb(225, 223, 223);
 
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 .page-btn {
   display: flex;
@@ -54,4 +56,55 @@
 .pagination-container .active {
   color: black;
   font-weight: bold;
+}
+.price-btn-container {
+  display: flex;
+  width: 240px;
+}
+.rating-btn-container {
+  width: 240px;
+}
+.price-btn {
+  box-sizing: border-box;
+  width: 50px;
+  padding: 5px;
+  background-color: #f7f5f5;
+  border: 1px solid var(--border-light-color);
+  border-right: none;
+  transition: background-color 0.8s ease;
+  color: var(--content-text-color);
+}
+.price-btn:hover {
+  background-color: rgba(213, 212, 212, 0.6);
+}
+.price-btn.first {
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+.price-btn.last {
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  border-right: 1px solid var(--border-light-color);
+}
+.price-btn.selected {
+  background-color: rgba(213, 212, 212, 0.6);
+}
+.filter-all-container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.rating-btn-container {
+  display: flex;
+  align-items: center;
+}
+.clear-filter-btn {
+  background-color: transparent;
+  border: none;
+  color: var(--content-text-color);
+}
+.filter-sorter-all-container {
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border-light-color);
+  max-width: 715px;
 }

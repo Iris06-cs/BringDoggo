@@ -7,7 +7,74 @@ export const restaurantsSlice = createSlice({
     error: null,
     isLoading: false,
     totalRestaurants: null,
+    displayRestaurants: {},
   },
+
+  // filterRestaurantByRating(state, rating) {
+  //   const allRestaurants = Object.values(state.restaurants);
+  //   state.displayRestaurant = allRestaurants.filter(
+  //     (restaurant) => restaurant.avgRaing >= rating
+  //   );
+  // },
+  // filterRestaurantByPrice(state, price) {
+  //   const allRestaurants = Object.values(state.restaurants);
+  //   state.displayRestaurant = allRestaurants.filter(
+  //     (restaurant) => restaurant.price === price
+  //   );
+  // },
+  // sortRestaurantByHighestRating(state) {
+  //   const allRestaurants = Object.values(state.restaurants);
+  //   state.displayRestaurant = allRestaurants.sort((a, b) => {
+  //     return b.avgRating - a.avgRating;
+  //   });
+  // },
+  // sortRestaurantByMostReviews(state) {
+  //   const allRestaurants = Object.values(state.restaurants);
+  //   state.displayRestaurant = allRestaurants.sort((a, b) => {
+  //     return b.dogReviewCount - a.dogReviewCount;
+  //   });
+  // },
+  reducers: {
+    filterRestaurantByRating(state, action) {
+      const rating = action.payload;
+      const allRestaurants = state.restaurants;
+      state.displayRestaurants = Object.fromEntries(
+        Object.entries(allRestaurants).filter(
+          ([_, restaurant]) => restaurant.avgRating >= rating
+        )
+      );
+    },
+    filterRestaurantByPrice(state, action) {
+      const price = action.payload;
+      const allRestaurants = state.restaurants;
+      state.displayRestaurants = Object.fromEntries(
+        Object.entries(allRestaurants).filter(
+          ([_, restaurant]) => restaurant.price === price
+        )
+      );
+    },
+    sortRestaurantByHighestRating(state) {
+      const allRestaurants = Object.values(state.restaurants);
+      const sortedRestaurants = allRestaurants.sort((a, b) => {
+        return b.avgRating - a.avgRating;
+      });
+      state.displayRestaurants = sortedRestaurants.reduce((acc, restaurant) => {
+        acc[restaurant.id] = restaurant;
+        return acc;
+      }, {});
+    },
+    sortRestaurantByMostReviews(state) {
+      const allRestaurants = Object.values(state.restaurants);
+      const sortedRestaurants = allRestaurants.sort((a, b) => {
+        return b.dogReviewCount - a.dogReviewCount;
+      });
+      state.displayRestaurants = sortedRestaurants.reduce((acc, restaurant) => {
+        acc[restaurant.id] = restaurant;
+        return acc;
+      }, {});
+    },
+  },
+
   extraReducers: (builder) => {
     builder
       .addCase(getAllRestaurants.fulfilled, (state, action) => {
@@ -17,6 +84,7 @@ export const restaurantsSlice = createSlice({
           res[restaurant.id] = restaurant;
         });
         state.restaurants = res;
+        state.displayRestaurants = res;
         state.isLoading = false;
         state.totalRestaurants = action.payload.totalResults;
       })
@@ -44,8 +112,12 @@ export const restaurantsSlice = createSlice({
 });
 export const getAllRestaurants = createAsyncThunk(
   "restaurants/getAllRestaurants",
-  async (page = 1, { rejectWithValue }) => {
-    const response = await fetch(`/api/restaurants/?page=${page}`);
+  async ({ page, filter }, { rejectWithValue }) => {
+    let url = `/api/restaurants?page=${page}`;
+    if (filter) {
+      url += `&filter=${filter}`;
+    }
+    const response = await fetch(url);
     const data = await response.json();
 
     if (!response.ok) return rejectWithValue(data);
@@ -61,4 +133,10 @@ export const getRestaurantById = createAsyncThunk(
     return data;
   }
 );
+export const {
+  sortRestaurantByHighestRating,
+  sortRestaurantByMostReviews,
+  filterRestaurantByPrice,
+  filterRestaurantByRating,
+} = restaurantsSlice.actions;
 export default restaurantsSlice.reducer;
