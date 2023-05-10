@@ -25,6 +25,9 @@
 }
 .page-content-container {
   display: flex;
+  width: 100%;
+  justify-content: space-between;
+  gap: 20px;
 }
 /* content left section */
 .page-content-left-container {
@@ -38,7 +41,7 @@
   display: flex;
 }
 .func-btns-container button,
-.func-btns-container #add-photo-btn + button {
+.func-btns-container #add-photo-btn + .open-modal-btn {
   width: 200px;
   font-size: 20px;
   padding: 10px 0;
@@ -60,7 +63,8 @@
   display: none;
 }
 
-.func-btns-container button:hover {
+.func-btns-container button:hover,
+.func-btns-container #add-photo-btn + .open-modal-btn:hover {
   background-color: rgba(213, 212, 212, 0.6);
 }
 .func-btns-container .write-review-btn,
@@ -72,6 +76,7 @@
 .func-btns-container .open-modal-btn:hover {
   background-color: var(--button-background-hover-color);
 }
+
 .review-overview-container {
   display: flex;
   flex-direction: column;
@@ -106,4 +111,54 @@
   padding: 0 50px;
   text-align: center;
   margin: 0;
+}
+.contact-location-card-container {
+  display: flex;
+  flex-direction: column;
+}
+.contact-card-container {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  border: 1px solid var(--border-light-color);
+  margin: 25px 0;
+  border-radius: 5px;
+  min-width: 320px;
+}
+.contact-card-row-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-light-color);
+}
+.contact-card-row-container a,
+.contact-card-row-container .fa-arrow-up-right-from-square {
+  margin: 0;
+  padding: 0 0 20px 0;
+}
+.contact-card-row-container p,
+.contact-card-row-container .fa-phone-volume {
+  margin: 0;
+  padding: 20px 0;
+}
+.location-hours-card-container {
+  border: 1px solid var(--border-light-color);
+  border-radius: 5px;
+  padding: 30px;
+}
+.location-hours-container {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+}
+.business-hour-row {
+  display: flex;
+  align-items: center;
+  text-align: left;
+}
+.business-hour-row span:nth-child(1) {
+  width: 50px;
+}
+#open-tag {
+  color: #ffc107;
 }

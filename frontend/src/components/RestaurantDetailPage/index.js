@@ -19,13 +19,11 @@ import {
 const RestaurantDetailPage = () => {
   const dispatch = useDispatch();
   const { restaurantId } = useParams();
-  // const currentUser = useSelector((state) => state.session.user);
-  // const allRestaurants = useSelector((state) => state.restaurants.restaurants);
-  // const isLoading = useSelector((state) => state.restaurants.isLoading);
+
   const { currentUser, allRestaurants, isLoading, currUserFavs } = useSelector(
     (state) => ({
       currentUser: state.session.user,
-      allRestaurants: state.restaurants.restaurants,
+      allRestaurants: state.restaurants.displayRestaurants,
       isLoading: state.restaurants.isLoading,
       currUserFavs: selectCurrUserFavs(state),
     })
@@ -35,6 +33,7 @@ const RestaurantDetailPage = () => {
   const [restaurantDetail, setRestaurantDetail] = useState();
   const [isFetched, setIsFetched] = useState(false);
   const [isFav, setIsFav] = useState(false);
+
   useEffect(() => {
     if (!restaurantId) return;
     const fetchRestaurant = async () => {
@@ -74,9 +73,13 @@ const RestaurantDetailPage = () => {
         setHasReview(false);
       }
       if (currUserFavs) {
+        console.log("76");
         const favs = Object.values(currUserFavs);
+        console.log(favs);
         favs.forEach((fav) => {
+          console.log("79");
           const restaurants = fav.restaurants; //object
+          console.log(restaurants, restaurants[restaurantId], "82");
           if (restaurants[restaurantId]) setIsFav(true);
         });
       }
@@ -84,7 +87,7 @@ const RestaurantDetailPage = () => {
   }, [currentUser, restaurantDetail, currUserFavs, restaurantId]);
 
   if (isLoading || !restaurantDetail) return <LoadingSpinner />;
-
+  console.log(isFav);
   return (
     <div className="page-container detail-page">
       <TopSection restaurantDetail={restaurantDetail} />
@@ -103,7 +106,7 @@ const RestaurantDetailPage = () => {
             setHasReview={setHasReview}
           />
         </div>
-        <ContactLocationCard />
+        <ContactLocationCard restaurantDetail={restaurantDetail} />
       </div>
     </div>
   );

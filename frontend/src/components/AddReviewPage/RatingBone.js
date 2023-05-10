@@ -1,9 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 
-const RatingBone = ({ selectedRating, setSelctedRating }) => {
+const RatingBone = ({ selectedRating, setSelectedRating }) => {
   const [hoverRating, setHoverRating] = useState(0);
-  const onClickIcon = (bones) => setSelctedRating(bones);
+  const onClickIcon = (bones) => setSelectedRating(bones);
   const onMouseIn = (bones) => setHoverRating(bones);
 
   const onMouseOut = () => setHoverRating(0);
