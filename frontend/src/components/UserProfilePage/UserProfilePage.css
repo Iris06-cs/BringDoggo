@@ -1,0 +1,69 @@
+.userProfile-container {
+  display: flex;
+  flex-direction: column;
+}
+.user-profile-top-section-container {
+  display: flex;
+  margin: 40px 0;
+  align-items: center;
+  border-bottom: 1px solid var(--border-light-color);
+  padding-bottom: 40px;
+}
+.user-profile-bottom-section-container h3 {
+  margin-top: 0;
+}
+.userInfo-container {
+  width: 60%;
+  margin-left: 40px;
+}
+.userInfo-summary-container {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+.user-profile-tabs-container {
+  display: flex;
+  flex-direction: column;
+  width: 165px;
+}
+.user-profile-tabs-container .tab-link {
+  background-color: var(--theme-color);
+  color: white;
+  padding: 10px;
+  border: 1px solid white;
+  border-radius: 5px;
+}
+.user-profile-tabs-container .tab-link i,
+.user-profile-tabs-container .tab-link svg {
+  margin-right: 5px;
+}
+
+.user-profile-tabs-container .tab-link:hover {
+  background-color: var(--button-background-hover-color);
+}
+.overview-container {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+}
+.user-favs-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+.user-favs-container h3 {
+  margin-top: 0;
+}
+.modify-fav-btns-container {
+  display: flex;
+  flex-direction: column;
+  width: 125px;
+}
+.fav-card-container {
+  display: flex;
+  justify-content: space-between;
+}
+.fav-collection-info {
+  display: flex;
+  gap: 20px;
+}
