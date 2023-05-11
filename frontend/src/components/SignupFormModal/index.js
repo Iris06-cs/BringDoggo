@@ -188,7 +188,7 @@ function SignupFormModal() {
           />
         </div>
       </div>
-      <div className="modal-contect-right-section">
+      <div className="modal-content-right-section">
         <img alt="sublogo" src={sublogo} />
       </div>
     </div>
