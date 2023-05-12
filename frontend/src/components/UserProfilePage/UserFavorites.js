@@ -5,7 +5,6 @@ import {
   getAllFavs,
   getCurrentUserFavs,
   selectCurrUserFavs,
-  updateFav,
 } from "../../store/favorites";
 import LoadingSpinner from "../LoadingSpinner";
 import OpenModalButton from "../OpenModalButton";
@@ -23,7 +22,7 @@ const UserFavorites = () => {
     dispatch(deleteFav(favId));
   };
 
-  if (!userFavs) <LoadingSpinner />;
+  if (!userFavs) return <LoadingSpinner />;
   return (
     <>
       <h3>Favorites</h3>

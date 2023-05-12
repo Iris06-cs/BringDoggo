@@ -4,14 +4,12 @@
 }
 .user-profile-top-section-container {
   display: flex;
-  margin: 40px 0;
+  margin-top: 40px;
   align-items: center;
   border-bottom: 1px solid var(--border-light-color);
   padding-bottom: 40px;
 }
-.user-profile-bottom-section-container h3 {
-  margin-top: 0;
-}
+
 .userInfo-container {
   width: 60%;
   margin-left: 40px;
@@ -54,16 +52,53 @@
 .user-favs-container h3 {
   margin-top: 0;
 }
+.fav-card-left-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.fav-title-row {
+  font-size: 19px;
+  font-weight: bold;
+}
 .modify-fav-btns-container {
   display: flex;
   flex-direction: column;
-  width: 125px;
+  width: 150px;
+  justify-content: center;
+  gap: 20px;
+}
+.modify-fav-btns-container .general-button {
+  width: 150px;
 }
 .fav-card-container {
+  padding-top: 20px;
   display: flex;
   justify-content: space-between;
+  border-top: 1px solid var(--border-light-color);
+  margin-bottom: 20px;
+}
+.userprofile-fav-cards-container .fav-card-container:nth-last-child(1) {
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border-light-color);
 }
 .fav-collection-info {
   display: flex;
   gap: 20px;
+}
+.modify-fav-btns-container .open-modal-btn .fa-bone {
+  display: none;
+}
+.modify-fav-btns-container .open-modal-btn {
+  width: 150px;
+  border-radius: 5px;
+  border: 1px solid var(--button-background-color);
+  background-color: var(--button-background-color);
+  color: white;
+  font-size: 15px;
+  padding: 5px;
+  transition: background-color 0.8s ease;
+}
+.modify-fav-btns-container .open-modal-btn:hover {
+  background-color: var(--button-background-hover-color);
 }
