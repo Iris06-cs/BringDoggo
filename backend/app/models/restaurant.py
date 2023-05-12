@@ -28,6 +28,7 @@ class Restaurant(db.Model):
     fetched_at=db.Column(
         db.DateTime, nullable=False, default=datetime.utcnow()
     )
+    total_api_results=db.Column(db.Integer)
 
 
     # relationship
@@ -40,6 +41,11 @@ class Restaurant(db.Model):
         """
         Convert the Restaurant object to a dictionary representation.
         """
+        reviews=self.restaurant_reviews
+        avg_rating=0
+        if reviews:
+            avg_rating=round(sum(review.stars for review in reviews)/len(reviews),1)
+
         return {
             'id': self.id,
             'name':self.name,
@@ -59,4 +65,9 @@ class Restaurant(db.Model):
             'categories':self.categories,
             'hours':self.hours,
             'fetchedAt': self.fetched_at,
+            'dogReviewCount':len(self.restaurant_reviews),
+            'avgRating':avg_rating,
+            'totalApiResults':self.total_api_results,
+            'reviews':[review.to_dict() for review in reviews]
+
         }

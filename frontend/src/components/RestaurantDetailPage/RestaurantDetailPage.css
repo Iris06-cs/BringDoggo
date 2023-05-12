@@ -1,0 +1,165 @@
+.page-container.detail-page {
+  display: flex;
+  flex-direction: column;
+}
+/* top section */
+.page-top-section {
+  height: 250px;
+  box-sizing: border-box;
+  position: relative;
+  background-color: rgba(97, 97, 97, 0.5);
+}
+.restaurant-detail-info-container {
+  box-sizing: border-box;
+  position: absolute;
+  /* z-index: 1; */
+  color: white;
+  font-weight: bold;
+  bottom: 10px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+.info-row-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.page-content-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  gap: 20px;
+}
+/* content left section */
+.page-content-left-container {
+  width: calc(2 / 3 * 100%);
+  box-sizing: border-box;
+}
+
+.func-btns-container {
+  padding: 25px 0;
+  border-bottom: 1px solid var(--border-light-color);
+  display: flex;
+}
+.func-btns-container button,
+.func-btns-container #add-photo-btn + .open-modal-btn {
+  width: 200px;
+  font-size: 20px;
+  padding: 10px 0;
+  margin-right: 10px;
+  background-color: transparent;
+  border: none;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f7f5f5;
+  border: 1px solid #dbd7d7;
+  gap: 5px;
+  color: var(--content-text-color);
+  transition: background-color 0.8s ease;
+}
+
+.func-btns-container .display-bone + .fa-bone {
+  display: none;
+}
+
+.func-btns-container button:hover,
+.func-btns-container #add-photo-btn + .open-modal-btn:hover {
+  background-color: rgba(213, 212, 212, 0.6);
+}
+.func-btns-container .write-review-btn,
+.func-btns-container .open-modal-btn {
+  background-color: var(--theme-color);
+  color: white;
+}
+.func-btns-container .write-review-btn:hover,
+.func-btns-container .open-modal-btn:hover {
+  background-color: var(--button-background-hover-color);
+}
+
+.review-overview-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.ratings-container {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  height: 200px;
+  border: 1px solid var(--border-light-color);
+  border-radius: 5px;
+  flex-wrap: wrap;
+}
+.dog-owner-rating-container,
+.yelp-rating-container {
+  display: flex;
+  flex-direction: column;
+  height: 65%;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
+}
+.rating-img-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#rating-sum {
+  width: 100%;
+  padding: 0 50px;
+  text-align: center;
+  margin: 0;
+}
+.contact-location-card-container {
+  display: flex;
+  flex-direction: column;
+}
+.contact-card-container {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  border: 1px solid var(--border-light-color);
+  margin: 25px 0;
+  border-radius: 5px;
+  min-width: 320px;
+}
+.contact-card-row-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-light-color);
+}
+.contact-card-row-container a,
+.contact-card-row-container .fa-arrow-up-right-from-square {
+  margin: 0;
+  padding: 0 0 20px 0;
+}
+.contact-card-row-container p,
+.contact-card-row-container .fa-phone-volume {
+  margin: 0;
+  padding: 20px 0;
+}
+.location-hours-card-container {
+  border: 1px solid var(--border-light-color);
+  border-radius: 5px;
+  padding: 30px;
+}
+.location-hours-container {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+}
+.business-hour-row {
+  display: flex;
+  align-items: center;
+  text-align: left;
+}
+.business-hour-row span:nth-child(1) {
+  width: 50px;
+}
+#open-tag {
+  color: #ffc107;
+}

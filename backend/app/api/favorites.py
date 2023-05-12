@@ -58,7 +58,7 @@ def add_restaurant_to_favorite(restaurantId,favoriteId):
     restaurant=Restaurant.query.filter(Restaurant.id==restaurantId).first()
     if not restaurant:
         raise NotFoundError(f"Restaurant with ID {restaurantId} not found")
-    existing_favorite.restaurants.append(restaurant)
+    existing_favorite.fav_restaurants.append(restaurant)
     db.session.commit()
     return jsonify(existing_favorite.to_dict()),200
 
@@ -77,6 +77,7 @@ def update_favorite_by_id(favoriteId):
         raise ForbiddenError("Only owner can update favortie")
 
     form=FavoriteForm()
+
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         existing_favorite.title=form.data['title']
@@ -104,12 +105,12 @@ def remove_restaurant_from_favorite(favoriteId,restaurantId):
     restaurant = Restaurant.query.get(restaurantId)
     if not restaurant:
         raise NotFoundError(f"Restaurant with ID {restaurantId} not found")
-    if restaurant not in existing_favorite.restaurants:
+    if restaurant not in existing_favorite.fav_restaurants:
         raise NotFoundError(f"Restaurant with ID {restaurantId} not found in the collection")
     if existing_favorite.user_id!=current_user.id:
         raise ForbiddenError("Only owner can delete restaurants from favorties")
 
-    existing_favorite.restaurants.remove(restaurant)
+    existing_favorite.fav_restaurants.remove(restaurant)
     db.session.commit()
     return {"message": "Restaurant successfully removed from favorite collection"}, 200
 
@@ -130,3 +131,12 @@ def delete_favorite_collection(favoriteId):
     db.session.delete(existing_favorite)
     db.session.commit()
     return {"message": "Favorite collection successfully deleted"}, 200
+
+@favorite_routes.route("/")
+def get_all_reviews():
+    """
+    Get all favs
+    """
+    all_favs=Favorite.query.all()
+
+    return {"Favorites":[favorite.to_dict() for favorite in all_favs]},200

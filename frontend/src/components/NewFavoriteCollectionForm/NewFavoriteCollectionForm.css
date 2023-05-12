@@ -1,0 +1,66 @@
+.modal-content-container.fav-form {
+  flex-grow: 1;
+  height: fit-content;
+  width: 600px;
+  padding: 40px;
+}
+.new-fav-collection-container {
+  width: 100%;
+}
+.new-fav-collection-container h2 {
+  margin: 0;
+  padding-bottom: 20px;
+}
+.new-fav-title-container,
+.new-fav-description-container {
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+}
+.fav-collection-btns-container {
+  display: flex;
+  gap: 20px;
+}
+.fav-collection-btns-container .general-button {
+  width: 60px;
+  padding: 10px 0;
+}
+.fav-title-section-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  border-bottom: 1px solid var(--border-light-color);
+}
+.add-fav-form-close-btn {
+  color: inherit;
+  font-size: inherit;
+}
+.add-fav-form-close-modal-button {
+  background-color: transparent;
+  border: none;
+  color: var(--theme-color);
+  font-size: 20px;
+}
+.add-fav-form-close-modal-button:hover {
+  color: var(--button-background-hover-color);
+}
+#fav-collection-title,
+#fav-collection-description {
+  margin-top: 10px;
+  padding: 12px;
+  border: 1px solid var(--border-light-color);
+  border-radius: 5px;
+  outline-color: var(--button-background-hover-color);
+}
+#fav-collection-title:hover,
+#fav-collection-description:hover {
+  border: 1px solid var(--button-background-hover-color);
+}
+.general-button.disabled {
+  cursor: not-allowed;
+  background-color: var(--button-background-hover-color);
+}
+.radio-btn-container {
+  margin-top: 20px;
+}

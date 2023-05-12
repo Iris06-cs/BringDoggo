@@ -1,4 +1,8 @@
 /* TODO Add site wide styles */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
 :root {
   --theme-color: #0db9f5;
   --container-background-color: #eeeeee;
@@ -13,4 +17,47 @@
   --title-text-hover-color: #0db9f5;
   --subtitle-text-color: #757575;
   --content-text-color: #616161;
+  --border-light-color: rgb(225, 223, 223);
+}
+html,
+body {
+  font-family: "Nunito", sans-serif;
+  color: var(--content-text-color);
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+main {
+  margin-left: 10%;
+  margin-right: 10%;
+  flex-grow: 1;
+}
+a {
+  text-decoration: none;
+  color: var(--content-text-color);
+}
+a:visited {
+  color: var(--content-text-color);
+}
+ul {
+  list-style-type: none;
+  padding: 5px;
+}
+.general-button {
+  border-radius: 5px;
+  border: 1px solid var(--button-background-color);
+  background-color: var(--button-background-color);
+  color: white;
+  font-size: 15px;
+  padding: 5px;
+  transition: background-color 0.8s ease;
+}
+.general-button:hover {
+  background-color: var(--button-background-hover-color);
 }

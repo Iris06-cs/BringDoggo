@@ -1,0 +1,123 @@
+.review-card-container,
+.add-review-card-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  justify-content: space-between;
+}
+.add-review-card-container {
+  padding: 15px;
+  box-shadow: 0 0 14px rgba(97, 97, 97, 0.5);
+  border-radius: 5px;
+}
+.review-author-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.review-author-info-container {
+  font-size: 14px;
+}
+.review-detail-container {
+  width: 60%;
+}
+.review-rating-container {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 16px;
+  position: relative;
+}
+.edit-review-btn {
+  background-color: transparent;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-weight: bold;
+  font-size: large;
+  color: var(--content-text-color);
+  transition: background-color 0.6s ease-in-out;
+}
+.edit-review-btn:hover {
+  background-color: rgba(213, 212, 212, 0.6);
+}
+#review-restaurant-name {
+  font-weight: bold;
+}
+.rating-bone-container {
+  display: flex;
+  flex-direction: row-reverse;
+}
+.rating-bone-container .single-bone-container {
+  color: #bdbdbd;
+  font-size: 20px;
+  margin-right: 5px;
+  transition: color 0.3s;
+  position: relative;
+  text-align: center;
+}
+.bone-btn-link {
+  color: inherit;
+  font-size: inherit;
+}
+.bone-btn-link:visited {
+  color: inherit;
+  font-size: inherit;
+}
+
+.rating-bone-container .single-bone-container:hover,
+.rating-bone-container .single-bone-container:hover ~ .single-bone-container {
+  color: #ffc107;
+}
+.tooltip-text {
+  visibility: hidden;
+  position: absolute;
+  z-index: 2;
+  /* make content not wrapping */
+  white-space: nowrap;
+  color: white;
+  font-size: 12px;
+  background-color: var(--content-text-color);
+  border-radius: 5px;
+  padding: 8px;
+  top: -40px;
+  left: 50%;
+  /* move horizontally ->left 50% of its width */
+  transform: translateX(-50%);
+  box-sizing: border-box;
+}
+.tooltip-text::before {
+  content: "";
+  position: absolute;
+  transform: rotate(45deg) translateX(-50%);
+  background-color: var(--content-text-color);
+  padding: 6px;
+  z-index: 1;
+  top: 85%;
+  left: 50%;
+}
+.rating-bone-container .single-bone-container:hover .tooltip-text {
+  visibility: visible;
+}
+.modify-review-dropdown {
+  position: absolute;
+  box-sizing: border-box;
+  left: 30px;
+  top: 25px;
+  width: 120px;
+  background-color: var(--main-background-color);
+  font-size: 13px;
+  padding: 0;
+  border-radius: 5px;
+  box-shadow: 0 0 14px rgba(97, 97, 97, 0.5);
+  z-index: 1;
+}
+.modify-review-dropdown li {
+  padding: 5px 10px;
+  margin: 0;
+  border-radius: 5px;
+}
+.modify-review-dropdown li:hover {
+  background-color: var(--theme-color);
+  color: white;
+}

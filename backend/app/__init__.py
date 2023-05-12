@@ -10,6 +10,8 @@ from .api.auth_routes import auth_routes
 from .api.restaurants import restaurant_routes
 from .api.reviews import review_routes
 from .api.favorites import favorite_routes
+from .api.restaurant_images import restaurant_images_routes
+from .api.review_images import review_images_routes
 from .seeds import seed_commands
 from .config import Config
 from .utils.error_handler import ValidationError,NotFoundError,ForbiddenError,UnauthorizedError,error_handler
@@ -19,13 +21,18 @@ app = Flask(__name__, static_folder='../../frontend/build', static_url_path='/')
 
 # Setup login manager
 login = LoginManager(app)
-login.login_view = 'auth.unauthorized'
-
+# login.login_view = 'auth.unauthorized'
+login.login_view = 'auth.login'
 
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))
-
+@login.unauthorized_handler
+def unauthorized_handler():
+    """
+    Returns unauthorized JSON when flask-login authentication fails
+    """
+    return {'errors': ['Unauthorized']}, 401
 
 # Tell flask about our seed commands
 app.cli.add_command(seed_commands)
@@ -36,6 +43,8 @@ app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(restaurant_routes, url_prefix='/api/restaurants')
 app.register_blueprint(review_routes, url_prefix='/api/reviews')
 app.register_blueprint(favorite_routes,url_prefix='/api/favorites')
+app.register_blueprint(restaurant_images_routes,url_prefix='/api/restaurant-images')
+app.register_blueprint(review_images_routes,url_prefix='/api/review-images')
 app.register_error_handler(ValidationError, error_handler)
 app.register_error_handler(NotFoundError, error_handler)
 app.register_error_handler(ForbiddenError, error_handler)
