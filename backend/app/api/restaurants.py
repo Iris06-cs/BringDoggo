@@ -11,7 +11,7 @@ from ..utils.error_handler import ValidationError,NotFoundError,ForbiddenError,v
 
 restaurant_routes=Blueprint('restaurants',__name__)
 
-def get_dog_friendly_restaurants_sd(page=1,filter_param=None):
+def get_dog_friendly_restaurants_sd(page=1):
     url = "https://api.yelp.com/v3/businesses/search"
     headers = {
         "accept": "application/json",
@@ -32,9 +32,9 @@ def get_dog_friendly_restaurants_sd(page=1,filter_param=None):
         "offset": offset,
 
     }
-    # Add the filter parameter to the API request if it's provided
-    if filter_param:
-        params["term"] = f"{params['term']} {filter_param}"
+    # # Add the filter parameter to the API request if it's provided
+    # if filter_param:
+    #     params["term"] = f"{params['term']} {filter_param}"
 
     response = requests.get(url, headers=headers, params=params)
     data=response.json()
@@ -62,12 +62,12 @@ def all_restaurants():
     limit=20
     need_fetch_count=page*limit
     restaurant_db_count=Restaurant.query.count()
-    filter_param = request.args.get("filter", None)
+    # filter_param = request.args.get("filter", None)
 
     # cached data is not enough
     if restaurant_db_count<need_fetch_count:
         for i in range(restaurant_db_count//(limit+1),page+1):
-            fetched_restaurants,total_results=get_dog_friendly_restaurants_sd(i,filter_param=filter_param)
+            fetched_restaurants,total_results=get_dog_friendly_restaurants_sd(i)
             if total_results>480:
                 total_results=480
             for restaurant in fetched_restaurants:

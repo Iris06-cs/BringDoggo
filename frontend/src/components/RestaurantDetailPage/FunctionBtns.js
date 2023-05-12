@@ -5,10 +5,21 @@ import { useHistory, useParams } from "react-router-dom";
 import OpenModalButton from "../OpenModalButton";
 import SignupFormModal from "../SignupFormModal";
 import FavoriteCollectionModal from "../FavoriteCollectionModal";
-const FunctionBtns = ({ hasReview, name, currentUserReview, isFav }) => {
+import NewFavoriteCollectionForm from "../NewFavoriteCollectionForm";
+import { selectCurrUserFavs } from "../../store/favorites";
+const FunctionBtns = ({
+  hasReview,
+  name,
+  currentUserReview,
+  isFav,
+  setIsFav,
+}) => {
   const { restaurantId } = useParams();
   const history = useHistory();
-  const currentUser = useSelector((state) => state.session.user);
+  const { currentUser, currUserFavs } = useSelector((state) => ({
+    currentUser: state.session.user,
+    currUserFavs: selectCurrUserFavs(state),
+  }));
   const handleCreateReview = (e) => {
     e.preventDefault();
     history.push(`/restaurants/${restaurantId}/reviews/new?name=${name}`);
@@ -23,12 +34,7 @@ const FunctionBtns = ({ hasReview, name, currentUserReview, isFav }) => {
 
     history.push(path + param);
   };
-  const handleAddFav = (e) => {
-    e.preventDefault();
-  };
-  const handleUpdateFav = (e) => {
-    e.preventDefault();
-  };
+  console.log(currUserFavs, "37");
   return (
     <div className="func-btns-container">
       {/* if has login user && without review||no login user */}
@@ -60,10 +66,11 @@ const FunctionBtns = ({ hasReview, name, currentUserReview, isFav }) => {
           Update review
         </button>
       )}
-      <button id="add-photo-btn">
+      {/* image feature */}
+      {/* <button id="add-photo-btn">
         <FontAwesomeIcon icon="fa-solid fa-camera-retro" />
         Add photo
-      </button>
+      </button> */}
       {/* no login user，on click login popup */}
       {/* user logged in, has not added to fav, onclick popup add to/create collection popup */}
       {/* user logged in,already added to fav,button added fav, onclick remove or change to other collection, or create new collection */}
@@ -82,12 +89,6 @@ const FunctionBtns = ({ hasReview, name, currentUserReview, isFav }) => {
           modalComponent={<SignupFormModal />}
         />
       )}
-      {currentUser && !isFav && (
-        <button>
-          <FontAwesomeIcon icon="fa-solid fa-heart" />
-          Favorite
-        </button>
-      )}
       {isFav && (
         <OpenModalButton
           buttonText={
@@ -101,7 +102,52 @@ const FunctionBtns = ({ hasReview, name, currentUserReview, isFav }) => {
           }
           // onItemClick={closeMenu}
           modalComponent={
-            <FavoriteCollectionModal restaurantId={restaurantId} />
+            <FavoriteCollectionModal
+              restaurantId={restaurantId}
+              setIsFav={setIsFav}
+            />
+          }
+        />
+      )}
+      {currentUser && !isFav && !Object.values(currUserFavs).length && (
+        <OpenModalButton
+          buttonText={
+            <>
+              <FontAwesomeIcon
+                icon="fa-solid fa-heart"
+                className="display-bone"
+              />
+              Favorite
+            </>
+          }
+          modalComponent={
+            <NewFavoriteCollectionForm
+              restaurantId={restaurantId}
+              setIsFav={setIsFav}
+            />
+          }
+        />
+        // <FontAwesomeIcon icon="fa-solid fa-heart" />
+        // Favorite
+      )}
+
+      {!isFav && Object.values(currUserFavs).length > 0 && (
+        <OpenModalButton
+          buttonText={
+            <>
+              <FontAwesomeIcon
+                icon="fa-solid fa-heart"
+                className="display-bone"
+              />
+              Favorite
+            </>
+          }
+          // onItemClick={closeMenu}
+          modalComponent={
+            <FavoriteCollectionModal
+              restaurantId={restaurantId}
+              setIsFav={setIsFav}
+            />
           }
         />
       )}

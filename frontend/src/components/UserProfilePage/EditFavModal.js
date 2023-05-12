@@ -1,40 +1,41 @@
-import { useEffect, useState } from "react";
 import { useModal } from "../../context/Modal";
-import "./NewFavoriteCollectionForm.css";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { updateFav } from "../../store/favorites";
 import { useDispatch } from "react-redux";
-import { addRestaurantToFav, createFav } from "../../store/favorites";
-const NewFavoriteCollectionForm = ({ restaurantId, setIsFav }) => {
+const EditFavModal = ({ fav }) => {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
-  const [collectionTitle, setCollectionTitle] = useState("");
-  const [collectionDescription, setCollectionDescription] = useState("");
-  const [isPublic, setIsPublic] = useState(true);
+  const {
+    title: initialTitle,
+    description: initialDescription,
+    isPublic: initialPublic,
+  } = fav;
+
+  const [collectionTitle, setCollectionTitle] = useState(initialTitle);
+  const [collectionDescription, setCollectionDescription] =
+    useState(initialDescription);
+  const [isPublic, setIsPublic] = useState(initialPublic);
   const [isDisable, setIsDisable] = useState(true);
-  const [favId, setFavId] = useState();
-  // input validation
+  console.log(isPublic);
   useEffect(() => {
     if (collectionTitle && collectionDescription) setIsDisable(false);
     else setIsDisable(true);
   }, [collectionDescription, collectionTitle]);
-  const submitForm = async (e) => {
+  const handleUpdateSubmit = async (e) => {
     e.preventDefault();
-
-    const newFav = await dispatch(
-      createFav({
+    console.log(isPublic, "27");
+    await dispatch(
+      updateFav({
         title: collectionTitle,
         description: collectionDescription,
         is_public: isPublic,
+        favId: fav.id,
       })
     );
-    setFavId(newFav.payload.id);
-    setIsFav(true);
     closeModal();
   };
-  useEffect(() => {
-    dispatch(addRestaurantToFav({ favId, restaurantId }));
-  }, [favId, restaurantId, dispatch]);
-  console.log(setIsFav, "modal 37");
+  console.log(fav.id, "38", collectionDescription, collectionTitle, isPublic);
   return (
     <div className="modal-content-container fav-form">
       <div className="new-fav-collection-container">
@@ -50,7 +51,7 @@ const NewFavoriteCollectionForm = ({ restaurantId, setIsFav }) => {
             />
           </button>
         </div>
-        <form onSubmit={submitForm}>
+        <form onSubmit={handleUpdateSubmit}>
           <div className="new-fav-title-container">
             <label
               htmlFor="fav-collection-title"
@@ -110,7 +111,7 @@ const NewFavoriteCollectionForm = ({ restaurantId, setIsFav }) => {
               type="submit"
               disabled={isDisable}
             >
-              Save
+              Update
             </button>
             <button onClick={closeModal} className="general-button">
               Close
@@ -121,4 +122,5 @@ const NewFavoriteCollectionForm = ({ restaurantId, setIsFav }) => {
     </div>
   );
 };
-export default NewFavoriteCollectionForm;
+
+export default EditFavModal;

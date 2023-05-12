@@ -77,6 +77,7 @@ def update_favorite_by_id(favoriteId):
         raise ForbiddenError("Only owner can update favortie")
 
     form=FavoriteForm()
+
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         existing_favorite.title=form.data['title']

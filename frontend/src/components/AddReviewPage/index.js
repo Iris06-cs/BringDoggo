@@ -33,44 +33,60 @@ const AddReviewPage = () => {
     })
   );
 
-  const [selectedRating, setSelctedRating] = useState(initialRating);
+  const [selectedRating, setSelectedRating] = useState(initialRating);
   const [reviewInput, setReviewInput] = useState("");
+  const [currRating, setCurrRating] = useState();
   const [reviewId, setReviewId] = useState();
   const [isUpdate, setIsUpdate] = useState(false);
   const [hasFetchedReviews, setHasFetchedReviews] = useState(false);
   const [isExistingReview, setIsExistingReview] = useState(false);
   useEffect(() => {
+    dispatch(getAllReviews());
+  }, [dispatch]);
+  useEffect(() => {
     const fetchReviews = async () => {
       if (currentUser) {
-        await dispatch(getAllReviews());
-        await dispatch(getCurrentUserReviews());
-        setHasFetchedReviews(true);
+        const userReviews = await dispatch(getCurrentUserReviews());
+        // setHasFetchedReviews(true);
+        const reviews = userReviews.payload;
+
+        if (reviews.length > 0) {
+          reviews.forEach((review) => {
+            if (review.restaurantId === restaurantId) {
+              setIsUpdate(true);
+              setReviewId(review.id);
+              setReviewInput(review.reviewDetail);
+              setCurrRating(review.stars);
+            }
+          });
+        }
       }
     };
     fetchReviews();
-  }, [dispatch, currentUser]);
+  }, [dispatch, currentUser, restaurantId]);
 
-  useEffect(() => {
-    if (hasFetchedReviews && !isExistingReview) {
-      const reviews = Object.values(currentUserReview);
-      // current user review
-      if (currentUser && reviews.length > 0) {
-        reviews.forEach((review) => {
-          if (review.restaurantId === restaurantId) {
-            setIsUpdate(true);
-            setReviewId(review.id);
-            setReviewInput(review.reviewDetail);
-          }
-        });
-      }
-    }
-  }, [
-    currentUserReview,
-    restaurantId,
-    currentUser,
-    hasFetchedReviews,
-    isExistingReview,
-  ]);
+  // useEffect(() => {
+  //   if (hasFetchedReviews && !isExistingReview) {
+  //     const reviews = Object.values(currentUserReview);
+  //     // current user review
+  //     if (reviews.length > 0) {
+  //       reviews.forEach((review) => {
+  //         if (review.restaurantId === restaurantId) {
+  //           setIsUpdate(true);
+  //           setReviewId(review.id);
+  //           console.log("64");
+  //           setReviewInput(review.reviewDetail);
+  //         }
+  //       });
+  //     }
+  //   }
+  // }, [
+  //   currentUserReview,
+  //   restaurantId,
+  //   currentUser,
+  //   hasFetchedReviews,
+  //   isExistingReview,
+  // ]);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -95,7 +111,7 @@ const AddReviewPage = () => {
     history.push(`/restaurants/${restaurantId}`);
   };
   if (isLoading) return <LoadingSpinner />;
-  console.log(reviewInput);
+  console.log(reviewInput, isUpdate);
   return (
     <div className="add-review-form-container">
       <h1>{decodedRestaurantName}</h1>
@@ -103,8 +119,10 @@ const AddReviewPage = () => {
       <form onSubmit={handleFormSubmit}>
         <div className="review-input-area-container">
           <RatingBone
-            setSelctedRating={setSelctedRating}
+            setSelectedRating={setSelectedRating}
             selectedRating={selectedRating}
+            currRating={currRating}
+            setCurrRating={setCurrRating}
           />
           <textarea
             className="review-input-area"

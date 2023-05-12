@@ -10,7 +10,7 @@ import NewFavoriteCollectionForm from "../NewFavoriteCollectionForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useModal } from "../../context/Modal";
 
-const FavoriteCollectionModal = ({ restaurantId }) => {
+const FavoriteCollectionModal = ({ restaurantId, setIsFav }) => {
   const { closeModal } = useModal();
   const dispatch = useDispatch();
   const currUserFavs = Object.values(
@@ -90,7 +90,10 @@ const FavoriteCollectionModal = ({ restaurantId }) => {
           }
           // onItemClick={closeMenu}
           modalComponent={
-            <NewFavoriteCollectionForm restaurantId={restaurantId} />
+            <NewFavoriteCollectionForm
+              restaurantId={restaurantId}
+              setIsFav={setIsFav}
+            />
           }
         />
       </div>

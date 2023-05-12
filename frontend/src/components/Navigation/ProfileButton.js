@@ -5,7 +5,7 @@ import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 import { login, logout } from "../../store/session";
-import { useHistory } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -73,9 +73,15 @@ function ProfileButton({ user }) {
               {user.firstname} {user.lastname[0]}.
             </li>
             <li>{user.email}</li>
-            <li>About me</li>
-            <li>Favorites</li>
-            <li>Reviews</li>
+            <li>
+              <NavLink to="/users/current/profile">About me</NavLink>
+            </li>
+            <li>
+              <NavLink to="/users/current/favorites">Favorites</NavLink>
+            </li>
+            <li>
+              <NavLink to="/users/current/reviews">Reviews</NavLink>
+            </li>
             <li id="logout-btn-container">
               <button onClick={handleLogout} id="logout-btn">
                 <FontAwesomeIcon icon="fa-solid fa-arrow-right-from-bracket" />

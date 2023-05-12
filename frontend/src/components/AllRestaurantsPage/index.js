@@ -4,6 +4,8 @@ import {
   filterRestaurantByPrice,
   filterRestaurantByRating,
   getAllRestaurants,
+  getFirstPage,
+  setCurrentPage,
 } from "../../store/restaurants";
 
 import FilterTabs from "./FilterTabs";
@@ -14,8 +16,8 @@ import "./AllRestaurantsPage.css";
 import LoadingSpinner from "../LoadingSpinner";
 const AllRestaurantsPage = () => {
   const dispatch = useDispatch();
-  // const allRestaurants = useSelector((state) => state.restaurants.restaurants);
-  const allRestaurants = useSelector(
+  const allRestaurants = useSelector((state) => state.restaurants.restaurants);
+  const displayedRestaurants = useSelector(
     (state) => state.restaurants.displayRestaurants
   );
   const loadingRestaurants = useSelector(
@@ -24,7 +26,14 @@ const AllRestaurantsPage = () => {
   const totalResults = useSelector(
     (state) => state.restaurants.totalRestaurants
   );
-  const [currentPage, setCurrentPage] = useState(1);
+  const initialPageRestaurents = useSelector(
+    (state) => state.restaurants.firstPage
+  );
+  const restaurantsByPage = useSelector(
+    (state) => state.restaurants.restaurantsByPage
+  );
+  const currentPage = useSelector((state) => state.restaurants.currentPage);
+  // const [currentPage, setCurrentPage] = useState(1);
   const [selectedRating, setSelectedRating] = useState();
   const [selectedPrice, setSelectedPrice] = useState();
   const [pageNumber, setPageNumber] = useState(24);
@@ -32,49 +41,43 @@ const AllRestaurantsPage = () => {
   const totalPages = (pages) => Math.ceil(pages / 20);
   useEffect(() => {
     // fetch initial page
+    dispatch(getFirstPage()).then((response) => {
+      if (response.type === getFirstPage.fulfilled.type) {
+        dispatch(setCurrentPage(1));
+      }
+    });
+    dispatch(getAllRestaurants());
+    setPageNumber(24);
 
-    if (!selectedPrice && !selectedRating) {
-      dispatch(getAllRestaurants({ page: 1 }));
-      setPageNumber(24);
-    }
-    if (selectedRating) {
-      dispatch(filterRestaurantByRating(selectedRating));
-    }
-    if (selectedPrice) {
-      dispatch(filterRestaurantByPrice(selectedPrice));
-    }
-  }, [dispatch, selectedPrice, selectedRating, totalResults]);
-  useEffect(() => {
-    if (selectedRating) {
-      setPageNumber(totalPages(Object.values(allRestaurants).length));
-    }
-  }, [dispatch, selectedRating, allRestaurants]);
+    // if (selectedRating) {
+    //   dispatch(filterRestaurantByRating(selectedRating));
+    // }
+    // if (selectedPrice) {
+    //   dispatch(filterRestaurantByPrice(selectedPrice));
+    // }
+  }, [dispatch]);
+  // useEffect(() => {
+  //   if (selectedRating) {
+  //     setPageNumber(totalPages(Object.values(displayedRestaurants).length));
+  //   }
+  // }, [dispatch, selectedRating, displayedRestaurants]);
 
-  useEffect(() => {
-    if (selectedPrice) {
-      setPageNumber(totalPages(Object.values(allRestaurants).length));
-    }
-  }, [dispatch, selectedPrice, allRestaurants]);
+  // useEffect(() => {
+  //   if (selectedPrice) {
+  //     setPageNumber(totalPages(Object.values(displayedRestaurants).length));
+  //   }
+  // }, [dispatch, selectedPrice, displayedRestaurants]);
   // fetch page with offset page
-  const handlePageChange = async (pageNum) => {
-    setCurrentPage(pageNum);
-    await dispatch(getAllRestaurants({ page: pageNum }));
-    if (selectedRating) {
-      setCurrentPage(1);
-      await dispatch(getAllRestaurants(1));
-      dispatch(filterRestaurantByRating(selectedRating));
-    }
-    if (selectedPrice) {
-      setCurrentPage(1);
-      await dispatch(getAllRestaurants(1));
-      dispatch(filterRestaurantByPrice(selectedPrice));
-    }
+  const handlePageChange = (pageNum) => {
+    dispatch(setCurrentPage(pageNum));
   };
   const displayRestaurantIdx = (idx) => {
     return idx + 1 + (currentPage - 1) * 20;
   };
-  if (!allRestaurants || loadingRestaurants) return <LoadingSpinner />;
-
+  if (loadingRestaurants) return <LoadingSpinner />;
+  if (currentPage > 1 && Object.values(allRestaurants).length < 480)
+    return <LoadingSpinner />;
+  console.log(currentPage);
   return (
     <div className="page-container">
       <div className="allRestaurants-left-section">
@@ -85,20 +88,20 @@ const AllRestaurantsPage = () => {
           setSelectedPrice={setSelectedPrice}
         />
         <div className="restaurant-cards-container">
-          {Object.values(allRestaurants).length ? (
-            Object.values(allRestaurants).map((restaurant, idx) => (
-              <RestaurantCard
-                key={idx}
-                restaurant={restaurant}
-                idx={displayRestaurantIdx(idx)}
-              />
-            ))
-          ) : (
-            <div>
-              <h3>Sorry,we couldn't find any results</h3>
-              <p>Try clearing filters to see more results</p>
-            </div>
-          )}
+          {
+            Object.values(displayedRestaurants).length > 0 &&
+              Object.values(displayedRestaurants).map((restaurant, idx) => (
+                <RestaurantCard
+                  key={idx}
+                  restaurant={restaurant}
+                  idx={displayRestaurantIdx(idx)}
+                />
+              ))
+            // <div>
+            //   <h3>Sorry,we couldn't find any results</h3>
+            //   <p>Try clearing filters to see more results</p>
+            // </div>
+          }
         </div>
         {pageNumber > 0 && (
           <PageNumbers

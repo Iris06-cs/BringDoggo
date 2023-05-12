@@ -23,7 +23,7 @@ const RestaurantDetailPage = () => {
   const { currentUser, allRestaurants, isLoading, currUserFavs } = useSelector(
     (state) => ({
       currentUser: state.session.user,
-      allRestaurants: state.restaurants.displayRestaurants,
+      allRestaurants: state.restaurants.restaurants,
       isLoading: state.restaurants.isLoading,
       currUserFavs: selectCurrUserFavs(state),
     })
@@ -50,6 +50,7 @@ const RestaurantDetailPage = () => {
 
   useEffect(() => {
     if (isFetched && allRestaurants) {
+      console.log(allRestaurants, "53");
       setRestaurantDetail(allRestaurants[restaurantId]);
     }
   }, [isFetched, allRestaurants, restaurantId]);
@@ -77,17 +78,20 @@ const RestaurantDetailPage = () => {
         const favs = Object.values(currUserFavs);
         console.log(favs);
         favs.forEach((fav) => {
-          console.log("79");
-          const restaurants = fav.restaurants; //object
-          console.log(restaurants, restaurants[restaurantId], "82");
-          if (restaurants[restaurantId]) setIsFav(true);
+          if (fav.restaurants) {
+            console.log("79");
+            const restaurants = fav.restaurants; //object
+            console.log(restaurants, restaurants[restaurantId], "82");
+            if (restaurants[restaurantId]) setIsFav(true);
+            else setIsFav(false);
+          }
         });
-      }
+      } else setIsFav(false);
     }
   }, [currentUser, restaurantDetail, currUserFavs, restaurantId]);
 
-  if (isLoading || !restaurantDetail) return <LoadingSpinner />;
-  console.log(isFav);
+  if (!restaurantDetail) return <LoadingSpinner />;
+
   return (
     <div className="page-container detail-page">
       <TopSection restaurantDetail={restaurantDetail} />
@@ -98,9 +102,11 @@ const RestaurantDetailPage = () => {
             name={restaurantDetail.name}
             currentUserReview={currentUserReview}
             isFav={isFav}
+            setIsFav={setIsFav}
           />
           <ReviewOverview restaurantDetail={restaurantDetail} />
-          <FilterSorter />
+          {/* add filter sorter search feature */}
+          {/* <FilterSorter /> */}
           <Reviews
             restaurantDetail={restaurantDetail}
             setHasReview={setHasReview}

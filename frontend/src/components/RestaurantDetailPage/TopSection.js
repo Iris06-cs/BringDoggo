@@ -13,7 +13,8 @@ const TopSection = ({ restaurantDetail }) => {
   const currHour = currDay.getHours();
   const currMinut = currDay.getMinutes();
   const curr24hTime = currHour * 100 + currMinut;
-  const todayHours = hours.length > 0 ? hours[0].open[today - 1] : undefined; //object
+  const todayHours =
+    hours && hours.length > 0 ? hours[0].open[today - 1] : undefined; //object
   useEffect(() => {
     if (todayHours)
       setOpenTime(
@@ -28,11 +29,13 @@ const TopSection = ({ restaurantDetail }) => {
       const endTime = parseInt(todayHours.end, 10);
       setIsOpen(curr24hTime >= startTime && curr24hTime <= endTime);
     };
-    checkIsOpen();
-    const timer = setInterval(() => {
+    if (todayHours) {
       checkIsOpen();
-    }, 60000); //check every min
-    return () => clearInterval(timer); //clean up
+      const timer = setInterval(() => {
+        checkIsOpen();
+      }, 60000); //check every min
+      return () => clearInterval(timer);
+    }
   }, [curr24hTime, todayHours]);
   return (
     <div className="page-top-section">
