@@ -21,13 +21,14 @@ const ContactLocationCard = ({ restaurantDetail }) => {
         <h3>Location & Hours</h3>
         <div className="location-hours-container">
           <div className="location-card-container">
-            <p>map</p>
+            {/* google map */}
+            {/* <p>map</p> */}
             <p>{restaurantDetail.address}</p>
             <p>
               {restaurantDetail.city},{restaurantDetail.state}{" "}
               {restaurantDetail.zipcode}
             </p>
-            <p>get direction</p>
+            {/* <p>get direction</p> */}
           </div>
           <div className="hours-card-container">
             <ul>
