@@ -13,6 +13,9 @@ import Footer from "./components/Footer";
 import RestaurantDetailPage from "./components/RestaurantDetailPage";
 import AddReviewPage from "./components/AddReviewPage";
 import LoadingSpinner from "./components/LoadingSpinner";
+import UserProfilePage from "./components/UserProfilePage";
+import UserReviews from "./components/UserProfilePage/UserReviews";
+import UserFavorites from "./components/UserProfilePage/UserFavorites";
 
 function App() {
   const dispatch = useDispatch();
@@ -44,6 +47,15 @@ function App() {
             </Route>
             <Route path="/restaurants">
               <AllRestaurantsPage />
+            </Route>
+            <Route
+              path={[
+                "/users/current/profile",
+                "/users/current/reviews",
+                "/users/current/favorites",
+              ]}
+            >
+              <UserProfilePage />
             </Route>
           </Switch>
         )}
