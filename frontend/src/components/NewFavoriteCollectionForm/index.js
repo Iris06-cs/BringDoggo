@@ -4,7 +4,7 @@ import "./NewFavoriteCollectionForm.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDispatch } from "react-redux";
 import { addRestaurantToFav, createFav } from "../../store/favorites";
-const NewFavoriteCollectionForm = ({ restaurantId }) => {
+const NewFavoriteCollectionForm = ({ restaurantId, setIsFav }) => {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
   const [collectionTitle, setCollectionTitle] = useState("");
@@ -28,12 +28,13 @@ const NewFavoriteCollectionForm = ({ restaurantId }) => {
       })
     );
     setFavId(newFav.payload.id);
+    setIsFav(true);
     closeModal();
   };
   useEffect(() => {
     dispatch(addRestaurantToFav({ favId, restaurantId }));
   }, [favId, restaurantId, dispatch]);
-
+  console.log(setIsFav, "modal 37");
   return (
     <div className="modal-content-container fav-form">
       <div className="new-fav-collection-container">
