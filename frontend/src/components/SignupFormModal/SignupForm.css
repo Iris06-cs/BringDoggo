@@ -78,3 +78,7 @@
 .signup-confirm-text .open-modal-btn .fa-bone {
   display: none;
 }
+.modal-content-right-section {
+  width: 500px;
+  background-color: var(--theme-color);
+}
