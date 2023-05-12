@@ -65,6 +65,7 @@ const Reviews = ({ restaurantDetail, setHasReview }) => {
 
     history.push(path + param);
   };
+  console.log(reviews);
   return (
     <div className="reviews-section-container">
       {!currentUser && (
@@ -91,7 +92,7 @@ const Reviews = ({ restaurantDetail, setHasReview }) => {
           </div>
         </div>
       )}
-      {reviews &&
+      {reviews.length ? (
         reviews.map((review, idx) => (
           <div className="review-card-container" key={idx}>
             <div className="review-author-container">
@@ -130,7 +131,10 @@ const Reviews = ({ restaurantDetail, setHasReview }) => {
               )}
             </div>
           </div>
-        ))}
+        ))
+      ) : (
+        <h3>No Reviews Yet</h3>
+      )}
     </div>
   );
 };
