@@ -34,7 +34,7 @@ const NewFavoriteCollectionForm = ({ restaurantId, setIsFav }) => {
   useEffect(() => {
     dispatch(addRestaurantToFav({ favId, restaurantId }));
   }, [favId, restaurantId, dispatch]);
-  console.log(setIsFav, "modal 37");
+
   return (
     <div className="modal-content-container fav-form">
       <div className="new-fav-collection-container">

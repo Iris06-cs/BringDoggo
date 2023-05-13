@@ -21,10 +21,12 @@ const FavoriteCollectionModal = ({ restaurantId, setIsFav }) => {
   const onClickRemove = async (e, favId) => {
     e.preventDefault();
     await dispatch(removeRestaurantFromFav({ favId, restaurantId }));
+    if (currUserFavs.length < 1) setIsFav(false);
   };
   const onClickSave = async (e, favId) => {
     e.preventDefault();
     await dispatch(addRestaurantToFav({ favId, restaurantId }));
+    setIsFav(true);
   };
   return (
     <div className="modal-content-container favorite">
