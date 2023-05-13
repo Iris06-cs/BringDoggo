@@ -45,7 +45,8 @@ function App() {
             <Route path="/restaurants/:restaurantId">
               <RestaurantDetailPage />
             </Route>
-            <Route path="/restaurants">
+            {/* will add homepage */}
+            <Route path={["/", "/restaurants"]}>
               <AllRestaurantsPage />
             </Route>
             <Route
