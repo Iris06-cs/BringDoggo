@@ -34,7 +34,7 @@ const FunctionBtns = ({
 
     history.push(path + param);
   };
-  console.log(currUserFavs, "37");
+
   return (
     <div className="func-btns-container">
       {/* if has login user && without review||no login user */}
