@@ -46,10 +46,8 @@ function App() {
               <RestaurantDetailPage />
             </Route>
             {/* will add homepage */}
-            <Route path={["/", "/restaurants"]}>
-              <AllRestaurantsPage />
-            </Route>
             <Route
+              exact
               path={[
                 "/users/current/profile",
                 "/users/current/reviews",
@@ -57,6 +55,9 @@ function App() {
               ]}
             >
               <UserProfilePage />
+            </Route>
+            <Route path={["/", "/restaurants"]}>
+              <AllRestaurantsPage />
             </Route>
           </Switch>
         )}
