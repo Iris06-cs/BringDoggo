@@ -136,10 +136,16 @@
   justify-content: space-between;
   border-bottom: 1px solid var(--border-light-color);
 }
+.contact-card-row-container .icon-link-yelp {
+  padding: 0;
+}
 .contact-card-row-container a,
 .contact-card-row-container .fa-arrow-up-right-from-square {
   margin: 0;
   padding: 0 0 20px 0;
+}
+.contact-card-row-container .yelp-link:hover {
+  text-decoration: underline;
 }
 .contact-card-row-container p,
 .contact-card-row-container .fa-phone-volume {
