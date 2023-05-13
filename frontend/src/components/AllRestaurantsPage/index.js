@@ -89,7 +89,7 @@ const AllRestaurantsPage = () => {
         /> */}
         <div className="restaurant-cards-container">
           {
-            Object.values(displayedRestaurants).length > 0 &&
+            Object.values(displayedRestaurants).length > 0 ? (
               Object.values(displayedRestaurants).map((restaurant, idx) => (
                 <RestaurantCard
                   key={idx}
@@ -97,6 +97,9 @@ const AllRestaurantsPage = () => {
                   idx={displayRestaurantIdx(idx)}
                 />
               ))
+            ) : (
+              <LoadingSpinner />
+            )
             // <div>
             //   <h3>Sorry,we couldn't find any results</h3>
             //   <p>Try clearing filters to see more results</p>
