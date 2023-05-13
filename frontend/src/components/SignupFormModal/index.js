@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -46,10 +46,42 @@ function SignupFormModal() {
         setshowRedLabel(true);
         setErrors(data.payload.errors);
       } else {
+        setshowRedLabel(false);
         closeModal();
       }
     }
   };
+  useEffect(() => {
+    const errors = validateInput({
+      firstname,
+      lastname,
+      username,
+      email,
+      password,
+      confirmPassword,
+    });
+    if (
+      firstname.length &&
+      lastname.length &&
+      username.length &&
+      email.length &&
+      password.length &&
+      confirmPassword.length &&
+      errors.length
+    ) {
+      setshowRedLabel(true);
+      setInputValidate(errors);
+    } else {
+      setInputValidate([]);
+      setshowRedLabel(false);
+    }
+  }, [confirmPassword, password, email, firstname, lastname, username]);
+  useEffect(() => {
+    if (errors.length || inputValidate.length) setshowRedLabel(true);
+    else {
+      setshowRedLabel(false);
+    }
+  }, [errors, inputValidate]);
   const inputLabel = "input-label " + (redLabel ? "red" : "");
   const errList = "form-error-msg signup " + (redLabel ? "red" : "");
   return (
