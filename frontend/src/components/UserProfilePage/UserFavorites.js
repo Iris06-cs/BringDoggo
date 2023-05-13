@@ -9,7 +9,7 @@ import {
 import LoadingSpinner from "../LoadingSpinner";
 import OpenModalButton from "../OpenModalButton";
 import EditFavModal from "./EditFavModal";
-const UserFavorites = () => {
+const UserFavorites = ({ setIsDeleted }) => {
   const dispatch = useDispatch();
   const currUser = useSelector((state) => state.session.user);
   const userFavs = useSelector((state) => selectCurrUserFavs(state));
@@ -17,9 +17,10 @@ const UserFavorites = () => {
     dispatch(getAllFavs());
     dispatch(getCurrentUserFavs());
   }, [dispatch]);
-  const handleDelete = (e, favId) => {
+  const handleDelete = async (e, favId) => {
     e.preventDefault();
-    dispatch(deleteFav(favId));
+    await dispatch(deleteFav(favId));
+    setIsDeleted((prev) => prev + 1);
   };
 
   if (!userFavs) return <LoadingSpinner />;

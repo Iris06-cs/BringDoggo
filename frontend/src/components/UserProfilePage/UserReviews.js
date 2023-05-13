@@ -8,7 +8,7 @@ import {
 } from "../../store/reviews";
 import LoadingSpinner from "../LoadingSpinner";
 import { getAllRestaurants, getRestaurantById } from "../../store/restaurants";
-const UserReviews = () => {
+const UserReviews = ({ setIsDeleted }) => {
   const dispatch = useDispatch();
   const allRestaurants = useSelector((state) => state.restaurants.restaurants);
   const currUser = useSelector((state) => state.session.user);
@@ -18,9 +18,10 @@ const UserReviews = () => {
     dispatch(getAllReviews());
     dispatch(getCurrentUserReviews());
   }, [dispatch]);
-  const handleDeleteReview = (e, reviewId) => {
+  const handleDeleteReview = async (e, reviewId) => {
     e.preventDefault();
-    dispatch(deleteReview(reviewId));
+    await dispatch(deleteReview(reviewId));
+    setIsDeleted((prev) => prev + 1);
   };
 
   if (!userReviews) return <LoadingSpinner />;
