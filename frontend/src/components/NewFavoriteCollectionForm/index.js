@@ -9,7 +9,7 @@ const NewFavoriteCollectionForm = ({ restaurantId, setIsFav }) => {
   const { closeModal } = useModal();
   const [collectionTitle, setCollectionTitle] = useState("");
   const [collectionDescription, setCollectionDescription] = useState("");
-  const [isPublic, setIsPublic] = useState(true);
+  const [isPublic, setIsPublic] = useState(true); //default to true
   const [isDisable, setIsDisable] = useState(true);
   const [favId, setFavId] = useState();
   // input validation
@@ -65,7 +65,8 @@ const NewFavoriteCollectionForm = ({ restaurantId, setIsFav }) => {
               value={collectionTitle}
               onChange={(e) => setCollectionTitle(e.target.value)}
               placeholder="Best Sushi Bars,Favorite Cafes..."
-            ></input>
+              required
+            />
           </div>
           <div className="new-fav-description-container">
             <label
@@ -81,7 +82,8 @@ const NewFavoriteCollectionForm = ({ restaurantId, setIsFav }) => {
               value={collectionDescription}
               onChange={(e) => setCollectionDescription(e.target.value)}
               placeholder="Sushi places at North City..."
-            ></input>
+              required
+            />
           </div>
           <div className="radio-btn-container">
             <input
