@@ -23,8 +23,9 @@ function Navigation({ isLoaded }) {
             Restaurants
           </NavLink>
         </div>
-        <div>Places</div>
-        <div>Events</div>
+        {/* other features */}
+        {/* <div>Places</div>
+        <div>Events</div> */}
       </div>
       <div className="nav-middle-section">
         <SearchBar />
