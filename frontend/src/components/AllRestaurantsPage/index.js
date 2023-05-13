@@ -81,12 +81,12 @@ const AllRestaurantsPage = () => {
   return (
     <div className="page-container">
       <div className="allRestaurants-left-section">
-        <FilterTabs
+        {/* <FilterTabs
           setSelectedRating={setSelectedRating}
           selectedRating={selectedRating}
           selectedPrice={selectedPrice}
           setSelectedPrice={setSelectedPrice}
-        />
+        /> */}
         <div className="restaurant-cards-container">
           {
             Object.values(displayedRestaurants).length > 0 &&
@@ -111,9 +111,7 @@ const AllRestaurantsPage = () => {
           />
         )}
       </div>
-      <div className="allRestaurants-right-section">
-        <Map />
-      </div>
+      <div className="allRestaurants-right-section">{/* <Map /> */}</div>
     </div>
   );
 };

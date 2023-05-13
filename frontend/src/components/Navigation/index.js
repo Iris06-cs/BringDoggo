@@ -27,9 +27,7 @@ function Navigation({ isLoaded }) {
         {/* <div>Places</div>
         <div>Events</div> */}
       </div>
-      <div className="nav-middle-section">
-        <SearchBar />
-      </div>
+      <div className="nav-middle-section">{/* <SearchBar /> */}</div>
       {isLoaded && (
         <div className="nav-right-section">
           <ProfileButton user={sessionUser} />
