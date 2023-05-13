@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,7 +18,8 @@ function LoginFormModal() {
   const [redLabel, setshowRedLabel] = useState(false);
   const [errors, setErrors] = useState([]);
   const [inputValidate, setInputValidate] = useState([]);
-
+  const [loginlabel, setloginLabel] = useState("loginForm-label ");
+  const [errList, setErrList] = useState("form-error-msg ");
   const handleSubmit = async (e) => {
     e.preventDefault();
     const errors = validateInput({ email, password });
@@ -28,16 +29,44 @@ function LoginFormModal() {
     } else {
       setInputValidate([]);
       const data = await dispatch(login({ email, password }));
+      setshowRedLabel(false);
       if (data.error) {
         setshowRedLabel(true);
         setErrors(data.payload.errors);
       } else {
+        setshowRedLabel(false);
         closeModal();
       }
     }
   };
-  const loginlabel = "loginForm-label " + (redLabel ? "red" : "");
-  const errList = "form-error-msg " + (redLabel ? "red" : "");
+  useEffect(() => {
+    const errors = validateInput({ email, password });
+    if (email.length && password.length && errors.length) {
+      setshowRedLabel(true);
+      setInputValidate(errors);
+    } else {
+      setInputValidate([]);
+
+      setshowRedLabel(false);
+    }
+  }, [email, password]);
+  useEffect(() => {
+    if (errors.length || inputValidate.length) setshowRedLabel(true);
+    else {
+      setshowRedLabel(false);
+    }
+  }, [errors, inputValidate]);
+  useEffect(() => {
+    if (redLabel) {
+      setloginLabel((prev) => prev + "red");
+      setErrList((prev) => prev + "red");
+    } else {
+      setloginLabel("loginForm-label ");
+      setErrList("form-error-msg ");
+    }
+  }, [redLabel]);
+  // const loginlabel = "loginForm-label " + (redLabel ? "red" : "");
+  // const errList = "form-error-msg " + (redLabel ? "red" : "");
   return (
     <div className="modal-content-container">
       <div className="modal-content-left-section">
