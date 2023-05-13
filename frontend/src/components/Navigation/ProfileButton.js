@@ -74,13 +74,19 @@ function ProfileButton({ user }) {
             </li>
             <li>{user.email}</li>
             <li>
-              <NavLink to="/users/current/profile">About me</NavLink>
+              <NavLink to="/users/current/profile" onClick={closeMenu}>
+                About me
+              </NavLink>
             </li>
             <li>
-              <NavLink to="/users/current/favorites">Favorites</NavLink>
+              <NavLink to="/users/current/favorites" onClick={closeMenu}>
+                Favorites
+              </NavLink>
             </li>
             <li>
-              <NavLink to="/users/current/reviews">Reviews</NavLink>
+              <NavLink to="/users/current/reviews" onClick={closeMenu}>
+                Reviews
+              </NavLink>
             </li>
             <li id="logout-btn-container">
               <button onClick={handleLogout} id="logout-btn">

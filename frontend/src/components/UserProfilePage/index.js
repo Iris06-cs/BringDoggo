@@ -4,29 +4,30 @@ import "./UserProfilePage.css";
 import placeHoderImg from "../../image/user-icon.png";
 import UserFavorites from "./UserFavorites";
 import UserReviews from "./UserReviews";
-import {
-  getAllReviews,
-  getCurrentUserReviews,
-  selectCurrentUserReviews,
-} from "../../store/reviews";
+import { getAllReviews, getCurrentUserReviews } from "../../store/reviews";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import dateFormater from "../../utils/dateFormater";
 import { NavLink } from "react-router-dom";
 import ProfileOverview from "./ProfileOverview";
+import { getCurrentUserFavs } from "../../store/favorites";
 const UserProfilePage = () => {
-  const { currUser, currUserReviews } = useSelector((state) => ({
+  const { currUser, currUserReviews, currUserFavs } = useSelector((state) => ({
     currUser: state.session.user,
-    currUserReviews: selectCurrentUserReviews(state),
+    currUserReviews: state.reviews.currentUserReviewIds,
+    currUserFavs: state.favorites.currentUserFavoritesId,
   }));
+  const [isDeleted, setIsDeleted] = useState(0);
   const dispatch = useDispatch();
   useEffect(() => {
     getAllReviews();
     if (currUser) {
       getCurrentUserReviews();
+      getCurrentUserFavs();
     }
-  }, [dispatch, currUser]);
+  }, [dispatch, currUser, isDeleted]);
   if (!currUser) return <h1>loading...</h1>;
+  console.log(currUserReviews);
   return (
     <div className="user-profile-container">
       <div className="user-profile-top-section-container">
@@ -41,8 +42,14 @@ const UserProfilePage = () => {
           </h3>
           <div>Member Since {dateFormater(currUser.createdAt)}</div>
           <div className="userInfo-summary-container">
-            <div>{currUser.reviewsCount} Reviews</div>
-            <div>{currUser.favorites.length} Favorites Collection</div>
+            <div>
+              {currUserReviews ? currUserReviews.length : currUser.reviewCount}{" "}
+              Reviews
+            </div>
+            <div>
+              {currUserFavs ? currUserFavs.length : currUser.favorites.length}{" "}
+              Favorites Collection
+            </div>
           </div>
         </div>
       </div>
@@ -73,10 +80,10 @@ const UserProfilePage = () => {
               <ProfileOverview />
             </Route>
             <Route path="/users/current/reviews">
-              <UserReviews />
+              <UserReviews setIsDeleted={setIsDeleted} />
             </Route>
             <Route path="/users/current/favorites">
-              <UserFavorites />
+              <UserFavorites setIsDeleted={setIsDeleted} />
             </Route>
           </div>
         </div>

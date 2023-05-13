@@ -115,8 +115,8 @@ const AddReviewPage = () => {
   return (
     <div className="add-review-form-container">
       <h1>{decodedRestaurantName}</h1>
-      {isUpdate && <h3 className="update-alter-msg">Update your review</h3>}
       <form onSubmit={handleFormSubmit}>
+        {isUpdate && <h3 className="update-alter-msg">Update your review</h3>}
         <div className="review-input-area-container">
           <RatingBone
             setSelectedRating={setSelectedRating}

@@ -102,3 +102,12 @@
 .modify-fav-btns-container .open-modal-btn:hover {
   background-color: var(--button-background-hover-color);
 }
+.restaurant-review-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 20px;
+  align-items: center;
+}
+.restaurant-name-link:hover {
+  text-decoration: underline;
+}
