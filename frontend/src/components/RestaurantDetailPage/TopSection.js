@@ -39,8 +39,8 @@ const TopSection = ({ restaurantDetail }) => {
   }, [curr24hTime, todayHours]);
   return (
     <div className="page-top-section">
-      <div>
-        <img
+      <div className="image-container">
+        {/* <img
           alt="*"
           src={haruMenu}
           style={{
@@ -50,7 +50,7 @@ const TopSection = ({ restaurantDetail }) => {
             objectPosition: "left",
             zIndex: "-1",
           }}
-        />
+        /> */}
       </div>
       <div className="restaurant-detail-info-container">
         <p>{name}</p>
