@@ -146,7 +146,7 @@ def get_restaurant_detail(restaurant_Id):
         existing_restaurant.categories=fetched_restaurant['categories']
         existing_restaurant.rating=fetched_restaurant['rating']
         existing_restaurant.price=fetched_restaurant.get('price',None)
-        existing_restaurant.hours=fetched_restaurant['hours']
+        existing_restaurant.hours=fetched_restaurant.get('hours')
         existing_restaurant.address=fetched_restaurant['location']['address1']
         existing_restaurant.city=fetched_restaurant['location']['city']
         existing_restaurant.state=fetched_restaurant['location']['state']
