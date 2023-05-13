@@ -6,13 +6,29 @@ const ContactLocationCard = ({ restaurantDetail }) => {
     <div className="contact-location-card-container">
       <div className="contact-card-container">
         <div className="contact-card-row-container">
-          <a href={restaurantDetail.url}>
+          <a
+            className="yelp-link"
+            href={restaurantDetail.url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             {restaurantDetail.url.slice(0, 35)}...
           </a>
-          <FontAwesomeIcon icon="fa-solid fa-arrow-up-right-from-square" />
+          <a
+            className="icon-link-yelp"
+            href={restaurantDetail.url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FontAwesomeIcon icon="fa-solid fa-arrow-up-right-from-square" />
+          </a>
         </div>
         <div className="contact-card-row-container">
-          <p>{restaurantDetail.displayPhone}</p>
+          <p>
+            {restaurantDetail.displayPhone
+              ? restaurantDetail.displayPhone
+              : "No Listed Phone"}
+          </p>
           <FontAwesomeIcon icon="fa-solid fa-phone-volume" />
         </div>
       </div>
