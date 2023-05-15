@@ -41,7 +41,7 @@ const Map = ({ currentPage }) => {
   };
   const markerIcon = (idx) => {
     const markerIconInfo = {
-      url: `http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${displayRestaurantIdx(
+      url: `https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${displayRestaurantIdx(
         idx
       )}|dd0a35|ffffff`, // URL of the marker image
       scaledSize: new window.google.maps.Size(30, 30),
