@@ -26,11 +26,11 @@ def get_dog_friendly_restaurants_sd(page=1):
     offset=limit * (page-1)
 
     params = {
-        "term": "dog allowed",
+        "term": "restaurants dog allowed",
         "location": "San Diego",
         "limit": limit,
         "offset": offset,
-        "categories": "restaurants"
+        # "categories": "restaurants"
 
     }
     # # Add the filter parameter to the API request if it's provided
