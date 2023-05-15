@@ -35,6 +35,7 @@ const AllRestaurantsPage = () => {
   // const [selectedRating, setSelectedRating] = useState();
   // const [selectedPrice, setSelectedPrice] = useState();
   const [pageNumber, setPageNumber] = useState(24);
+  const [orderedRestaurantIds, setOrderedRestaurantIds] = useState([]);
   // const pageNumber = Math.ceil(totalResults / 20); //max 480/20=24
   // const totalPages = (pages) => Math.ceil(pages / 20);
   useEffect(() => {
@@ -54,6 +55,9 @@ const AllRestaurantsPage = () => {
     //   dispatch(filterRestaurantByPrice(selectedPrice));
     // }
   }, [dispatch]);
+  useEffect(() => {
+    setOrderedRestaurantIds(Object.keys(allRestaurants));
+  }, [allRestaurants]);
   // useEffect(() => {
   //   if (selectedRating) {
   //     setPageNumber(totalPages(Object.values(displayedRestaurants).length));
@@ -87,14 +91,18 @@ const AllRestaurantsPage = () => {
         /> */}
         <div className="restaurant-cards-container">
           {
-            Object.values(displayedRestaurants).length > 0 ? (
-              Object.values(displayedRestaurants).map((restaurant, idx) => (
-                <RestaurantCard
-                  key={idx}
-                  restaurant={restaurant}
-                  idx={displayRestaurantIdx(idx)}
-                />
-              ))
+            // Object.values(displayedRestaurants).length > 0 ? (
+            //   Object.values(displayedRestaurants).map((restaurant, idx) => (
+            orderedRestaurantIds ? (
+              orderedRestaurantIds
+                .map((id) => displayedRestaurants[id])
+                .map((restaurant, idx) => (
+                  <RestaurantCard
+                    key={idx}
+                    restaurant={restaurant}
+                    idx={displayRestaurantIdx(idx)}
+                  />
+                ))
             ) : (
               <LoadingSpinner />
             )
