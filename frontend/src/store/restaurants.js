@@ -90,6 +90,7 @@ export const restaurantsSlice = createSlice({
       })
       .addCase(getRestaurantById.fulfilled, (state, action) => {
         state.restaurants[action.payload.id] = action.payload;
+        state.displayRestaurants[action.payload.id] = action.payload;
         state.isLoading = false;
       })
       .addCase(getRestaurantById.rejected, (state, action) => {
