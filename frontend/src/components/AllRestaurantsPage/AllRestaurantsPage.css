@@ -5,11 +5,13 @@
   box-sizing: border-box;
 }
 .allRestaurants-left-section {
-  width: calc(2 / 3 * 100%);
+  /* width: calc(2 / 3 * 100%); */
+  width: 60%;
   box-sizing: border-box;
 }
 .allRestaurants-right-section {
-  width: calc(1 / 3 * 100%);
+  /* width: calc(1 / 3 * 100%); */
+  width: 40%;
   box-sizing: border-box;
 }
 .restaurant-cards-container {
@@ -107,4 +109,12 @@
   padding: 20px 0;
   border-bottom: 1px solid var(--border-light-color);
   max-width: 715px;
+}
+.google-map-container {
+  height: 900px;
+  width: 100%;
+  padding-top: 30px;
+  border-radius: 5px;
+  position: sticky;
+  top: 1px;
 }

@@ -77,7 +77,7 @@ const AllRestaurantsPage = () => {
   if (loadingRestaurants) return <LoadingSpinner />;
   if (currentPage > 1 && Object.values(allRestaurants).length < 480)
     return <LoadingSpinner />;
-  console.log(currentPage);
+
   return (
     <div className="page-container">
       <div className="allRestaurants-left-section">
@@ -114,7 +114,9 @@ const AllRestaurantsPage = () => {
           />
         )}
       </div>
-      <div className="allRestaurants-right-section">{/* <Map /> */}</div>
+      <div className="allRestaurants-right-section">
+        <Map currentPage={currentPage} />
+      </div>
     </div>
   );
 };

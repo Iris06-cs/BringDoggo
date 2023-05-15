@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import convertTimeFormat from "../../utils/convertTimeFormat";
+import LocationMap from "./LocationMap";
 const ContactLocationCard = ({ restaurantDetail }) => {
   const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
   return (
@@ -38,7 +39,7 @@ const ContactLocationCard = ({ restaurantDetail }) => {
         <div className="location-hours-container">
           <div className="location-card-container">
             {/* google map */}
-            {/* <p>map</p> */}
+            <LocationMap restaurantDetail={restaurantDetail} />
             <p>{restaurantDetail.address}</p>
             <p>
               {restaurantDetail.city},{restaurantDetail.state}{" "}
