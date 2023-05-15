@@ -54,7 +54,7 @@ const ProfileOverview = () => {
     Object.values(allRestaurants).length < 1
   )
     return <LoadingSpinner />;
-  console.log(userFavs, userReviews);
+
   return (
     <>
       <h3>Latest Activity </h3>

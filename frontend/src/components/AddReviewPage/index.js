@@ -25,13 +25,11 @@ const AddReviewPage = () => {
   const decodedRestaurantName = decodeURIComponent(restaurantName);
   const initialRating = queryParams.get("rating");
 
-  const { currentUser, currentUserReview, isLoading } = useSelector(
-    (state) => ({
-      currentUser: state.session.user,
-      currentUserReview: selectCurrentUserReviews(state),
-      isLoading: state.reviews.isLoading,
-    })
-  );
+  const { currentUser, isLoading } = useSelector((state) => ({
+    currentUser: state.session.user,
+    currentUserReview: selectCurrentUserReviews(state),
+    isLoading: state.reviews.isLoading,
+  }));
 
   const [selectedRating, setSelectedRating] = useState(initialRating);
   const [reviewInput, setReviewInput] = useState("");

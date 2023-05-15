@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
 const LocationMap = ({ restaurantDetail }) => {
   const [currentPosition, setCurrentPosition] = useState({

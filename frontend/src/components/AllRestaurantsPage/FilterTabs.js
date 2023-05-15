@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useDispatch } from "react-redux";
-import { filterRestaurantByRating } from "../../store/restaurants";
+// import { useDispatch } from "react-redux";
+// import { filterRestaurantByRating } from "../../store/restaurants";
 
 const FilterTabs = ({
   setSelectedRating,

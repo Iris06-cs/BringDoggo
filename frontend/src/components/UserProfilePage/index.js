@@ -27,7 +27,7 @@ const UserProfilePage = () => {
     }
   }, [dispatch, currUser, isDeleted]);
   if (!currUser) return <h1>loading...</h1>;
-  console.log(currUserReviews);
+
   return (
     <div className="user-profile-container">
       <div className="user-profile-top-section-container">

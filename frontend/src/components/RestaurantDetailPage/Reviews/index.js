@@ -65,7 +65,7 @@ const Reviews = ({ restaurantDetail, setHasReview }) => {
 
     history.push(path + param);
   };
-  console.log(reviews);
+
   return (
     <div className="reviews-section-container">
       {!currentUser && (

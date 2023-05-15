@@ -11,7 +11,7 @@ import OpenModalButton from "../OpenModalButton";
 import EditFavModal from "./EditFavModal";
 const UserFavorites = ({ setIsDeleted }) => {
   const dispatch = useDispatch();
-  const currUser = useSelector((state) => state.session.user);
+  // const currUser = useSelector((state) => state.session.user);
   const userFavs = useSelector((state) => selectCurrUserFavs(state));
   useEffect(() => {
     dispatch(getAllFavs());

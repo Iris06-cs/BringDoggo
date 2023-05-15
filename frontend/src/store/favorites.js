@@ -76,7 +76,7 @@ export const favoritesSlice = createSlice({
       })
       .addCase(updateFav.fulfilled, (state, action) => {
         const newFav = action.payload;
-        console.log(newFav, "79");
+
         state.favoritesById[newFav.id] = { ...newFav };
         // console.log(state.favoritesById[newFav.id], "80");
       })
@@ -221,7 +221,6 @@ export const removeRestaurantFromFav = createAsyncThunk(
 export const updateFav = createAsyncThunk(
   "favorites/updateFav",
   async ({ title, description, is_public, favId }, { rejectWithValue }) => {
-    console.log(is_public, "223", favId);
     const response = await fetch(`/api/favorites/${favId}`, {
       method: "PUT",
       headers: {
@@ -232,7 +231,6 @@ export const updateFav = createAsyncThunk(
     const data = await response.json();
 
     if (!response.ok) {
-      console.log(data, "235");
       return rejectWithValue(data);
     }
 

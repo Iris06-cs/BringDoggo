@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import SignupFormPage from "./components/SignupFormPage";
@@ -12,10 +12,10 @@ import AllRestaurantsPage from "./components/AllRestaurantsPage";
 import Footer from "./components/Footer";
 import RestaurantDetailPage from "./components/RestaurantDetailPage";
 import AddReviewPage from "./components/AddReviewPage";
-import LoadingSpinner from "./components/LoadingSpinner";
+// import LoadingSpinner from "./components/LoadingSpinner";
 import UserProfilePage from "./components/UserProfilePage";
-import UserReviews from "./components/UserProfilePage/UserReviews";
-import UserFavorites from "./components/UserProfilePage/UserFavorites";
+// import UserReviews from "./components/UserProfilePage/UserReviews";
+// import UserFavorites from "./components/UserProfilePage/UserFavorites";
 
 function App() {
   const dispatch = useDispatch();
