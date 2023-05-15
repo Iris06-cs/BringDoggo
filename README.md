@@ -31,3 +31,5 @@ Frontend:
 - Create your favorite restaurant collections
 - Modify/delete your favorite restaurant collections
 - Add/Remove restaurant from a favorite collection
+  ![login](./showcaseImage/login.png)
+  ![signup](./showcaseImage/signup.png)
