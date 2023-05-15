@@ -9,7 +9,7 @@ import {
 import Ratings from "./Ratings/Ratings";
 import { useHistory } from "react-router-dom";
 
-const Map = () => {
+const Map = ({ currentPage }) => {
   const displayedRestaurants = useSelector(
     (state) => state.restaurants.displayRestaurants
   );
@@ -36,11 +36,14 @@ const Map = () => {
   const onUnmount = useCallback(function callback(map) {
     setMap(null);
   }, []);
+  const displayRestaurantIdx = (idx) => {
+    return idx + 1 + (currentPage - 1) * 20;
+  };
   const markerIcon = (idx) => {
     const markerIconInfo = {
-      url: `http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${
-        idx + 1
-      }|dd0a35|ffffff`, // URL of the marker image
+      url: `http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${displayRestaurantIdx(
+        idx
+      )}|dd0a35|ffffff`, // URL of the marker image
       scaledSize: new window.google.maps.Size(30, 30),
     };
     return markerIconInfo;
@@ -49,6 +52,7 @@ const Map = () => {
   const handleMarkerClick = (restaurantId) => {
     history.push(`/restaurants/${restaurantId}`);
   };
+
   return (
     <div className="google-map-container">
       <div>
