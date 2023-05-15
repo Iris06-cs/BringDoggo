@@ -66,28 +66,6 @@ const AddReviewPage = () => {
     fetchReviews();
   }, [dispatch, currentUser, restaurantId]);
 
-  // useEffect(() => {
-  //   if (hasFetchedReviews && !isExistingReview) {
-  //     const reviews = Object.values(currentUserReview);
-  //     // current user review
-  //     if (reviews.length > 0) {
-  //       reviews.forEach((review) => {
-  //         if (review.restaurantId === restaurantId) {
-  //           setIsUpdate(true);
-  //           setReviewId(review.id);
-  //           console.log("64");
-  //           setReviewInput(review.reviewDetail);
-  //         }
-  //       });
-  //     }
-  //   }
-  // }, [
-  //   currentUserReview,
-  //   restaurantId,
-  //   currentUser,
-  //   hasFetchedReviews,
-  //   isExistingReview,
-  // ]);
   useEffect(() => {
     if (selectedRating && reviewInput) setIsDisable(false);
     else setIsDisable(true);
