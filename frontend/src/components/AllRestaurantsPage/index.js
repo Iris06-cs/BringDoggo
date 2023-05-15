@@ -114,7 +114,9 @@ const AllRestaurantsPage = () => {
           />
         )}
       </div>
-      <div className="allRestaurants-right-section">{/* <Map /> */}</div>
+      <div className="allRestaurants-right-section">
+        <Map />
+      </div>
     </div>
   );
 };
