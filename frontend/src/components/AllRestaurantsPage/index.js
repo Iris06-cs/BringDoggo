@@ -93,7 +93,7 @@ const AllRestaurantsPage = () => {
           {
             // Object.values(displayedRestaurants).length > 0 ? (
             //   Object.values(displayedRestaurants).map((restaurant, idx) => (
-            orderedRestaurantIds ? (
+            orderedRestaurantIds.length > 0 ? (
               orderedRestaurantIds
                 .map((id) => displayedRestaurants[id])
                 .map((restaurant, idx) => (
