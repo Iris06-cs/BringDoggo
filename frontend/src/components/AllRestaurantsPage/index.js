@@ -80,7 +80,7 @@ const AllRestaurantsPage = () => {
     return <LoadingSpinner />;
   if (currentPage > 1 && Object.values(allRestaurants).length < 480)
     return <LoadingSpinner />;
-
+  console.log(orderedRestaurantIds, displayedRestaurants, "83");
   return (
     <div className="page-container">
       <div className="allRestaurants-left-section">
