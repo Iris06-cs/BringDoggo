@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import haruMenu from "../../image/haru-menu.jpg";
+// import haruMenu from "../../image/haru-menu.jpg";
 import convertTimeFormat from "../../utils/convertTimeFormat";
 import Ratings from "../AllRestaurantsPage/Ratings/Ratings";
 

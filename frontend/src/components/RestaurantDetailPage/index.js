@@ -8,7 +8,7 @@ import FunctionBtns from "./FunctionBtns";
 import ContactLocationCard from "./ContactLocationCard";
 import ReviewOverview from "./ReviewOverview";
 import Reviews from "./Reviews";
-import FilterSorter from "./FilterSorter";
+// import FilterSorter from "./FilterSorter";
 import LoadingSpinner from "../LoadingSpinner";
 import {
   getAllFavs,
@@ -20,7 +20,7 @@ const RestaurantDetailPage = () => {
   const dispatch = useDispatch();
   const { restaurantId } = useParams();
 
-  const { currentUser, allRestaurants, isLoading, currUserFavs } = useSelector(
+  const { currentUser, allRestaurants, currUserFavs } = useSelector(
     (state) => ({
       currentUser: state.session.user,
       allRestaurants: state.restaurants.restaurants,
@@ -50,7 +50,6 @@ const RestaurantDetailPage = () => {
 
   useEffect(() => {
     if (isFetched && allRestaurants) {
-      console.log(allRestaurants, "53");
       setRestaurantDetail(allRestaurants[restaurantId]);
     }
   }, [isFetched, allRestaurants, restaurantId]);
@@ -74,14 +73,12 @@ const RestaurantDetailPage = () => {
         setHasReview(false);
       }
       if (currUserFavs) {
-        console.log("76");
         const favs = Object.values(currUserFavs);
-        console.log(favs);
+
         favs.forEach((fav) => {
           if (fav.restaurants) {
-            console.log("79");
             const restaurants = fav.restaurants; //object
-            console.log(restaurants, restaurants[restaurantId], "82");
+
             if (restaurants[restaurantId]) setIsFav(true);
             else setIsFav(false);
           }

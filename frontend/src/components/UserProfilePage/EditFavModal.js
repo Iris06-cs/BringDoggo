@@ -17,14 +17,14 @@ const EditFavModal = ({ fav }) => {
     useState(initialDescription);
   const [isPublic, setIsPublic] = useState(initialPublic);
   const [isDisable, setIsDisable] = useState(true);
-  console.log(isPublic);
+
   useEffect(() => {
     if (collectionTitle && collectionDescription) setIsDisable(false);
     else setIsDisable(true);
   }, [collectionDescription, collectionTitle]);
   const handleUpdateSubmit = async (e) => {
     e.preventDefault();
-    console.log(isPublic, "27");
+
     await dispatch(
       updateFav({
         title: collectionTitle,
@@ -35,7 +35,7 @@ const EditFavModal = ({ fav }) => {
     );
     closeModal();
   };
-  console.log(fav.id, "38", collectionDescription, collectionTitle, isPublic);
+
   return (
     <div className="modal-content-container fav-form">
       <div className="new-fav-collection-container">
