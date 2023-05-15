@@ -69,10 +69,10 @@ function ProfileButton({ user }) {
             )}
           </button>
           <ul className={ulClassName} ref={ulRef} id="dropdown-menu">
-            <li>
+            {/* <li>
               {user.firstname} {user.lastname[0]}.
             </li>
-            <li>{user.email}</li>
+            <li>{user.email}</li> */}
             <li>
               <NavLink to="/users/current/profile" onClick={closeMenu}>
                 About me

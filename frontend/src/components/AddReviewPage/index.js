@@ -38,6 +38,7 @@ const AddReviewPage = () => {
   const [currRating, setCurrRating] = useState();
   const [reviewId, setReviewId] = useState();
   const [isUpdate, setIsUpdate] = useState(false);
+  const [isDisable, setIsDisable] = useState(true);
   const [hasFetchedReviews, setHasFetchedReviews] = useState(false);
   const [isExistingReview, setIsExistingReview] = useState(false);
   useEffect(() => {
@@ -65,29 +66,10 @@ const AddReviewPage = () => {
     fetchReviews();
   }, [dispatch, currentUser, restaurantId]);
 
-  // useEffect(() => {
-  //   if (hasFetchedReviews && !isExistingReview) {
-  //     const reviews = Object.values(currentUserReview);
-  //     // current user review
-  //     if (reviews.length > 0) {
-  //       reviews.forEach((review) => {
-  //         if (review.restaurantId === restaurantId) {
-  //           setIsUpdate(true);
-  //           setReviewId(review.id);
-  //           console.log("64");
-  //           setReviewInput(review.reviewDetail);
-  //         }
-  //       });
-  //     }
-  //   }
-  // }, [
-  //   currentUserReview,
-  //   restaurantId,
-  //   currentUser,
-  //   hasFetchedReviews,
-  //   isExistingReview,
-  // ]);
-
+  useEffect(() => {
+    if (selectedRating && reviewInput) setIsDisable(false);
+    else setIsDisable(true);
+  }, [selectedRating, reviewInput]);
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     // body validation
@@ -136,7 +118,11 @@ const AddReviewPage = () => {
         </div>
         <div className="post-btn-container">
           {currentUser && (
-            <button type="submit" className="general-button">
+            <button
+              type="submit"
+              className={"general-button" + (isDisable ? " disabled" : "")}
+              disabled={isDisable}
+            >
               Post Review
             </button>
           )}
