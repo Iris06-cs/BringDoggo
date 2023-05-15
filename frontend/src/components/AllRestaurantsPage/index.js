@@ -76,7 +76,8 @@ const AllRestaurantsPage = () => {
   const displayRestaurantIdx = (idx) => {
     return idx + 1 + (currentPage - 1) * 20;
   };
-  if (loadingRestaurants) return <LoadingSpinner />;
+  if (loadingRestaurants || orderedRestaurantIds.length < 1)
+    return <LoadingSpinner />;
   if (currentPage > 1 && Object.values(allRestaurants).length < 480)
     return <LoadingSpinner />;
 
@@ -96,6 +97,7 @@ const AllRestaurantsPage = () => {
             orderedRestaurantIds.length > 0 ? (
               orderedRestaurantIds
                 .map((id) => displayedRestaurants[id])
+                .filter((restaurant) => restaurant)
                 .map((restaurant, idx) => (
                   <RestaurantCard
                     key={idx}
