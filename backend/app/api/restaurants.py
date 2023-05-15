@@ -30,6 +30,7 @@ def get_dog_friendly_restaurants_sd(page=1):
         "location": "San Diego",
         "limit": limit,
         "offset": offset,
+        "categories": "restaurants"
 
     }
     # # Add the filter parameter to the API request if it's provided
