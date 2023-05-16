@@ -22,11 +22,21 @@ const FavoriteCollectionModal = ({ restaurantId, setIsFav }) => {
     e.preventDefault();
     await dispatch(removeRestaurantFromFav({ favId, restaurantId }));
     if (currUserFavs.length < 1) setIsFav(false);
+    // Check if the restaurant is in any other collections
+    const isRestaurantInOtherFavs = currUserFavs.some(
+      (fav) => fav.id !== favId && fav.restaurants[restaurantId]
+    );
+    setIsFav(isRestaurantInOtherFavs);
   };
   const onClickSave = async (e, favId) => {
     e.preventDefault();
     await dispatch(addRestaurantToFav({ favId, restaurantId }));
-    setIsFav(true);
+    // setIsFav(true);
+    // Check if the restaurant is in any collections
+    const isRestaurantInAnyFav = currUserFavs.some(
+      (fav) => fav.restaurants[restaurantId]
+    );
+    setIsFav(isRestaurantInAnyFav);
   };
   return (
     <div className="modal-content-container favorite">

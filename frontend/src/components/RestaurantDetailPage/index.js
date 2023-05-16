@@ -74,15 +74,15 @@ const RestaurantDetailPage = () => {
       }
       if (currUserFavs) {
         const favs = Object.values(currUserFavs);
-
-        favs.forEach((fav) => {
+        setIsFav(false);
+        for (let fav of favs) {
           if (fav.restaurants) {
             const restaurants = fav.restaurants; //object
 
             if (restaurants[restaurantId]) setIsFav(true);
-            else setIsFav(false);
+            break;
           }
-        });
+        }
       } else setIsFav(false);
     }
   }, [currentUser, restaurantDetail, currUserFavs, restaurantId]);
