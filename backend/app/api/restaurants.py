@@ -121,12 +121,12 @@ def all_restaurants():
                         existing_restaurant.total_api_results=total_results
         db.session.commit()
         offset=limit*(page-1)
-        updated_restaurants = Restaurant.query.offset(offset).limit(limit).all()
+        updated_restaurants = Restaurant.query.order_by(Restaurant.name.asc()).offset(offset).limit(limit).all()
         return jsonify({"restaurants":[restaurant.to_dict() for restaurant in updated_restaurants],"totalResults":total_results}),200
     else:
         # database cached enough data
         offset=limit*(page-1)
-        restaurants = Restaurant.query.offset(offset).limit(limit).all()
+        restaurants = Restaurant.query.order_by(Restaurant.name.asc()).offset(offset).limit(limit).all()
         total_api_results = restaurants[0].total_api_results if restaurants else 0
         return jsonify({"restaurants": [restaurant.to_dict() for restaurant in restaurants],"totalResults":total_api_results}), 200
 
