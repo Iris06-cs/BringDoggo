@@ -14,6 +14,7 @@ import RestaurantDetailPage from "./components/RestaurantDetailPage";
 import AddReviewPage from "./components/AddReviewPage";
 // import LoadingSpinner from "./components/LoadingSpinner";
 import UserProfilePage from "./components/UserProfilePage";
+import { getAllRestaurants } from "./store/restaurants";
 // import UserReviews from "./components/UserProfilePage/UserReviews";
 // import UserFavorites from "./components/UserProfilePage/UserFavorites";
 
@@ -23,6 +24,7 @@ function App() {
   // const runLoader = useSelector((state) => state.loader.loading);
   useEffect(() => {
     dispatch(authenticate()).then(() => setIsLoaded(true));
+    dispatch(getAllRestaurants());
   }, [dispatch]);
 
   library.add(fas);
