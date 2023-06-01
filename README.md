@@ -33,3 +33,4 @@ Frontend:
 - Add/Remove restaurant from a favorite collection
   ![login](./showcaseImage/login.png)
   ![signup](./showcaseImage/signup.png)
+  ![main](./showcaseImage/main.png)

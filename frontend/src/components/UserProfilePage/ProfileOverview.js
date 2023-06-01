@@ -11,7 +11,7 @@ import {
 } from "../../store/favorites";
 import { useEffect, useState } from "react";
 import LoadingSpinner from "../LoadingSpinner";
-import { getAllRestaurants } from "../../store/restaurants";
+
 import Ratings from "../AllRestaurantsPage/Ratings/Ratings";
 import { NavLink } from "react-router-dom";
 
@@ -35,7 +35,6 @@ const ProfileOverview = () => {
   const [lastReview, setLastReview] = useState();
   const [lastFav, setLastFav] = useState();
   useEffect(() => {
-    dispatch(getAllRestaurants());
     dispatch(getAllFavs());
     dispatch(getAllReviews());
     dispatch(getCurrentUserReviews());
@@ -54,7 +53,7 @@ const ProfileOverview = () => {
     Object.values(allRestaurants).length < 1
   )
     return <LoadingSpinner />;
-
+  console.log(lastReview, "56");
   return (
     <>
       <h3>Latest Activity </h3>
