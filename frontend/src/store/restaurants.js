@@ -7,7 +7,7 @@ export const restaurantsSlice = createSlice({
     restaurants: {}, //byId
     error: null,
     isLoading: false,
-    totalRestaurants: null,
+    // totalRestaurants: null,
     displayRestaurants: {},
   },
 
@@ -67,7 +67,7 @@ export const restaurantsSlice = createSlice({
     builder
       .addCase(getAllRestaurants.fulfilled, (state, action) => {
         // restaurants array
-        let { restaurants, totalResults } = action.payload;
+        let { restaurants } = action.payload;
         let res = {};
         let displayed = {};
         restaurants.forEach((restaurant, idx) => {
@@ -77,7 +77,7 @@ export const restaurantsSlice = createSlice({
         state.restaurants = res;
         state.displayRestaurants = displayed;
         state.isLoading = false;
-        state.totalRestaurants = totalResults;
+        // state.totalRestaurants = totalResults;
       })
       .addCase(getAllRestaurants.pending, (state, action) => {
         state.error = action.payload;

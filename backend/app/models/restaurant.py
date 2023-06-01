@@ -67,7 +67,7 @@ class Restaurant(db.Model):
             'fetchedAt': self.fetched_at,
             'dogReviewCount':len(self.restaurant_reviews),
             'avgRating':avg_rating,
-            'totalApiResults':self.total_api_results,
+            # 'totalApiResults':self.total_api_results,
             'reviews':[review.to_dict() for review in reviews]
 
         }

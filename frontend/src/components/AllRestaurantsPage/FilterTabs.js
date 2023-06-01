@@ -12,6 +12,7 @@ const FilterTabs = ({
   const onClickIcon = (bones) => {
     setSelectedRating(bones);
   };
+
   return (
     <div className="filter-sorter-all-container">
       <div className="filter-all-container">

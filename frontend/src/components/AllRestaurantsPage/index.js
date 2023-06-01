@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getFirstPage, setCurrentPage } from "../../store/restaurants";
+import { setCurrentPage } from "../../store/restaurants";
 
-// import FilterTabs from "./FilterTabs";
+import FilterTabs from "./FilterTabs";
 import Map from "./Map";
 import RestaurantCard from "./RestaurantCard/RestaurantCard";
 import PageNumbers from "./PageNumbers";
@@ -20,11 +20,14 @@ const AllRestaurantsPage = () => {
 
   const currentPage = useSelector((state) => state.restaurants.currentPage);
   const [pageNumber, setPageNumber] = useState(24);
+  const [selectedRating, setSelectedRating] = useState();
+  const [selectedPrice, setSelectedPrice] = useState();
   const [orderedRestaurantIds, setOrderedRestaurantIds] = useState([]);
+
   useEffect(() => {
     // fetch initial page
     dispatch(setCurrentPage(1));
-    setPageNumber(24);
+    // setPageNumber(24);
   }, [dispatch]);
   useEffect(() => {
     setOrderedRestaurantIds(Object.keys(allRestaurants));
@@ -39,18 +42,18 @@ const AllRestaurantsPage = () => {
   };
   if (loadingRestaurants || orderedRestaurantIds.length < 1)
     return <LoadingSpinner />;
-  if (currentPage > 1 && Object.values(allRestaurants).length < 480)
-    return <LoadingSpinner />;
+
+  // if (!Object.values(allRestaurants).length) return <LoadingSpinner />;
 
   return (
     <div className="page-container">
       <div className="allRestaurants-left-section">
-        {/* <FilterTabs
+        <FilterTabs
           setSelectedRating={setSelectedRating}
           selectedRating={selectedRating}
           selectedPrice={selectedPrice}
           setSelectedPrice={setSelectedPrice}
-        /> */}
+        />
         <div className="restaurant-cards-container">
           {
             // Object.values(displayedRestaurants).length > 0 ? (

@@ -18,11 +18,11 @@ def get_dog_friendly_restaurants_sd():
         "Authorization": f"Bearer {Config.YELP_API_KEY}"
     }
     page=1
-    limit=48
+    limit=50
     results=[]
-    total=0
+    # total=0
 
-    while page<=10:
+    while page<=20:
         offset=limit * (page-1)
         params = {
             "term": "restaurants dog allowed dog friendly",
@@ -35,12 +35,12 @@ def get_dog_friendly_restaurants_sd():
         data=response.json()
         if response.status_code == 200:
             results.extend(data.get('businesses', []))
-            total=data.get('total',0)
+            # total=data.get('total',0)
         else:
             raise Exception(f"Error fetching Yelp results: {data.get('error', {}).get('description', 'Yelp API error')}")
         page+=1
 
-    return results,total
+    return results
 
 
 def get_restaurant_by_id(id):
@@ -58,24 +58,24 @@ def all_restaurants():
     if restaurant_db_count:
         oldestData = Restaurant.query.order_by(Restaurant.fetched_at.asc()).first()
         if not oldestData or datetime.utcnow() - oldestData.fetched_at > timedelta(hours=24):
-            fetched_restaurants, total_results = get_dog_friendly_restaurants_sd()
+            fetched_restaurants = get_dog_friendly_restaurants_sd()
             for restaurant in fetched_restaurants:
-                update_or_create_restaurant(restaurant, total_results)
+                update_or_create_restaurant(restaurant)
             updated_restaurants = Restaurant.query.order_by(Restaurant.review_count.desc()).all()
-            return jsonify({"restaurants": [restaurant.to_dict() for restaurant in updated_restaurants], "totalResults": total_results}), 200
+            return jsonify({"restaurants": [restaurant.to_dict() for restaurant in updated_restaurants]}), 200
         else:
             restaurants = Restaurant.query.order_by(Restaurant.review_count.desc()).all()
-            total_api_results = restaurants[0].total_api_results if restaurants else 0
-            return jsonify({"restaurants": [restaurant.to_dict() for restaurant in restaurants], "totalResults": total_api_results}), 200
+            # total_api_results = restaurants[0].total_api_results if restaurants else 0
+            return jsonify({"restaurants": [restaurant.to_dict() for restaurant in restaurants]}), 200
     else:
-        fetched_restaurants, total_results = get_dog_friendly_restaurants_sd()
+        fetched_restaurants = get_dog_friendly_restaurants_sd()
         for restaurant in fetched_restaurants:
-            update_or_create_restaurant(restaurant, total_results)
+            update_or_create_restaurant(restaurant)
         restaurants = Restaurant.query.order_by(Restaurant.review_count.desc()).all()
-        return jsonify({"restaurants": [restaurant.to_dict() for restaurant in restaurants], "totalResults": total_results}), 200
+        return jsonify({"restaurants": [restaurant.to_dict() for restaurant in restaurants]}), 200
 
 
-def update_or_create_restaurant(restaurant, total_results):
+def update_or_create_restaurant(restaurant):
     restaurant_field = {
         'id': restaurant['id'],
         'name': restaurant['name'],
@@ -97,15 +97,16 @@ def update_or_create_restaurant(restaurant, total_results):
 
     existing_restaurant = Restaurant.query.filter_by(id=restaurant_field['id']).first()
     if not existing_restaurant:
-        new_restaurant = Restaurant(**restaurant_field, fetched_at=datetime.utcnow(), total_api_results=total_results)
+        new_restaurant = Restaurant(**restaurant_field, fetched_at=datetime.utcnow())
         db.session.add(new_restaurant)
     else:
         for key, value in restaurant_field.items():
             setattr(existing_restaurant, key, value)
         existing_restaurant.fetched_at = datetime.utcnow()
-        existing_restaurant.total_api_results = total_results
+        # existing_restaurant.total_api_results = total_results
 
     db.session.commit()
+    db.session.close()
 
 
 
