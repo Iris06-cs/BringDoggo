@@ -67,14 +67,17 @@ export const restaurantsSlice = createSlice({
     builder
       .addCase(getAllRestaurants.fulfilled, (state, action) => {
         // restaurants array
+        let { restaurants, totalResults } = action.payload;
         let res = {};
-        action.payload.restaurants.forEach((restaurant) => {
+        let displayed = {};
+        restaurants.forEach((restaurant, idx) => {
           res[restaurant.id] = restaurant;
+          if (idx < 24) displayed[restaurant.id] = restaurant;
         });
         state.restaurants = res;
-        // state.displayRestaurants = res;
+        state.displayRestaurants = displayed;
         state.isLoading = false;
-        state.totalRestaurants = action.payload.totalResults;
+        state.totalRestaurants = totalResults;
       })
       .addCase(getAllRestaurants.pending, (state, action) => {
         state.error = action.payload;
@@ -96,72 +99,51 @@ export const restaurantsSlice = createSlice({
       .addCase(getRestaurantById.rejected, (state, action) => {
         state.error = action.payload;
         state.isLoading = false;
-      })
-      .addCase(getFirstPage.pending, (state, action) => {
-        state.error = action.payload;
-        state.isLoading = true;
-      })
-      .addCase(getFirstPage.fulfilled, (state, action) => {
-        let res = {};
-        action.payload.restaurants.forEach((restaurant) => {
-          res[restaurant.id] = restaurant;
-        });
-        state.restaurants = res;
-        state.displayRestaurants = res;
-        state.currentPage = 1;
-        state.isLoading = false;
       });
+    // .addCase(getFirstPage.pending, (state, action) => {
+    //   state.error = action.payload;
+    //   state.isLoading = true;
+    // })
+    // .addCase(getFirstPage.fulfilled, (state, action) => {
+    //   let res = {};
+    //   action.payload.restaurants.forEach((restaurant) => {
+    //     res[restaurant.id] = restaurant;
+    //   });
+    //   state.restaurants = res;
+    //   state.displayRestaurants = res;
+    //   state.currentPage = 1;
+    //   state.isLoading = false;
+    // });
   },
 });
 export const getAllRestaurants = createAsyncThunk(
   "restaurants/getAllRestaurants",
   async (_, { rejectWithValue }) => {
-    try {
-      const totalPages = 24;
-      const allRestaurants = [];
+    const allRestaurants = [];
 
-      for (let page = 1; page <= totalPages; page++) {
-        const response = await fetch(`/api/restaurants?page=${page}`);
-        const data = await response.json();
+    const response = await fetch(`/api/restaurants/`);
+    const data = await response.json();
 
-        if (!response.ok) {
-          return rejectWithValue(data);
-        }
-
-        allRestaurants.push(...data.restaurants);
-      }
-
-      return { restaurants: allRestaurants };
-    } catch (error) {
-      return rejectWithValue(error.message);
+    if (!response.ok) {
+      return rejectWithValue(data);
     }
+
+    allRestaurants.push(...data.restaurants);
+
+    return { restaurants: allRestaurants };
   }
 );
 
-// export const getAllRestaurants = createAsyncThunk(
-//   "restaurants/getAllRestaurants",
-//   async ({ page, filter }, { rejectWithValue }) => {
-//     let url = `/api/restaurants?page=${page}`;
-//     if (filter) {
-//       url += `&filter=${filter}`;
-//     }
-//     const response = await fetch(url);
+// export const getFirstPage = createAsyncThunk(
+//   "restaurants/getFirstPage",
+//   async (_, { rejectWithValue }) => {
+//     const response = await fetch(`/api/restaurants?page=1`);
 //     const data = await response.json();
 
 //     if (!response.ok) return rejectWithValue(data);
 //     return data;
 //   }
 // );
-export const getFirstPage = createAsyncThunk(
-  "restaurants/getFirstPage",
-  async (_, { rejectWithValue }) => {
-    const response = await fetch(`/api/restaurants?page=1`);
-    const data = await response.json();
-
-    if (!response.ok) return rejectWithValue(data);
-    return data;
-  }
-);
 export const getRestaurantById = createAsyncThunk(
   "restaurants/getRestaurantById",
   async (restaurantId, { rejectWithValue }) => {

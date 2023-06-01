@@ -1,12 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  // filterRestaurantByPrice,
-  // filterRestaurantByRating,
-  getAllRestaurants,
-  getFirstPage,
-  setCurrentPage,
-} from "../../store/restaurants";
+import { getFirstPage, setCurrentPage } from "../../store/restaurants";
 
 // import FilterTabs from "./FilterTabs";
 import Map from "./Map";
@@ -23,52 +17,19 @@ const AllRestaurantsPage = () => {
   const loadingRestaurants = useSelector(
     (state) => state.restaurants.isLoading
   );
-  // const totalResults = useSelector(
-  //   (state) => state.restaurants.totalRestaurants
-  // );
-  // const initialPageRestaurents = useSelector(
-  //   (state) => state.restaurants.firstPage
-  // );
 
   const currentPage = useSelector((state) => state.restaurants.currentPage);
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const [selectedRating, setSelectedRating] = useState();
-  // const [selectedPrice, setSelectedPrice] = useState();
   const [pageNumber, setPageNumber] = useState(24);
   const [orderedRestaurantIds, setOrderedRestaurantIds] = useState([]);
-  // const pageNumber = Math.ceil(totalResults / 20); //max 480/20=24
-  // const totalPages = (pages) => Math.ceil(pages / 20);
   useEffect(() => {
     // fetch initial page
-    dispatch(getFirstPage()).then((response) => {
-      if (response.type === getFirstPage.fulfilled.type) {
-        dispatch(setCurrentPage(1));
-      }
-    });
-    dispatch(getAllRestaurants());
+    dispatch(setCurrentPage(1));
     setPageNumber(24);
-
-    // if (selectedRating) {
-    //   dispatch(filterRestaurantByRating(selectedRating));
-    // }
-    // if (selectedPrice) {
-    //   dispatch(filterRestaurantByPrice(selectedPrice));
-    // }
   }, [dispatch]);
   useEffect(() => {
     setOrderedRestaurantIds(Object.keys(allRestaurants));
   }, [allRestaurants]);
-  // useEffect(() => {
-  //   if (selectedRating) {
-  //     setPageNumber(totalPages(Object.values(displayedRestaurants).length));
-  //   }
-  // }, [dispatch, selectedRating, displayedRestaurants]);
 
-  // useEffect(() => {
-  //   if (selectedPrice) {
-  //     setPageNumber(totalPages(Object.values(displayedRestaurants).length));
-  //   }
-  // }, [dispatch, selectedPrice, displayedRestaurants]);
   // fetch page with offset page
   const handlePageChange = (pageNum) => {
     dispatch(setCurrentPage(pageNum));
@@ -80,7 +41,7 @@ const AllRestaurantsPage = () => {
     return <LoadingSpinner />;
   if (currentPage > 1 && Object.values(allRestaurants).length < 480)
     return <LoadingSpinner />;
-  // console.log(orderedRestaurantIds, displayedRestaurants, "83");
+
   return (
     <div className="page-container">
       <div className="allRestaurants-left-section">

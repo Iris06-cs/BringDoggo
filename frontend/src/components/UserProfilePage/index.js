@@ -11,12 +11,16 @@ import dateFormater from "../../utils/dateFormater";
 import { NavLink } from "react-router-dom";
 import ProfileOverview from "./ProfileOverview";
 import { getCurrentUserFavs } from "../../store/favorites";
+
+import LoadingSpinner from "../LoadingSpinner";
 const UserProfilePage = () => {
-  const { currUser, currUserReviews, currUserFavs } = useSelector((state) => ({
-    currUser: state.session.user,
-    currUserReviews: state.reviews.currentUserReviewIds,
-    currUserFavs: state.favorites.currentUserFavoritesId,
-  }));
+  const { currUser, currUserReviews, currUserFavs, allRestaurants } =
+    useSelector((state) => ({
+      currUser: state.session.user,
+      currUserReviews: state.reviews.currentUserReviewIds,
+      currUserFavs: state.favorites.currentUserFavoritesId,
+      allRestaurants: state.restaurants.restaurants,
+    }));
   const [isDeleted, setIsDeleted] = useState(0);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -26,8 +30,9 @@ const UserProfilePage = () => {
       getCurrentUserFavs();
     }
   }, [dispatch, currUser, isDeleted]);
-  if (!currUser) return <h1>loading...</h1>;
-
+  // if (!currUser) return <h1>loading...</h1>;
+  if (!currUser || Object.values(allRestaurants).length < 1)
+    return <LoadingSpinner />;
   return (
     <div className="user-profile-container">
       <div className="user-profile-top-section-container">
