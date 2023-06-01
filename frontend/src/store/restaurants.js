@@ -72,6 +72,7 @@ export const restaurantsSlice = createSlice({
         let displayed = {};
         restaurants.forEach((restaurant, idx) => {
           res[restaurant.id] = restaurant;
+          // set initial displayed restaurants
           if (idx < 24) displayed[restaurant.id] = restaurant;
         });
         state.restaurants = res;
