@@ -22,7 +22,7 @@ def get_dog_friendly_restaurants_sd():
     results=[]
     # total=0
 
-    while page<=20:
+    while page<=10:
         offset=limit * (page-1)
         params = {
             "term": "restaurants dog allowed dog friendly",
@@ -139,6 +139,7 @@ def get_restaurant_detail(restaurant_Id):
         existing_restaurant.fetched_at=datetime.utcnow()
 
         db.session.commit()
+        db.session.close()
     updated_restaurant=Restaurant.query.filter_by(id=restaurant_Id).first()
     return jsonify(updated_restaurant.to_dict()),200
 
@@ -186,6 +187,7 @@ def write_review(restaurantId):
         )
         db.session.add(review)
         db.session.commit()
+        db.session.close()
         return jsonify(review.to_dict()),201
     # Handle 400 ValidationError
 
@@ -216,6 +218,7 @@ def add_image_to_restaurant(restaurantId):
         )
         db.session.add(restaurant_image)
         db.session.commit()
+        db.session.close()
         return jsonify(restaurant_image.to_dict()),201
     # Handle 400 ValidationError
     raise ValidationError(f"Validation Error: {validation_errors_to_error_messages(form.errors)}")
@@ -226,5 +229,5 @@ def clear_cache():
     # Delete all records in the Restaurant table
     db.session.query(Restaurant).delete()
     db.session.commit()
-
+    db.session.close()
     return jsonify({"message": "Cache cleared successfully"}), 200
