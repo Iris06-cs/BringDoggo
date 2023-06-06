@@ -9,16 +9,23 @@ export const restaurantsSlice = createSlice({
     isLoading: false,
     // totalRestaurants: null,
     displayRestaurants: {},
+    filteredRestaurants: null,
+    totalPages: 0,
   },
 
   reducers: {
     setCurrentPage(state, action) {
       state.currentPage = action.payload;
-      const allRestaurants = Object.values(state.restaurants);
+      const allRestaurants = Object.values(
+        state.filteredRestaurants
+          ? state.filteredRestaurants
+          : state.restaurants
+      );
       const restaurantToDisplay = allRestaurants.slice(
         (state.currentPage - 1) * 20,
         (state.currentPage - 1) * 20 + 20
       );
+      console.log(allRestaurants, "27", state.filteredRestaurants);
       state.displayRestaurants = restaurantToDisplay.reduce((accu, curr) => {
         return { ...accu, [curr.id]: curr };
       }, {});
@@ -26,19 +33,25 @@ export const restaurantsSlice = createSlice({
     filterRestaurantByRating(state, action) {
       const rating = action.payload;
       const allRestaurants = state.restaurants;
-      state.displayRestaurants = Object.fromEntries(
+      state.filteredRestaurants = Object.fromEntries(
         Object.entries(allRestaurants).filter(
           ([_, restaurant]) => restaurant.avgRating >= rating
         )
+      );
+      state.totalPages = Math.ceil(
+        Object.keys(state.filteredRestaurants).length / 20
       );
     },
     filterRestaurantByPrice(state, action) {
       const price = action.payload;
       const allRestaurants = state.restaurants;
-      state.displayRestaurants = Object.fromEntries(
+      state.filteredRestaurants = Object.fromEntries(
         Object.entries(allRestaurants).filter(
           ([_, restaurant]) => restaurant.price === price
         )
+      );
+      state.totalPages = Math.ceil(
+        Object.keys(state.filteredRestaurants).length / 20
       );
     },
     sortRestaurantByHighestRating(state) {
@@ -61,6 +74,10 @@ export const restaurantsSlice = createSlice({
         return acc;
       }, {});
     },
+    clearFilter(state) {
+      state.filteredRestaurants = null;
+      state.totalPages = Math.ceil(Object.keys(state.restaurants).length / 20);
+    },
   },
 
   extraReducers: (builder) => {
@@ -73,7 +90,7 @@ export const restaurantsSlice = createSlice({
         restaurants.forEach((restaurant, idx) => {
           res[restaurant.id] = restaurant;
           // set initial displayed restaurants
-          if (idx < 24) displayed[restaurant.id] = restaurant;
+          if (idx < 20) displayed[restaurant.id] = restaurant;
         });
         state.restaurants = res;
         state.displayRestaurants = displayed;
@@ -160,5 +177,6 @@ export const {
   filterRestaurantByPrice,
   filterRestaurantByRating,
   setCurrentPage,
+  clearFilter,
 } = restaurantsSlice.actions;
 export default restaurantsSlice.reducer;
