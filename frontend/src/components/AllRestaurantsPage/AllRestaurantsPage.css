@@ -1,8 +1,20 @@
 .page-container {
   width: 100%;
-  display: flex;
   justify-content: space-between;
   box-sizing: border-box;
+}
+.filter-sorter-all-container {
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border-light-color);
+  position: fixed;
+  z-index: 1;
+  background-color: white;
+  left: 10%;
+  right: 10%;
+}
+.page-content-container {
+  display: flex;
+  padding-top: 98px;
 }
 .allRestaurants-left-section {
   /* width: calc(2 / 3 * 100%); */
@@ -19,7 +31,6 @@
   flex-wrap: wrap;
   column-gap: 15px;
   box-sizing: border-box;
-  padding-top: 30px;
   padding-bottom: 15px;
 }
 .pagination-container {
@@ -105,16 +116,12 @@
   border: none;
   color: var(--content-text-color);
 }
-.filter-sorter-all-container {
-  padding: 20px 0;
-  border-bottom: 1px solid var(--border-light-color);
-  max-width: 715px;
-}
+
 .google-map-container {
-  height: 900px;
+  height: 100%vh;
   width: 100%;
-  padding-top: 30px;
   border-radius: 5px;
   position: sticky;
-  top: 1px;
+  top: 133.5px;
+  z-index: -1;
 }

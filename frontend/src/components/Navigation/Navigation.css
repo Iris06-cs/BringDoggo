@@ -11,11 +11,15 @@
 }
 
 .nav-container {
+  box-sizing: border-box;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-left: 10%;
-  padding-right: 10%;
+  position: fixed;
+  z-index: 1;
+  background-color: white;
+  left: 10%;
+  right: 10%;
 }
 .nav-left-section {
   display: flex;
