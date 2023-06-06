@@ -52,7 +52,7 @@ def get_restaurant_by_id(id):
     response = requests.get(url, headers=headers)
     return response.json()
 
-@restaurant_routes.route("/")
+@restaurant_routes.route("/",methods=["GET"])
 def all_restaurants():
     restaurant_db_count = Restaurant.query.count()
     if restaurant_db_count:
@@ -109,11 +109,7 @@ def update_or_create_restaurant(restaurant):
     db.session.close()
 
 
-
-
-
-
-@restaurant_routes.route("/<restaurant_Id>")
+@restaurant_routes.route("/<restaurant_Id>",methods=["GET"])
 def get_restaurant_detail(restaurant_Id):
     # restaurant_id record fetched over 24 hours,update record
     # missing detail info
@@ -145,7 +141,7 @@ def get_restaurant_detail(restaurant_Id):
 
 
 # get restaurant's reviews
-@restaurant_routes.route("/<restaurantId>/reviews")
+@restaurant_routes.route("/<restaurantId>/reviews",methods=["GET"])
 def get_restaurant_reviews(restaurantId):
     """
     Query for all reviews of restaurant by id
