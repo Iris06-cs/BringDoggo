@@ -74,7 +74,7 @@ const AllRestaurantsPage = () => {
         selectedPrice={selectedPrice}
         setSelectedPrice={setSelectedPrice}
       />
-      <div className="page-content-container">
+      <div className="page-main-content-container">
         <div className="allRestaurants-left-section">
           <div className="restaurant-cards-container">
             {pageNumber > 0 ? (

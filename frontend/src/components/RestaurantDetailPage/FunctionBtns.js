@@ -7,6 +7,7 @@ import SignupFormModal from "../SignupFormModal";
 import FavoriteCollectionModal from "../FavoriteCollectionModal";
 import NewFavoriteCollectionForm from "../NewFavoriteCollectionForm";
 import { selectCurrUserFavs } from "../../store/favorites";
+import NewImageModal from "./NewImageModal";
 const FunctionBtns = ({
   hasReview,
   name,
@@ -66,11 +67,7 @@ const FunctionBtns = ({
           Update review
         </button>
       )}
-      {/* image feature */}
-      {/* <button id="add-photo-btn">
-        <FontAwesomeIcon icon="fa-solid fa-camera-retro" />
-        Add photo
-      </button> */}
+
       {/* no login user，on click login popup */}
       {/* user logged in, has not added to fav, onclick popup add to/create collection popup */}
       {/* user logged in,already added to fav,button added fav, onclick remove or change to other collection, or create new collection */}
@@ -149,6 +146,36 @@ const FunctionBtns = ({
               setIsFav={setIsFav}
             />
           }
+        />
+      )}
+      {/* image feature */}
+      {!currentUser && (
+        <OpenModalButton
+          buttonText={
+            <>
+              <FontAwesomeIcon
+                icon="fa-solid fa-camera-retro"
+                className="display-bone"
+              />
+              Add photo
+            </>
+          }
+          // onItemClick={closeMenu}
+          modalComponent={<SignupFormModal />}
+        />
+      )}
+      {currentUser && (
+        <OpenModalButton
+          buttonText={
+            <>
+              <FontAwesomeIcon
+                icon="fa-solid fa-camera-retro"
+                className="display-bone"
+              />
+              Add photo
+            </>
+          }
+          modalComponent={<NewImageModal />}
         />
       )}
     </div>

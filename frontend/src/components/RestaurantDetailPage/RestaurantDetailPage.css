@@ -173,3 +173,23 @@
 #open-tag {
   color: #ffc107;
 }
+.all-photo-btn button {
+  position: absolute;
+  bottom: 26px;
+  right: 26px;
+  background-color: transparent;
+  border: 1px solid white;
+  color: white;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+}
+.all-photo-btn button:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+.all-photo-btn button .display-bone {
+  margin-right: 5px;
+}
+.all-photo-btn .display-bone + .fa-bone {
+  display: none;
+}

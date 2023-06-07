@@ -11,6 +11,7 @@ export const restaurantsSlice = createSlice({
     filteredRestaurants: null,
     searchResults: null,
     searchRecommend: [],
+    searchLocation: [],
     totalPages: 0,
   },
 
@@ -79,10 +80,11 @@ export const restaurantsSlice = createSlice({
     },
     searchRestaurants(state, action) {
       const keyword = action.payload.keyword.toLowerCase();
-      const location = action.payload.location.toLowerCase();
+      // const location = action.payload.location.toLowerCase();
       const allRestaurants = state.restaurants;
 
       const newRecommendations = [];
+      // const locations = [];
 
       Object.values(allRestaurants).forEach((restaurant) => {
         if (restaurant.categories.length > 0)
@@ -97,21 +99,33 @@ export const restaurantsSlice = createSlice({
           newRecommendations.push(restaurant.name);
         }
       });
+      // Object.values(allRestaurants).forEach((restaurant) => {
+      //   if (
+      //     restaurant.address &&
+      //     restaurant.address.toLowerCase().includes(location)
+      //   ) {
+      //     locations.push(restaurant.address);
+      //   }
+      // });
       // make the array unique
       state.searchRecommend = [...new Set(newRecommendations)];
+      // state.searchLocation = [...new Set(locations)];
+
       if (!keyword) state.searchRecommend = [];
       state.searchResults = Object.values(allRestaurants)
         .filter(
           (restaurant) =>
-            (!keyword ||
-              (restaurant.categories.length > 0 &&
-                restaurant.categories.some((category) =>
-                  category.title.toLowerCase().startsWith(keyword)
-                )) ||
-              restaurant.name.toLowerCase().startsWith(keyword)) &&
-            (!location ||
-              restaurant.address.toLowerCase().includes(location) ||
-              restaurant.zipcode.toString() === location)
+            !keyword ||
+            (restaurant.categories.length > 0 &&
+              restaurant.categories.some((category) =>
+                category.title.toLowerCase().startsWith(keyword)
+              )) ||
+            restaurant.name.toLowerCase().startsWith(keyword)
+          //  &&
+          // (!location ||
+          //   (restaurant.address &&
+          //     restaurant.address.toLowerCase().includes(location)) ||
+          //   restaurant.zipcode.toString() === location)
         )
         .reduce((obj, restaurant) => {
           obj[restaurant.id] = restaurant;

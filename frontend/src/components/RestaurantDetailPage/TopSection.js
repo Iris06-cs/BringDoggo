@@ -1,9 +1,16 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import haruMenu from "../../image/haru-menu.jpg";
 import convertTimeFormat from "../../utils/convertTimeFormat";
 import Ratings from "../AllRestaurantsPage/Ratings/Ratings";
+import OpenModalButton from "../OpenModalButton";
+import SignupFormModal from "../SignupFormModal";
+import NewImageModal from "./NewImageModal";
+import ImageModal from "./ImageModal";
 
 const TopSection = ({ restaurantDetail }) => {
+  const currentUser = useSelector((state) => state.session.user);
   const { name, avgRating, categories, dogReviewCount, price, hours } =
     restaurantDetail;
   const [openTime, setOpenTime] = useState();
@@ -66,6 +73,7 @@ const TopSection = ({ restaurantDetail }) => {
               <span key={idx}>{category.title} </span>
             ))}
         </div>
+
         {/* need to show open/closed + hours, if open show current day open time, if closed show next day open time, as a link to click to the hours section */}
         {openTime && (
           <p>
@@ -73,6 +81,20 @@ const TopSection = ({ restaurantDetail }) => {
             {openTime}
           </p>
         )}
+      </div>
+      <div className="all-photo-btn">
+        <OpenModalButton
+          buttonText={
+            <>
+              <FontAwesomeIcon
+                icon="fa-solid fa-camera-retro"
+                className="display-bone"
+              />
+              See All Photos
+            </>
+          }
+          modalComponent={<ImageModal />}
+        />
       </div>
     </div>
   );
