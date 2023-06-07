@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -6,8 +6,17 @@ import {
   setCurrentPage,
   submitSearch,
 } from "../../store/restaurants";
+// import {
+//   GoogleMap,
+//   useJsApiLoader,
+//   useLoadScript,
+// } from "@react-google-maps/api";
 
 const SearchBar = () => {
+  // const { isLoaded } = useLoadScript({
+  //   googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API,
+  //   libraries: ["places"],
+  // });
   const dispatch = useDispatch();
   const searchSuggestion = useSelector(
     (state) => state.restaurants.searchResults
@@ -15,15 +24,33 @@ const SearchBar = () => {
   const searchRecommend = useSelector(
     (state) => state.restaurants.searchRecommend
   );
+  const locationInputRef = useRef(null);
   const [keyword, setKeyword] = useState("");
-  const [location, setLocation] = useState("");
+  // const [location, setLocation] = useState("");
   const [isFocusKeyword, setIsFocusKeyword] = useState(false);
-  const [isFocusLocation, setIsFocusLocation] = useState(false);
+  // const [isFocusLocation, setIsFocusLocation] = useState(false);
   const [autocomplete, setAutocomplete] = useState([]);
 
+  // useEffect(() => {
+  //   if (isLoaded) {
+  //     const autocompleteLocation = new window.google.maps.places.Autocomplete(
+  //       locationInputRef.current
+  //     );
+  //     autocompleteLocation.addListener("place_changed", () => {
+  //       const place = autocompleteLocation.getPlace();
+  //       setLocation(place.formatted_address);
+  //     });
+  //   }
+  // }, [isLoaded]);
+
   useEffect(() => {
-    dispatch(searchRestaurants({ keyword, location }));
-  }, [dispatch, location, keyword]);
+    dispatch(
+      searchRestaurants({
+        keyword,
+        // , location
+      })
+    );
+  }, [dispatch, keyword]);
 
   useEffect(() => {
     if (searchRecommend.length > 5) {
@@ -37,10 +64,12 @@ const SearchBar = () => {
     e.preventDefault();
     dispatch(submitSearch());
     dispatch(setCurrentPage(1));
+    setIsFocusKeyword(false);
+    // setIsFocusLocation(false);
   };
   const chooseSuggestedWord = (e, word) => {
     e.preventDefault();
-    dispatch(searchRestaurants({ keyword: word, location }));
+    dispatch(searchRestaurants({ keyword: word }));
     dispatch(submitSearch());
     dispatch(setCurrentPage(1));
     setIsFocusKeyword(false);
@@ -73,7 +102,7 @@ const SearchBar = () => {
             // onBlur={(e) => setIsFocusKeyword(false)}
           />
         </div>
-        <div className="search-bar-input-container">
+        {/* <div className="search-bar-input-container">
           {autocomplete.length > 0 && (
             <input
               type="text"
@@ -88,19 +117,20 @@ const SearchBar = () => {
             />
           )}
           <input
+            ref={locationInputRef}
             type="text"
             value={location.toLocaleLowerCase()}
             placeholder="address, neighborhood, zip..."
             onChange={(e) => setLocation(e.target.value)}
             onFocus={(e) => setIsFocusLocation(true)}
-            onBlur={(e) => setIsFocusLocation(false)}
+            // onBlur={(e) => setIsFocusLocation(false)}
           />
-        </div>
+        </div> */}
         <button type="submit" id="searchbar-btn" className="general-button">
           <FontAwesomeIcon icon="fa-solid fa-magnifying-glass" />
         </button>
       </form>
-      {(keyword || location) && (
+      {keyword && (
         <div className="autocomplete-dropdown">
           <div className="search-dropdown">
             <div
@@ -122,16 +152,15 @@ const SearchBar = () => {
               </ul>
             </div>
           </div>
-          <div className="search-dropdown">
+          {/* <div className="search-dropdown">
             <div
               className={
                 "search-by-location" + (isFocusLocation ? "" : " hidden")
               }
             >
               <p>Best matches for you:location</p>
-              {/* current location */}
             </div>
-          </div>
+          </div> */}
         </div>
       )}
     </>
