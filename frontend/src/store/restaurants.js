@@ -7,9 +7,10 @@ export const restaurantsSlice = createSlice({
     restaurants: {}, //byId
     error: null,
     isLoading: false,
-    // totalRestaurants: null,
     displayRestaurants: {},
     filteredRestaurants: null,
+    searchResults: null,
+    searchRecommend: [],
     totalPages: 0,
   },
 
@@ -32,24 +33,26 @@ export const restaurantsSlice = createSlice({
     },
     filterRestaurantByRating(state, action) {
       const rating = action.payload;
-      const allRestaurants = state.restaurants;
-      state.filteredRestaurants = Object.fromEntries(
-        Object.entries(allRestaurants).filter(
-          ([_, restaurant]) => restaurant.avgRating >= rating
-        )
+      const allRestaurants = state.filteredRestaurants
+        ? state.filteredRestaurants
+        : state.restaurants;
+      state.filteredRestaurants = Object.values(allRestaurants).filter(
+        (restaurant) => restaurant.avgRating >= rating
       );
+
       state.totalPages = Math.ceil(
         Object.keys(state.filteredRestaurants).length / 20
       );
     },
     filterRestaurantByPrice(state, action) {
       const price = action.payload;
-      const allRestaurants = state.restaurants;
-      state.filteredRestaurants = Object.fromEntries(
-        Object.entries(allRestaurants).filter(
-          ([_, restaurant]) => restaurant.price === price
-        )
+      const allRestaurants = state.filteredRestaurants
+        ? state.filteredRestaurants
+        : state.restaurants;
+      state.filteredRestaurants = Object.values(allRestaurants).filter(
+        (restaurant) => restaurant.price === price
       );
+
       state.totalPages = Math.ceil(
         Object.keys(state.filteredRestaurants).length / 20
       );
@@ -74,9 +77,65 @@ export const restaurantsSlice = createSlice({
         return acc;
       }, {});
     },
+    searchRestaurants(state, action) {
+      const keyword = action.payload.keyword.toLowerCase();
+      const location = action.payload.location.toLowerCase();
+      const allRestaurants = state.restaurants;
+
+      const newRecommendations = [];
+
+      Object.values(allRestaurants).forEach((restaurant) => {
+        if (restaurant.categories.length > 0)
+          restaurant.categories.forEach((category) => {
+            if (category.title.toLowerCase().startsWith(keyword)) {
+              newRecommendations.push(category.title);
+            }
+          });
+      });
+      Object.values(allRestaurants).forEach((restaurant) => {
+        if (restaurant.name.toLowerCase().startsWith(keyword)) {
+          newRecommendations.push(restaurant.name);
+        }
+      });
+      // make the array unique
+      state.searchRecommend = [...new Set(newRecommendations)];
+      if (!keyword) state.searchRecommend = [];
+      state.searchResults = Object.values(allRestaurants)
+        .filter(
+          (restaurant) =>
+            (!keyword ||
+              (restaurant.categories.length > 0 &&
+                restaurant.categories.some((category) =>
+                  category.title.toLowerCase().startsWith(keyword)
+                )) ||
+              restaurant.name.toLowerCase().startsWith(keyword)) &&
+            (!location ||
+              restaurant.address.toLowerCase().includes(location) ||
+              restaurant.zipcode.toString() === location)
+        )
+        .reduce((obj, restaurant) => {
+          obj[restaurant.id] = restaurant;
+          return obj;
+        }, {});
+    },
+
+    submitSearch(state) {
+      state.filteredRestaurants = state.searchResults;
+      state.totalPages = Math.ceil(
+        Object.keys(state.filteredRestaurants).length / 20
+      );
+    },
     clearFilter(state) {
-      state.filteredRestaurants = null;
-      state.totalPages = Math.ceil(Object.keys(state.restaurants).length / 20);
+      state.filteredRestaurants = Object.keys(state.searchResults).length
+        ? state.searchResults
+        : null;
+      state.totalPages = Math.ceil(
+        Object.keys(
+          Object.keys(state.searchResults).length
+            ? state.searchResults
+            : state.restaurants
+        ).length / 20
+      );
     },
   },
 
@@ -178,5 +237,7 @@ export const {
   filterRestaurantByRating,
   setCurrentPage,
   clearFilter,
+  searchRestaurants,
+  submitSearch,
 } = restaurantsSlice.actions;
 export default restaurantsSlice.reducer;

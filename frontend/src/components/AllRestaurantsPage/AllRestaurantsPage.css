@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 .filter-sorter-all-container {
-  padding: 20px 0;
+  padding: 40px 0;
   border-bottom: 1px solid var(--border-light-color);
   position: fixed;
   z-index: 1;
@@ -14,7 +14,7 @@
 }
 .page-content-container {
   display: flex;
-  padding-top: 98px;
+  padding-top: 138px;
 }
 .allRestaurants-left-section {
   /* width: calc(2 / 3 * 100%); */

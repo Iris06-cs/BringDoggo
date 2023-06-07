@@ -1,6 +1,8 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
 from .favorite_restaurant import FavoriteRestaurant
+from sqlalchemy import or_,and_
+
 
 class Restaurant(db.Model):
     __tablename__='restaurants'
@@ -71,3 +73,29 @@ class Restaurant(db.Model):
             'reviews':[review.to_dict() for review in reviews]
 
         }
+
+# future for large dataset
+    # @classmethod
+    # def filtered_restaurants(cls,price=None,rating=None):
+    #     query=cls.query
+    #     if price and rating:
+    #         query=query.filter(and_(cls.price==price,cls.rating>=rating))
+    #     elif price:
+    #         query=query.filter(cls.price==price)
+    #     elif rating:
+    #         query=query.filter(cls.rating>=rating)
+
+    #     return query.all()
+
+
+    # @classmethod
+    # def search_restaurant_by_keyword(cls,keyword=None):
+    #     # keyword in category or in restaurant name
+    #     search_results=cls.query.filter(or_(cls.name.ilike(f'%{keyword}%'), cls.categories.op('@>')(db.cast([keyword], db.ARRAY(db.String())))).all())
+    #     return search_results
+
+
+    # @classmethod
+    # def search_restaurant_by_location(cls,location=None):
+    #     # location can be address neighborhood zipcode...
+    #     pass

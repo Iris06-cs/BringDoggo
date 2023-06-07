@@ -108,6 +108,13 @@ def update_or_create_restaurant(restaurant):
     db.session.commit()
     db.session.close()
 
+# future for large dataset
+# @restaurant_routes.route("/",methods=["GET"])
+# def get_filtered_restaurants():
+#     price = request.args.get('price', default=None)
+#     rating = request.args.get('rating', default=None)
+#     filtered_restaurants=Restaurant.filtered_restaurants(price,rating)
+#     return jsonify({"restaurants":filtered_restaurants})
 
 @restaurant_routes.route("/<restaurant_Id>",methods=["GET"])
 def get_restaurant_detail(restaurant_Id):
