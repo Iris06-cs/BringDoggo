@@ -23,6 +23,11 @@ function Navigation({ isLoaded }) {
             Restaurants
           </NavLink>
         </div>
+        <div>
+          <NavLink exact to="/about">
+            About
+          </NavLink>
+        </div>
         {/* other features */}
         {/* <div>Places</div>
         <div>Events</div> */}

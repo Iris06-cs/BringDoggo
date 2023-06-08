@@ -68,45 +68,47 @@ const AllRestaurantsPage = () => {
 
   return (
     <div className="page-container">
-      <div className="allRestaurants-left-section">
-        <FilterTabs
-          setSelectedRating={setSelectedRating}
-          selectedRating={selectedRating}
-          selectedPrice={selectedPrice}
-          setSelectedPrice={setSelectedPrice}
-        />
-        <div className="restaurant-cards-container">
-          {pageNumber > 0 ? (
-            orderedRestaurantIds
-              .map((id) => displayedRestaurants[id])
-              .filter((restaurant) => restaurant)
-              .map((restaurant, idx) => (
-                <RestaurantCard
-                  key={idx}
-                  restaurant={restaurant}
-                  idx={displayRestaurantIdx(idx)}
-                />
-              ))
-          ) : (
-            <div>
-              <h3>No Results Found</h3>
-              <p>
-                Please try to modify or clear your filter setting to see more
-                results.
-              </p>
-            </div>
+      <FilterTabs
+        setSelectedRating={setSelectedRating}
+        selectedRating={selectedRating}
+        selectedPrice={selectedPrice}
+        setSelectedPrice={setSelectedPrice}
+      />
+      <div className="page-main-content-container">
+        <div className="allRestaurants-left-section">
+          <div className="restaurant-cards-container">
+            {pageNumber > 0 ? (
+              orderedRestaurantIds
+                .map((id) => displayedRestaurants[id])
+                .filter((restaurant) => restaurant)
+                .map((restaurant, idx) => (
+                  <RestaurantCard
+                    key={idx}
+                    restaurant={restaurant}
+                    idx={displayRestaurantIdx(idx)}
+                  />
+                ))
+            ) : (
+              <div>
+                <h3>No Results Found</h3>
+                <p>
+                  Please try to modify or clear your filter setting to see more
+                  results.
+                </p>
+              </div>
+            )}
+          </div>
+          {pageNumber > 0 && (
+            <PageNumbers
+              pageNumber={pageNumber}
+              onPageChange={handlePageChange}
+              currentPage={currentPage}
+            />
           )}
         </div>
-        {pageNumber > 0 && (
-          <PageNumbers
-            pageNumber={pageNumber}
-            onPageChange={handlePageChange}
-            currentPage={currentPage}
-          />
-        )}
-      </div>
-      <div className="allRestaurants-right-section">
-        <Map currentPage={currentPage} />
+        <div className="allRestaurants-right-section">
+          <Map currentPage={currentPage} />
+        </div>
       </div>
     </div>
   );

@@ -1,6 +1,8 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
 from .favorite_restaurant import FavoriteRestaurant
+from sqlalchemy import or_,and_
+
 
 class Restaurant(db.Model):
     __tablename__='restaurants'
@@ -42,9 +44,12 @@ class Restaurant(db.Model):
         Convert the Restaurant object to a dictionary representation.
         """
         reviews=self.restaurant_reviews
+        images=self.restaurant_images
         avg_rating=0
         if reviews:
             avg_rating=round(sum(review.stars for review in reviews)/len(reviews),1)
+        preview_img = next((img for img in images if img.preview == True), None)
+        preview_img_dict = preview_img.to_dict() if preview_img is not None else None
 
         return {
             'id': self.id,
@@ -68,6 +73,32 @@ class Restaurant(db.Model):
             'dogReviewCount':len(self.restaurant_reviews),
             'avgRating':avg_rating,
             # 'totalApiResults':self.total_api_results,
-            'reviews':[review.to_dict() for review in reviews]
-
+            'reviews':[review.to_dict() for review in reviews],
+            'previewImg':preview_img_dict
         }
+
+# future for large dataset
+    # @classmethod
+    # def filtered_restaurants(cls,price=None,rating=None):
+    #     query=cls.query
+    #     if price and rating:
+    #         query=query.filter(and_(cls.price==price,cls.rating>=rating))
+    #     elif price:
+    #         query=query.filter(cls.price==price)
+    #     elif rating:
+    #         query=query.filter(cls.rating>=rating)
+
+    #     return query.all()
+
+
+    # @classmethod
+    # def search_restaurant_by_keyword(cls,keyword=None):
+    #     # keyword in category or in restaurant name
+    #     search_results=cls.query.filter(or_(cls.name.ilike(f'%{keyword}%'), cls.categories.op('@>')(db.cast([keyword], db.ARRAY(db.String())))).all())
+    #     return search_results
+
+
+    # @classmethod
+    # def search_restaurant_by_location(cls,location=None):
+    #     # location can be address neighborhood zipcode...
+    #     pass
