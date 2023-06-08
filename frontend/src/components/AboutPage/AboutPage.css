@@ -1,0 +1,42 @@
+.profile-section-container,
+.about-project-section,
+.about-us-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 50px;
+  padding: 30px 0;
+  border-bottom: rgb(225, 223, 223) 1px solid;
+}
+.about-us-section {
+  border-bottom: none;
+}
+.profile-img-outer {
+  min-width: 200px;
+}
+
+.profile-img-container {
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  margin: 22px 0 2em 0;
+  border-radius: 50%;
+}
+#profile-img {
+  width: 100%;
+  height: auto;
+}
+
+.about-page h2 {
+  font-size: 30px;
+}
+.about-sublogo {
+  width: 280px;
+  float: right;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+.about-dogs {
+  width: 300px;
+  border-radius: 10px;
+}
