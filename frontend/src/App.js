@@ -16,6 +16,7 @@ import AddReviewPage from "./components/AddReviewPage";
 import UserProfilePage from "./components/UserProfilePage";
 import { getAllRestaurants } from "./store/restaurants";
 import { getAllRestaurantImages } from "./store/restaurantImage";
+import AboutPage from "./components/AboutPage";
 // import UserReviews from "./components/UserProfilePage/UserReviews";
 // import UserFavorites from "./components/UserProfilePage/UserFavorites";
 
@@ -62,6 +63,9 @@ function App() {
             </Route>
             <Route exact path={["/", "/restaurants"]}>
               <AllRestaurantsPage />
+            </Route>
+            <Route exact path="/about">
+              <AboutPage />
             </Route>
           </Switch>
         )}
