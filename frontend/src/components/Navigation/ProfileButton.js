@@ -6,6 +6,7 @@ import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 import { login, logout } from "../../store/session";
 import { NavLink, useHistory } from "react-router-dom";
+import { getCurrentUserFavs } from "../../store/favorites";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -40,6 +41,7 @@ function ProfileButton({ user }) {
   const handleLogout = async (e) => {
     e.preventDefault();
     await dispatch(logout());
+    await dispatch(getCurrentUserFavs());
     history.push("/");
   };
   const closeMenu = () => setShowMenu(false);

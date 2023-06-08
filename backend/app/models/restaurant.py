@@ -44,9 +44,12 @@ class Restaurant(db.Model):
         Convert the Restaurant object to a dictionary representation.
         """
         reviews=self.restaurant_reviews
+        images=self.restaurant_images
         avg_rating=0
         if reviews:
             avg_rating=round(sum(review.stars for review in reviews)/len(reviews),1)
+        preview_img = next((img for img in images if img.preview == True), None)
+        preview_img_dict = preview_img.to_dict() if preview_img is not None else None
 
         return {
             'id': self.id,
@@ -70,8 +73,8 @@ class Restaurant(db.Model):
             'dogReviewCount':len(self.restaurant_reviews),
             'avgRating':avg_rating,
             # 'totalApiResults':self.total_api_results,
-            'reviews':[review.to_dict() for review in reviews]
-
+            'reviews':[review.to_dict() for review in reviews],
+            'previewImg':preview_img_dict
         }
 
 # future for large dataset

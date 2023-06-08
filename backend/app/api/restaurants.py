@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 from flask_login import login_required,current_user
 from ..forms import ReviewForm,RestaurantImageForm
 from ..utils.error_handler import ValidationError,NotFoundError,ForbiddenError,validation_errors_to_error_messages
-
+from ..utils.aws_helper import upload_file_to_s3,get_unique_filename
 
 restaurant_routes=Blueprint('restaurants',__name__)
 
@@ -22,7 +22,7 @@ def get_dog_friendly_restaurants_sd():
     results=[]
     # total=0
 
-    while page<=10:
+    while page<=7:
         offset=limit * (page-1)
         params = {
             "term": "restaurants dog allowed dog friendly",
@@ -106,7 +106,7 @@ def update_or_create_restaurant(restaurant):
         # existing_restaurant.total_api_results = total_results
 
     db.session.commit()
-    db.session.close()
+    # db.session.close()
 
 # future for large dataset
 # @restaurant_routes.route("/",methods=["GET"])
@@ -142,7 +142,7 @@ def get_restaurant_detail(restaurant_Id):
         existing_restaurant.fetched_at=datetime.utcnow()
 
         db.session.commit()
-        db.session.close()
+        # db.session.close()
     updated_restaurant=Restaurant.query.filter_by(id=restaurant_Id).first()
     return jsonify(updated_restaurant.to_dict()),200
 
@@ -190,7 +190,7 @@ def write_review(restaurantId):
         )
         db.session.add(review)
         db.session.commit()
-        db.session.close()
+        # db.session.close()
         return jsonify(review.to_dict()),201
     # Handle 400 ValidationError
 
@@ -205,14 +205,20 @@ def add_image_to_restaurant(restaurantId):
     Add image to restaurant by id
     """
     restaurant = Restaurant.query.get(restaurantId)
+    print(restaurant,restaurantId,"208")
     if not restaurant:
         raise NotFoundError(f"Restaurant with ID {restaurantId} not found")
     form=RestaurantImageForm()
     form['csrf_token'].data = request.cookies['csrf_token']
+
     if form.validate_on_submit:
+        image = form.data["image"]
+        image.filename = get_unique_filename(image.filename)
+        upload = upload_file_to_s3(image)
+        imageUrl = upload.get("url")
         restaurant_image=RestaurantImage(
             caption=form.data['caption'],
-            url=form.data['url'],
+            url=imageUrl,
             preview=form.data['preview'],
             created_at=datetime.utcnow(),
             updated_at=datetime.utcnow(),
@@ -221,7 +227,7 @@ def add_image_to_restaurant(restaurantId):
         )
         db.session.add(restaurant_image)
         db.session.commit()
-        db.session.close()
+        # db.session.close()
         return jsonify(restaurant_image.to_dict()),201
     # Handle 400 ValidationError
     raise ValidationError(f"Validation Error: {validation_errors_to_error_messages(form.errors)}")
@@ -232,5 +238,5 @@ def clear_cache():
     # Delete all records in the Restaurant table
     db.session.query(Restaurant).delete()
     db.session.commit()
-    db.session.close()
+    # db.session.close()
     return jsonify({"message": "Cache cleared successfully"}), 200

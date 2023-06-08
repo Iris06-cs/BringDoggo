@@ -35,32 +35,43 @@ const FunctionBtns = ({
 
     history.push(path + param);
   };
+  const renderOpenModalButton = (buttonText, modalComponent) => (
+    <OpenModalButton
+      buttonText={
+        <>
+          {buttonText === "Write a review" && (
+            <FontAwesomeIcon icon="fa-solid fa-bone" className="display-bone" />
+          )}
+          {buttonText.includes("Favorite") && (
+            <FontAwesomeIcon
+              icon="fa-solid fa-heart"
+              className="display-bone"
+            />
+          )}
+          {buttonText === "Add photo" && (
+            <FontAwesomeIcon
+              icon="fa-solid fa-camera-retro"
+              className="display-bone"
+            />
+          )}
 
+          {buttonText}
+        </>
+      }
+      modalComponent={modalComponent}
+    />
+  );
   return (
     <div className="func-btns-container">
       {/* if has login user && without review||no login user */}
-      {!currentUser && (
-        <OpenModalButton
-          buttonText={
-            <>
-              <FontAwesomeIcon
-                icon="fa-solid fa-bone"
-                className="display-bone"
-              />
-              Write a review
-            </>
-          }
-          // onItemClick={closeMenu}
-          modalComponent={<SignupFormModal />}
-        />
-      )}
+      {!currentUser &&
+        renderOpenModalButton("Write a review", <SignupFormModal />)}
       {currentUser && !hasReview && (
         <button className="write-review-btn" onClick={handleCreateReview}>
           <FontAwesomeIcon icon="fa-solid fa-bone" />
           Write a review
         </button>
       )}
-
       {hasReview && (
         <button className="write-review-btn" onClick={handleUpdateReview}>
           <FontAwesomeIcon icon="fa-solid fa-bone" />
@@ -71,64 +82,47 @@ const FunctionBtns = ({
       {/* no login user，on click login popup */}
       {/* user logged in, has not added to fav, onclick popup add to/create collection popup */}
       {/* user logged in,already added to fav,button added fav, onclick remove or change to other collection, or create new collection */}
-      {!currentUser && (
-        <OpenModalButton
-          buttonText={
-            <>
-              <FontAwesomeIcon
-                icon="fa-solid fa-heart"
-                className="display-bone"
-              />
-              Favorite
-            </>
-          }
-          // onItemClick={closeMenu}
-          modalComponent={<SignupFormModal />}
-        />
-      )}
-      {isFav && (
-        <OpenModalButton
-          buttonText={
-            <>
-              <FontAwesomeIcon
-                icon="fa-solid fa-heart"
-                className="display-bone"
-              />
-              Added Favorite
-            </>
-          }
-          // onItemClick={closeMenu}
-          modalComponent={
-            <FavoriteCollectionModal
-              restaurantId={restaurantId}
-              setIsFav={setIsFav}
-            />
-          }
-        />
-      )}
-      {currentUser && !isFav && !Object.values(currUserFavs).length && (
-        <OpenModalButton
-          buttonText={
-            <>
-              <FontAwesomeIcon
-                icon="fa-solid fa-heart"
-                className="display-bone"
-              />
-              Favorite
-            </>
-          }
-          modalComponent={
-            <NewFavoriteCollectionForm
-              restaurantId={restaurantId}
-              setIsFav={setIsFav}
-            />
-          }
-        />
-        // <FontAwesomeIcon icon="fa-solid fa-heart" />
-        // Favorite
-      )}
+      {!currentUser && renderOpenModalButton("Favorite", <SignupFormModal />)}
+      {isFav &&
+        renderOpenModalButton(
+          "Added Favorite",
+          <FavoriteCollectionModal
+            restaurantId={restaurantId}
+            setIsFav={setIsFav}
+          />
+        )}
+      {/* current user does not have existing collections */}
+      {currentUser &&
+        !isFav &&
+        !Object.values(currUserFavs).length &&
+        // <OpenModalButton
+        //   buttonText={
+        //     <>
+        //       <FontAwesomeIcon
+        //         icon="fa-solid fa-heart"
+        //         className="display-bone"
+        //       />
+        //       Favorite
+        //     </>
+        //   }
+        //   modalComponent={
+        //     <NewFavoriteCollectionForm
+        //       restaurantId={restaurantId}
+        //       setIsFav={setIsFav}
+        //     />
 
-      {!isFav && Object.values(currUserFavs).length > 0 && (
+        //     )
+        //   }
+        // />
+        renderOpenModalButton(
+          "Favorite",
+          <NewFavoriteCollectionForm
+            restaurantId={restaurantId}
+            setIsFav={setIsFav}
+          />
+        )}
+      {/* current user has existing collections */}
+      {currentUser && !isFav && Object.values(currUserFavs).length > 0 && (
         <OpenModalButton
           buttonText={
             <>
@@ -149,35 +143,12 @@ const FunctionBtns = ({
         />
       )}
       {/* image feature */}
-      {!currentUser && (
-        <OpenModalButton
-          buttonText={
-            <>
-              <FontAwesomeIcon
-                icon="fa-solid fa-camera-retro"
-                className="display-bone"
-              />
-              Add photo
-            </>
-          }
-          // onItemClick={closeMenu}
-          modalComponent={<SignupFormModal />}
-        />
-      )}
-      {currentUser && (
-        <OpenModalButton
-          buttonText={
-            <>
-              <FontAwesomeIcon
-                icon="fa-solid fa-camera-retro"
-                className="display-bone"
-              />
-              Add photo
-            </>
-          }
-          modalComponent={<NewImageModal />}
-        />
-      )}
+      {!currentUser && renderOpenModalButton("Add photo", <SignupFormModal />)}
+      {currentUser &&
+        renderOpenModalButton(
+          "Add photo",
+          <NewImageModal restaurantId={restaurantId} />
+        )}
     </div>
   );
 };

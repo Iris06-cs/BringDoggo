@@ -5,7 +5,8 @@ import { NavLink } from "react-router-dom";
 // import { useEffect, useState } from "react";
 
 const RestaurantCard = ({ restaurant, idx }) => {
-  const { id, name, price, dogReviewCount, avgRating } = restaurant;
+  const { id, name, price, dogReviewCount, avgRating, previewImg } = restaurant;
+  console.log(previewImg, "9");
   // const [neighborhood, setNeighborhood] = useState();
   // const googleAPI = process.env.REACT_APP_GOOGLE_MAPS_API;
   // const getNeighborhood = async (lat, lng) => {
@@ -41,18 +42,32 @@ const RestaurantCard = ({ restaurant, idx }) => {
   // console.log(neighborhood);
   return (
     <div className="restaurant-card-container">
-      {/* <img alt="restaurant" src={}/> */}
-      <img
-        alt="*"
-        src={haruMenu}
-        style={{
-          width: "100%",
-          height: "100%",
-          objectFit: "fill",
-          objectPosition: "top",
-          zIndex: "-1",
-        }}
-      />
+      {previewImg && (
+        <img
+          alt="restaurant"
+          src={previewImg.url}
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "fill",
+            objectPosition: "top",
+            zIndex: "-1",
+          }}
+        />
+      )}
+      {!previewImg && (
+        <img
+          alt="*"
+          src={haruMenu}
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "fill",
+            objectPosition: "top",
+            zIndex: "-1",
+          }}
+        />
+      )}
       <div className="restaurant-info-container">
         <NavLink to={`/restaurants/${id}`} className="restaurant-name">
           {idx}.{name}
