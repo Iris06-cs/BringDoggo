@@ -4,14 +4,14 @@
 }
 /* top section */
 .page-top-section {
-  height: 250px;
+  height: fit-content;
   box-sizing: border-box;
   position: relative;
   /* background-color: rgba(97, 97, 97, 0.5); */
-  background-image: url("../../image/haru-menu.jpg");
+  /* background-image: url("../../image/haru-menu.jpg"); */
   background-position: bottom;
   background-size: cover;
-  padding-left: 20px;
+  /* padding-left: 20px; */
 }
 .restaurant-detail-info-container {
   box-sizing: border-box;
@@ -21,6 +21,7 @@
   font-weight: bold;
   bottom: 10px;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  padding-left: 20px;
 }
 .info-row-container {
   display: flex;
@@ -177,19 +178,34 @@
   position: absolute;
   bottom: 26px;
   right: 26px;
-  background-color: transparent;
+  background-color: rgb(221, 219, 219);
   border: 1px solid white;
   color: white;
   padding: 10px;
   font-size: 16px;
   border-radius: 5px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 0 14px rgba(97, 97, 97, 0.5);
 }
 .all-photo-btn button:hover {
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(221, 219, 219, 0.5);
 }
 .all-photo-btn button .display-bone {
   margin-right: 5px;
 }
 .all-photo-btn .display-bone + .fa-bone {
   display: none;
+}
+.image-container {
+  display: flex;
+  overflow: hidden;
+  background-color: rgba(213, 212, 212, 0.3);
+}
+.image-container img {
+  flex-grow: 1;
+  width: 300px;
+  height: 400px;
+  object-fit: contain;
+  object-position: left;
+  z-index: -1;
 }
