@@ -1,9 +1,17 @@
 .restaurant-card-container {
+  width: 100%;
+  border-bottom: 1px solid rgb(225, 223, 223);
+  padding: 20px 0;
+}
+.restaurant-card-container:last-child {
+  border-bottom: none;
+}
+.restaurant-card {
   /* flex: 1 0 calc(50% - 15px); */
   /* max-width: 350px; */
   position: relative;
   box-sizing: border-box;
-  margin-bottom: 15px;
+  /* margin-bottom: 15px; */
   border-radius: 5px;
   overflow: hidden;
   display: flex;
@@ -11,7 +19,7 @@
   gap: 20px;
   width: 100%;
 }
-.restaurant-card-container:hover {
+.restaurant-card:hover {
   box-shadow: 0 0 14px rgba(0, 0, 0, 0.6);
 }
 .restaurant-card-img {
@@ -20,7 +28,7 @@
 
 .restaurant-card-img img {
   width: 250px;
-  height: 100%;
+  aspect-ratio: 3/4;
   object-fit: fill;
   object-position: top;
   border-radius: 5px;

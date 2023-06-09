@@ -55,9 +55,9 @@ const RestaurantCard = ({ restaurant, idx, currentHover, setCurrentHover }) => {
     history.push(`/restaurants/${id}`);
   };
   return (
-    <>
+    <div className="restaurant-card-container">
       <div
-        className="restaurant-card-container"
+        className="restaurant-card"
         onClick={handleCardClick}
         onMouseOver={() => setCurrentHover(id)}
         onMouseOut={() => setCurrentHover(null)}
@@ -96,7 +96,7 @@ const RestaurantCard = ({ restaurant, idx, currentHover, setCurrentHover }) => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 export default RestaurantCard;
