@@ -17,7 +17,6 @@ const RatingBone = ({
   const onMouseOut = () => setHoverRating(0);
 
   const toolkitText = ["Great", "Good", "Ok", "Not Good", "Bad"];
-  console.log(currRating);
 
   const displayBones = (hoverRating, currRating, selectedRating) => {
     let res;

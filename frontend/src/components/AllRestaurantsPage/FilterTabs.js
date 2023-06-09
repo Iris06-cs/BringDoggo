@@ -28,7 +28,7 @@ const FilterTabs = ({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-  console.log(sortBy.length, "15");
+
   return (
     <div className="filter-sorter-all-container">
       <div className="filter-all-container">

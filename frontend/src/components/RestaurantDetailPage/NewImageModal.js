@@ -38,16 +38,13 @@ const NewImageModal = ({ restaurantId }) => {
 
   const handleFomrSubmit = async (e) => {
     e.preventDefault();
-    console.log(caption, isPreview);
     let formData = new FormData();
     formData.append("caption", caption);
     formData.append("preview", isPreview);
     formData.append("image", image);
     formData.append("user_id", currUser.id);
     formData.append("restaurant_id", restaurantId);
-    for (var pair of formData.entries()) {
-      console.log(pair[0] + ", " + pair[1]);
-    }
+
     setImageLoading(true);
     setIsSubmited(true);
     await dispatch(addRestaurantImage(formData));
@@ -61,7 +58,6 @@ const NewImageModal = ({ restaurantId }) => {
     closeModal();
     history.push(`/restaurants/${restaurantId}`);
   };
-  console.log(restaurantId, "52");
   if (!isLoaded || imageLoading) return <LoadingSpinner />;
   return (
     <div>

@@ -21,7 +21,6 @@ export const restaurantImageSlice = createSlice({
         );
       })
       .addCase(getAllRestaurantImages.fulfilled, (state, action) => {
-        console.log(action.payload);
         action.payload.forEach((image) => {
           state.imageById[image.id] = image;
         });
@@ -43,9 +42,8 @@ export const getAllRestaurantImages = createAsyncThunk(
 export const addRestaurantImage = createAsyncThunk(
   "restaurantImages/addRestaurantImage",
   async (formData, { rejectWithValue }) => {
-    console.log(formData.entries(), "45");
     const restaurantId = formData.get("restaurant_id");
-    console.log(restaurantId);
+
     const res = await fetch(`/api/restaurants/${restaurantId}/images`, {
       method: "POST",
       body: formData,

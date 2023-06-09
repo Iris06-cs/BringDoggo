@@ -91,7 +91,6 @@ const AddReviewPage = () => {
     history.push(`/restaurants/${restaurantId}`);
   };
   if (isLoading) return <LoadingSpinner />;
-  console.log(reviewInput, isUpdate);
   return (
     <div className="add-review-form-container">
       <h1>{decodedRestaurantName}</h1>

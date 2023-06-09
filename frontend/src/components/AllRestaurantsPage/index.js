@@ -29,7 +29,7 @@ const AllRestaurantsPage = () => {
   const [selectedRating, setSelectedRating] = useState();
   const [selectedPrice, setSelectedPrice] = useState();
   const [orderedRestaurantIds, setOrderedRestaurantIds] = useState([]);
-
+  const [currentHover, setCurrentHover] = useState(null);
   const [sortBy, setSortBy] = useState("");
   useEffect(() => {
     // fetch initial page
@@ -37,7 +37,6 @@ const AllRestaurantsPage = () => {
   }, [dispatch, loadingRestaurants]);
 
   useEffect(() => {
-    console.log("changes");
     let ids = Object.keys(allRestaurants);
     if (sortBy === "highestRating") {
       ids.sort(
@@ -101,6 +100,8 @@ const AllRestaurantsPage = () => {
                     key={idx}
                     restaurant={restaurant}
                     idx={displayRestaurantIdx(idx)}
+                    currentHover={currentHover}
+                    setCurrentHover={setCurrentHover}
                   />
                 ))
             ) : (
@@ -122,7 +123,11 @@ const AllRestaurantsPage = () => {
           )}
         </div>
         <div className="allRestaurants-right-section">
-          <Map currentPage={currentPage} />
+          <Map
+            currentPage={currentPage}
+            currentHover={currentHover}
+            setCurrentHover={setCurrentHover}
+          />
         </div>
       </div>
     </div>
