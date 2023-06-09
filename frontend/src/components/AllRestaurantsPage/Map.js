@@ -9,7 +9,7 @@ import {
 import Ratings from "./Ratings/Ratings";
 import { useHistory } from "react-router-dom";
 
-const Map = ({ currentPage }) => {
+const Map = ({ currentPage, currentHover, setCurrentHover }) => {
   const displayedRestaurants = useSelector(
     (state) => state.restaurants.displayRestaurants
   );
@@ -39,11 +39,13 @@ const Map = ({ currentPage }) => {
   const displayRestaurantIdx = (idx) => {
     return idx + 1 + (currentPage - 1) * 20;
   };
-  const markerIcon = (idx) => {
+  const markerIcon = (idx, currentHover) => {
+    const displayColor = currentHover ? "e1dfdf" : "0db9f5";
+    const displayTextColor = currentHover ? "616161" : "ffffff";
     const markerIconInfo = {
       url: `https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${displayRestaurantIdx(
         idx
-      )}|dd0a35|ffffff`, // URL of the marker image
+      )}|${displayColor}|${displayTextColor}`, // URL of the marker image
       scaledSize: new window.google.maps.Size(30, 30),
     };
     return markerIconInfo;
@@ -69,7 +71,7 @@ const Map = ({ currentPage }) => {
                 position={{ lat: restaurant.lat, lng: restaurant.lng }}
                 // title={restaurant.name}
                 streetView={false}
-                icon={markerIcon(idx)}
+                icon={markerIcon(idx, currentHover === restaurant.id)}
                 onMouseOver={() => setActiveMarker(restaurant)}
                 onMouseOut={() => setActiveMarker(null)}
                 onClick={() => handleMarkerClick(restaurant.id)}

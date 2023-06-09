@@ -1,17 +1,33 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { useDispatch } from "react-redux";
-// import { filterRestaurantByRating } from "../../store/restaurants";
+import { useState, useRef, useEffect } from "react";
 
 const FilterTabs = ({
   setSelectedRating,
   selectedRating,
   selectedPrice,
   setSelectedPrice,
+  sortBy,
+  setSortBy,
 }) => {
   const toolkitText = ["5 only", "4 & up", "3 & up", "2 & up", "1 & up"];
   const onClickIcon = (bones) => {
     setSelectedRating(bones);
   };
+  const [option, setOption] = useState(false);
+  const dropdownRef = useRef();
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setOption(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    // Remove event listener on cleanup
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <div className="filter-sorter-all-container">
@@ -88,6 +104,62 @@ const FilterTabs = ({
               <FontAwesomeIcon icon="fa-solid fa-circle-xmark" />
             </button>
           )}
+        </div>
+      </div>
+      {/* <div>
+        <label htmlFor="sort-options">Sort:</label>
+        <select onChange={(e) => setSortBy(e.target.value)} id="sort-options">
+          <option value="">Yelp Popular</option>
+          <option value="mostRated">Most Rated</option>
+          <option value="highestRating">Highest Rating</option>
+        </select>
+      </div> */}
+      <div className="custom-selection">
+        <div className="curr-sort-by" onClick={() => setOption(true)}>
+          Sort:
+          {sortBy === "mostRated" && (
+            <span className="selected-sort">Most Rated</span>
+          )}
+          {sortBy === "highestRating" && (
+            <span className="selected-sort">Highest Rating</span>
+          )}
+          {sortBy === "" && <span className="selected-sort">Yelp Popular</span>}
+        </div>
+        <div
+          ref={dropdownRef}
+          className={"sort-options" + (option ? "" : " hidden")}
+        >
+          <div
+            onClick={() => {
+              setSortBy("");
+              setOption(false);
+            }}
+          >
+            Yelp Popular
+            {sortBy === "" && <FontAwesomeIcon icon="fa-solid fa-check" />}
+          </div>
+          <div
+            onClick={() => {
+              setSortBy("mostRated");
+              setOption(false);
+            }}
+          >
+            Most Rated
+            {sortBy === "mostRated" && (
+              <FontAwesomeIcon icon="fa-solid fa-check" />
+            )}
+          </div>
+          <div
+            onClick={() => {
+              setSortBy("highestRating");
+              setOption(false);
+            }}
+          >
+            Highest Rating
+            {sortBy === "highestRating" && (
+              <FontAwesomeIcon icon="fa-solid fa-check" />
+            )}
+          </div>
         </div>
       </div>
       <div className="sorter-all-container"></div>

@@ -1,27 +1,49 @@
 .restaurant-card-container {
-  flex: 1 0 calc(50% - 15px);
-  max-width: 350px;
+  /* flex: 1 0 calc(50% - 15px); */
+  /* max-width: 350px; */
   position: relative;
   box-sizing: border-box;
   margin-bottom: 15px;
   border-radius: 5px;
   overflow: hidden;
+  display: flex;
+  /* justify-content: space-between; */
+  gap: 20px;
+  width: 100%;
 }
 .restaurant-card-container:hover {
   box-shadow: 0 0 14px rgba(0, 0, 0, 0.6);
 }
+.restaurant-card-img {
+  max-width: 250px;
+}
+
+.restaurant-card-img img {
+  width: 250px;
+  height: 100%;
+  object-fit: fill;
+  object-position: top;
+  border-radius: 5px;
+}
 .restaurant-info-container {
   box-sizing: border-box;
-  position: absolute;
+  /* position: absolute; */
   /* z-index: 1; */
-  color: white;
+  /* color: white; */
   font-weight: bold;
-  bottom: 10px;
+  /* bottom: 10px; */
   font-size: 25px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  /* text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); */
+  /* max-width: 60%; */
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: var(--content-text-color);
 }
 .restaurant-info-container a {
-  color: white;
+  text-shadow: 2px 2px 4px rgba(107, 103, 103, 0.8);
+  color: var(--content-text-color);
   font-weight: bold;
   padding: 10px;
   box-sizing: border-box;
@@ -32,7 +54,7 @@
   text-underline-offset: 5px;
 }
 .restaurant-info-container a:visited {
-  color: white;
+  color: var(--content-text-color);
 }
 .restaurant-price {
   color: #ffc107;
@@ -44,4 +66,28 @@
 .rating-count-container {
   display: flex;
   align-items: center;
+  position: relative;
+  padding-left: 10px;
+}
+.rating-count-container .rating-icon-img-container {
+  position: absolute;
+  left: 35px;
+}
+.rating-count-container p {
+  position: absolute;
+  left: 140px;
+}
+
+.open-tag {
+  color: #ffc107;
+}
+.info-item {
+  padding-left: 10px;
+  font-size: 16px;
+}
+.info-item .category {
+  background-color: rgba(213, 212, 212, 0.6);
+  margin-right: 5px;
+  padding: 2px;
+  border-radius: 5px;
 }

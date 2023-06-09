@@ -29,15 +29,27 @@ const AllRestaurantsPage = () => {
   const [selectedRating, setSelectedRating] = useState();
   const [selectedPrice, setSelectedPrice] = useState();
   const [orderedRestaurantIds, setOrderedRestaurantIds] = useState([]);
-
+  const [currentHover, setCurrentHover] = useState(null);
+  const [sortBy, setSortBy] = useState("");
   useEffect(() => {
     // fetch initial page
     if (!loadingRestaurants) dispatch(setCurrentPage(1));
   }, [dispatch, loadingRestaurants]);
 
   useEffect(() => {
-    setOrderedRestaurantIds(Object.keys(allRestaurants));
-  }, [allRestaurants]);
+    let ids = Object.keys(allRestaurants);
+    if (sortBy === "highestRating") {
+      ids.sort(
+        (b, a) => allRestaurants[a].avgRating - allRestaurants[b].avgRating
+      );
+    } else if (sortBy === "mostRated") {
+      ids.sort(
+        (b, a) =>
+          allRestaurants[a].dogReviewCount - allRestaurants[b].dogReviewCount
+      );
+    }
+    setOrderedRestaurantIds(ids);
+  }, [allRestaurants, sortBy]);
 
   useEffect(() => {
     if (!selectedPrice && !selectedRating) {
@@ -68,14 +80,16 @@ const AllRestaurantsPage = () => {
 
   return (
     <div className="page-container">
-      <FilterTabs
-        setSelectedRating={setSelectedRating}
-        selectedRating={selectedRating}
-        selectedPrice={selectedPrice}
-        setSelectedPrice={setSelectedPrice}
-      />
       <div className="page-main-content-container">
         <div className="allRestaurants-left-section">
+          <FilterTabs
+            setSelectedRating={setSelectedRating}
+            selectedRating={selectedRating}
+            selectedPrice={selectedPrice}
+            setSelectedPrice={setSelectedPrice}
+            sortBy={sortBy}
+            setSortBy={setSortBy}
+          />
           <div className="restaurant-cards-container">
             {pageNumber > 0 ? (
               orderedRestaurantIds
@@ -86,6 +100,8 @@ const AllRestaurantsPage = () => {
                     key={idx}
                     restaurant={restaurant}
                     idx={displayRestaurantIdx(idx)}
+                    currentHover={currentHover}
+                    setCurrentHover={setCurrentHover}
                   />
                 ))
             ) : (
@@ -107,7 +123,11 @@ const AllRestaurantsPage = () => {
           )}
         </div>
         <div className="allRestaurants-right-section">
-          <Map currentPage={currentPage} />
+          <Map
+            currentPage={currentPage}
+            currentHover={currentHover}
+            setCurrentHover={setCurrentHover}
+          />
         </div>
       </div>
     </div>

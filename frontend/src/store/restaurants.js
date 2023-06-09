@@ -27,7 +27,7 @@ export const restaurantsSlice = createSlice({
         (state.currentPage - 1) * 20,
         (state.currentPage - 1) * 20 + 20
       );
-      console.log(allRestaurants, "27", state.filteredRestaurants);
+
       state.displayRestaurants = restaurantToDisplay.reduce((accu, curr) => {
         return { ...accu, [curr.id]: curr };
       }, {});
@@ -57,26 +57,6 @@ export const restaurantsSlice = createSlice({
       state.totalPages = Math.ceil(
         Object.keys(state.filteredRestaurants).length / 20
       );
-    },
-    sortRestaurantByHighestRating(state) {
-      const allRestaurants = Object.values(state.restaurants);
-      const sortedRestaurants = allRestaurants.sort((a, b) => {
-        return b.avgRating - a.avgRating;
-      });
-      state.displayRestaurants = sortedRestaurants.reduce((acc, restaurant) => {
-        acc[restaurant.id] = restaurant;
-        return acc;
-      }, {});
-    },
-    sortRestaurantByMostReviews(state) {
-      const allRestaurants = Object.values(state.restaurants);
-      const sortedRestaurants = allRestaurants.sort((a, b) => {
-        return b.dogReviewCount - a.dogReviewCount;
-      });
-      state.displayRestaurants = sortedRestaurants.reduce((acc, restaurant) => {
-        acc[restaurant.id] = restaurant;
-        return acc;
-      }, {});
     },
     searchRestaurants(state, action) {
       const keyword = action.payload.keyword.toLowerCase();

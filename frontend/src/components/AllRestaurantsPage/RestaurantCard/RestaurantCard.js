@@ -3,10 +3,19 @@ import haruMenu from "../../../image/haru-menu.jpg";
 import "./RestaurantCard.css";
 import { NavLink } from "react-router-dom";
 // import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+const RestaurantCard = ({ restaurant, idx, currentHover, setCurrentHover }) => {
+  const {
+    id,
+    name,
+    price,
+    dogReviewCount,
+    avgRating,
+    previewImg,
+    categories,
+    is_closed,
+  } = restaurant;
 
-const RestaurantCard = ({ restaurant, idx }) => {
-  const { id, name, price, dogReviewCount, avgRating, previewImg } = restaurant;
-  console.log(previewImg, "9");
   // const [neighborhood, setNeighborhood] = useState();
   // const googleAPI = process.env.REACT_APP_GOOGLE_MAPS_API;
   // const getNeighborhood = async (lat, lng) => {
@@ -40,47 +49,54 @@ const RestaurantCard = ({ restaurant, idx }) => {
   //   getNeighborhood(lat, lng).then((data) => setNeighborhood(data));
   // }, [lat, lng]);
   // console.log(neighborhood);
-  return (
-    <div className="restaurant-card-container">
-      {previewImg && (
-        <img
-          alt="restaurant"
-          src={previewImg.url}
-          style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "fill",
-            objectPosition: "top",
-            zIndex: "-1",
-          }}
-        />
-      )}
-      {!previewImg && (
-        <img
-          alt="*"
-          src={haruMenu}
-          style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "fill",
-            objectPosition: "top",
-            zIndex: "-1",
-          }}
-        />
-      )}
-      <div className="restaurant-info-container">
-        <NavLink to={`/restaurants/${id}`} className="restaurant-name">
-          {idx}.{name}
-        </NavLink>
+  const history = useHistory();
 
-        <div className="rating-count-container">
-          <Ratings avgRating={avgRating} />
-          <p className="restaurant-dog-review-count">{dogReviewCount}</p>
-          <span className="restaurant-price">{price}</span>
+  const handleCardClick = () => {
+    history.push(`/restaurants/${id}`);
+  };
+  return (
+    <>
+      <div
+        className="restaurant-card-container"
+        onClick={handleCardClick}
+        onMouseOver={() => setCurrentHover(id)}
+        onMouseOut={() => setCurrentHover(null)}
+      >
+        <div className="restaurant-card-img">
+          {previewImg && <img alt="restaurant" src={previewImg.url} />}
+          {!previewImg && <img alt="*" src={haruMenu} />}
         </div>
-        {/* <p>{neighborhood}</p> */}
+        <div>
+          <div className="restaurant-info-container">
+            <NavLink to={`/restaurants/${id}`} className="restaurant-name">
+              {idx}.{name}
+            </NavLink>
+
+            <div className="rating-count-container">
+              <Ratings avgRating={avgRating} />
+              <p className="restaurant-dog-review-count">{dogReviewCount}</p>
+              <span className="restaurant-price">{price}</span>
+            </div>
+            <div className="info-item">
+              <span className="open-tag">
+                {is_closed ? "Closed" : "Open Now"}
+              </span>
+            </div>
+            <div className="info-item">
+              {categories.length &&
+                categories.map((category, idx) => (
+                  // change it to link later, query search
+                  <span className="category" key={idx}>
+                    {category.title}{" "}
+                  </span>
+                ))}
+            </div>
+            <div></div>
+            {/* <p>{neighborhood}</p> */}
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 export default RestaurantCard;

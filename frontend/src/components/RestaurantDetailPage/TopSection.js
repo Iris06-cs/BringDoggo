@@ -56,7 +56,6 @@ const TopSection = ({ restaurantDetail }) => {
     }
   }, [curr24hTime, todayHours]);
   if (currResImges === undefined) return <LoadingSpinner />;
-  console.log(currResImges);
   return (
     <div className="page-top-section">
       <div className="image-container">
