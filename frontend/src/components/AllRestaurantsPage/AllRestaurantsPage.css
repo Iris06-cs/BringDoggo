@@ -160,3 +160,20 @@
   text-decoration: underline;
   text-underline-offset: 4px;
 }
+.marker-infowindow-container {
+  width: 200px;
+  height: fit-content;
+  padding: 10px;
+}
+.marker-infowindow-container h3 {
+  margin: 0 0 10px 0;
+}
+.marker-infowindow-container .rating-count-container {
+  display: flex;
+  padding-left: 0;
+}
+.rating-count-container #infowindow-price {
+  margin-left: 30px;
+  color: #ffc107;
+  font-weight: bold;
+}

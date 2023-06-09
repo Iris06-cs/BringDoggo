@@ -80,14 +80,15 @@ const Map = ({ currentPage, currentHover, setCurrentHover }) => {
                   <InfoWindow
                     position={{ lat: restaurant.lat, lng: restaurant.lng }}
                   >
-                    <div>
+                    <div className="marker-infowindow-container">
                       <h3>{restaurant.name}</h3>
                       <div className="rating-count-container">
                         <Ratings avgRating={restaurant.avgRating} />
                         <p className="restaurant-dog-review-count">
                           {restaurant.dogReviewCount}
                         </p>
-                        <span>{restaurant.price}</span>
+
+                        <p id="infowindow-price">{restaurant.price}</p>
                       </div>
                     </div>
                   </InfoWindow>
