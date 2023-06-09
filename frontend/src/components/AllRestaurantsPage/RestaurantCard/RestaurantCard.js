@@ -75,7 +75,6 @@ const RestaurantCard = ({ restaurant, idx, currentHover, setCurrentHover }) => {
             <div className="rating-count-container">
               <Ratings avgRating={avgRating} />
               <p className="restaurant-dog-review-count">{dogReviewCount}</p>
-              <span className="restaurant-price">{price}</span>
             </div>
             <div className="info-item">
               <span className="open-tag">
@@ -90,6 +89,7 @@ const RestaurantCard = ({ restaurant, idx, currentHover, setCurrentHover }) => {
                     {category.title}{" "}
                   </span>
                 ))}
+              <span className="restaurant-price">{price}</span>
             </div>
             <div></div>
             {/* <p>{neighborhood}</p> */}
