@@ -6,6 +6,7 @@ import {
   setCurrentPage,
   submitSearch,
 } from "../../store/restaurants";
+import { useHistory } from "react-router-dom";
 // import {
 //   GoogleMap,
 //   useJsApiLoader,
@@ -55,17 +56,18 @@ const SearchBar = () => {
   useEffect(() => {
     if (searchRecommend.length > 5) {
       setAutocomplete(searchRecommend.slice(0, 5));
-    } else if (searchRecommend.length > 0 && searchRecommend.length < 5) {
+    } else if (searchRecommend.length > 0 && searchRecommend.length <= 5) {
       setAutocomplete(searchRecommend);
     } else if (searchRecommend.length === 0) setAutocomplete([]);
-  }, [searchRecommend]);
-
+  }, [searchRecommend, keyword]);
+  const history = useHistory();
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(submitSearch());
     dispatch(setCurrentPage(1));
     setIsFocusKeyword(false);
     // setIsFocusLocation(false);
+    history.push("/restaurants");
   };
   const chooseSuggestedWord = (e, word) => {
     e.preventDefault();
@@ -75,6 +77,7 @@ const SearchBar = () => {
     setIsFocusKeyword(false);
     setKeyword(autocomplete[0]);
   };
+
   return (
     <>
       <form id="search-bar" onSubmit={handleSubmit}>

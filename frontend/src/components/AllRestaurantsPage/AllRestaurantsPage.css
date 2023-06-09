@@ -42,10 +42,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  max-width: 715px;
+  /* max-width: 715px; */
   font-size: 18px;
   border-top: 1px solid rgb(225, 223, 223);
   border-bottom: 1px solid rgb(225, 223, 223);
+  width: 100%;
 
   padding-top: 20px;
   padding-bottom: 20px;
