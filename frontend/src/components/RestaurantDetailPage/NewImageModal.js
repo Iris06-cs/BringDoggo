@@ -67,7 +67,7 @@ const NewImageModal = ({ restaurantId }) => {
   };
   if (!isLoaded || imageLoading)
     return (
-      <div className="add-img-modal-container">
+      <div className="add-img-modal-container loading">
         <LoadingSpinner />
       </div>
     );

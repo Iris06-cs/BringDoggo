@@ -210,10 +210,14 @@
 .add-img-modal-container {
   padding: 30px;
   min-width: 350px;
-  min-height: 260px;
+  min-height: 300px;
   box-sizing: border-box;
 }
-
+.add-img-modal-container.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .add-img-modal-container h2 {
   margin-top: 0;
   color: var(--theme-color);
