@@ -39,9 +39,9 @@ const NewImageModal = ({ restaurantId }) => {
     }
 
     setValidations(errs);
-    if (errs.length > 0) setIsDisabled(true);
+    if (!image || !caption.length) setIsDisabled(true);
     else setIsDisabled(false);
-  }, [caption]);
+  }, [caption, image]);
 
   const handleFomrSubmit = async (e) => {
     e.preventDefault();
