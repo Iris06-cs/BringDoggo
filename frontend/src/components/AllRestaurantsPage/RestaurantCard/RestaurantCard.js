@@ -4,6 +4,8 @@ import "./RestaurantCard.css";
 import { NavLink } from "react-router-dom";
 // import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useEffect, useState } from "react";
+import convertTimeFormat from "../../../utils/convertTimeFormat";
 const RestaurantCard = ({ restaurant, idx, currentHover, setCurrentHover }) => {
   const {
     id,
@@ -13,47 +15,96 @@ const RestaurantCard = ({ restaurant, idx, currentHover, setCurrentHover }) => {
     avgRating,
     previewImg,
     categories,
-    is_closed,
+    hours,
+    lat,
+    lng,
+    address,
   } = restaurant;
 
-  // const [neighborhood, setNeighborhood] = useState();
-  // const googleAPI = process.env.REACT_APP_GOOGLE_MAPS_API;
-  // const getNeighborhood = async (lat, lng) => {
-  //   console.log(lat, lng);
-  //   try {
-  //     const response = await fetch(
-  //       `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&result_type=neighborhood&key=${googleAPI}`
-  //     );
-  //     const data = await response.json();
+  const [neighborhood, setNeighborhood] = useState();
 
-  //     const results = data.results;
-  //     console.log(results, "19");
-  //     if (results[0]) {
-  //       const addressComponents = results[0].address_components;
-  //       const neighborhood = addressComponents.find((component) =>
-  //         component.types.includes("neighborhood")
-  //       );
+  useEffect(() => {
+    const googleAPI = process.env.REACT_APP_GOOGLE_MAPS_API;
+    const getNeighborhood = async (lat, lng) => {
+      console.log(typeof lat, lng);
 
-  //       if (neighborhood) {
-  //         return neighborhood.long_name;
-  //       }
-  //     }
+      const response = await fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${googleAPI}`
+      );
+      console.log(
+        "Status:",
+        response.status,
+        "Status Text:",
+        response.statusText
+      );
+      if (!response.ok) {
+        const data = await response.json();
+        console.log("Error:", data.error_message || "Unknown error");
+      } else {
+        const data = await response.json();
+        console.log(data);
+        const results = data.results;
+        console.log(results, "19");
+        if (results[0]) {
+          const addressComponents = results[0].address_components;
+          const neighborhood = addressComponents.find((component) =>
+            component.types.includes("neighborhood")
+          );
 
-  //     return null;
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
+          if (neighborhood) {
+            return neighborhood.long_name;
+          }
+          const locality = addressComponents.find((component) =>
+            component.types.includes("administrative_area_level_2")
+          );
 
-  // useEffect(() => {
-  //   getNeighborhood(lat, lng).then((data) => setNeighborhood(data));
-  // }, [lat, lng]);
-  // console.log(neighborhood);
+          if (locality) {
+            return locality.long_name;
+          }
+        }
+        return address;
+      }
+    };
+    getNeighborhood(lat, lng).then((data) => setNeighborhood(data));
+  }, [lat, lng, address]);
+  console.log(neighborhood);
   const history = useHistory();
 
   const handleCardClick = () => {
     history.push(`/restaurants/${id}`);
   };
+  const [isOpen, setIsOpen] = useState();
+  const [openTime, setOpenTime] = useState();
+  const currDay = new Date();
+  const today = currDay.getDay();
+  const currHour = currDay.getHours();
+  const currMinut = currDay.getMinutes();
+  const curr24hTime = currHour * 100 + currMinut;
+  const todayHours =
+    hours && hours.length > 0 ? hours[0].open[today - 1] : undefined;
+
+  useEffect(() => {
+    if (todayHours)
+      setOpenTime(
+        `${convertTimeFormat(todayHours.start)}-${convertTimeFormat(
+          todayHours.end
+        )}`
+      );
+  }, [todayHours]);
+  useEffect(() => {
+    const checkIsOpen = () => {
+      const startTime = parseInt(todayHours.start, 10);
+      const endTime = parseInt(todayHours.end, 10);
+      setIsOpen(curr24hTime >= startTime && curr24hTime <= endTime);
+    };
+    if (todayHours) {
+      checkIsOpen();
+      const timer = setInterval(() => {
+        checkIsOpen();
+      }, 60000); //check every min
+      return () => clearInterval(timer);
+    }
+  }, [curr24hTime, todayHours]);
   return (
     <div className="restaurant-card-container">
       <div
@@ -77,22 +128,25 @@ const RestaurantCard = ({ restaurant, idx, currentHover, setCurrentHover }) => {
               <p className="restaurant-dog-review-count">{dogReviewCount}</p>
             </div>
             <div className="info-item">
-              <span className="open-tag">
-                {is_closed ? "Closed" : "Open Now"}
-              </span>
+              <p>
+                {openTime && (
+                  <span className="open-tag">{isOpen ? "Open" : "Closed"}</span>
+                )}
+                {openTime}
+              </p>
             </div>
             <div className="info-item">
               {categories.length &&
                 categories.map((category, idx) => (
-                  // change it to link later, query search
                   <span className="category" key={idx}>
                     {category.title}{" "}
                   </span>
                 ))}
               <span className="restaurant-price">{price}</span>
             </div>
-            <div></div>
-            {/* <p>{neighborhood}</p> */}
+            <div className="info-item last">
+              <p>{neighborhood}</p>
+            </div>
           </div>
         </div>
       </div>

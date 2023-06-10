@@ -10,7 +10,7 @@ import ImageModal from "./ImageModal";
 import LoadingSpinner from "../LoadingSpinner";
 
 const TopSection = ({ restaurantDetail }) => {
-  const currentUser = useSelector((state) => state.session.user);
+  // const currentUser = useSelector((state) => state.session.user);
   const images = useSelector((state) => state.restaurantImages.imageById);
   const { name, avgRating, categories, dogReviewCount, price, hours } =
     restaurantDetail;

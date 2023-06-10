@@ -18,7 +18,7 @@ const NewImageModal = ({ restaurantId }) => {
   const [caption, setCaption] = useState("");
   const [imageLoading, setImageLoading] = useState(false);
   const [validations, setValidations] = useState([]);
-  const [isSubmited, setIsSubmited] = useState(false);
+  // const [isSubmited, setIsSubmited] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
   const { closeModal } = useModal();
   useEffect(() => {
@@ -29,12 +29,19 @@ const NewImageModal = ({ restaurantId }) => {
   }, [restaurantId, restaurants]);
   useEffect(() => {
     const errs = [];
-    if (!caption.length) errs.push("Please enter a caption for the image.");
-    if (!image) errs.push("Please select an image.");
+    const trimmedCaption = caption.trim(); //remove white space
+
+    if (
+      (trimmedCaption.length === 0 && caption.length > 0) ||
+      trimmedCaption.length > 255
+    ) {
+      errs.push("Please enter a valid caption.");
+    }
+
     setValidations(errs);
     if (errs.length > 0) setIsDisabled(true);
     else setIsDisabled(false);
-  }, [image, caption]);
+  }, [caption]);
 
   const handleFomrSubmit = async (e) => {
     e.preventDefault();
@@ -46,7 +53,7 @@ const NewImageModal = ({ restaurantId }) => {
     formData.append("restaurant_id", restaurantId);
 
     setImageLoading(true);
-    setIsSubmited(true);
+    // setIsSubmited(true);
     await dispatch(addRestaurantImage(formData));
     // get updated restaurants
     await dispatch(getAllRestaurants());
@@ -54,18 +61,27 @@ const NewImageModal = ({ restaurantId }) => {
     setCaption("");
     setImage("");
     setImageLoading(false);
-    setIsSubmited(false);
+    // setIsSubmited(false);
     closeModal();
     history.push(`/restaurants/${restaurantId}`);
   };
-  if (!isLoaded || imageLoading) return <LoadingSpinner />;
+  if (!isLoaded || imageLoading)
+    return (
+      <div className="add-img-modal-container">
+        <LoadingSpinner />
+      </div>
+    );
   return (
-    <div>
+    <div className="add-img-modal-container">
       <h2>
         {currRestaurant.name}:<span>Add Photos</span>
       </h2>
-      <form onSubmit={handleFomrSubmit} encType="multipart/form-data">
-        <div>
+      <form
+        onSubmit={handleFomrSubmit}
+        encType="multipart/form-data"
+        className="add-img-form"
+      >
+        <div className="caption-container">
           <label htmlFor="restaurant-img-caption">Caption</label>
           <input
             id="restaurant-img-caption"
@@ -105,7 +121,10 @@ const NewImageModal = ({ restaurantId }) => {
           />
           <label htmlFor="isNot-preview-option">Non-Preview</label>
         </div>
-
+        <ul>
+          {validations.length > 0 &&
+            validations.map((err) => <li key={err}>{err}</li>)}
+        </ul>
         <button
           className={"general-button" + (isDisabled ? " disabled" : "")}
           type="submit"
