@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import haruMenu from "../../image/haru-menu.webp";
+// import haruMenu from "../../image/haru-menu.webp";
 import convertTimeFormat from "../../utils/convertTimeFormat";
 import Ratings from "../AllRestaurantsPage/Ratings/Ratings";
 import OpenModalButton from "../OpenModalButton";
@@ -62,7 +62,7 @@ const TopSection = ({ restaurantDetail }) => {
           currResImges.map(
             (img, idx) => idx <= 6 && <img key={idx} alt="*" src={img.url} />
           )}
-        <img alt="*" src={haruMenu} />
+        {/* <img alt="*" src={haruMenu} /> */}
       </div>
       <div className="restaurant-detail-info-container">
         <p>{name}</p>

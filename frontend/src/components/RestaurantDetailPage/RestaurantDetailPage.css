@@ -196,12 +196,13 @@
   display: flex;
   overflow: hidden;
   background-color: rgba(213, 212, 212, 0.3);
+  align-items: flex-start;
+  justify-content: flex-start;
 }
 .image-container img {
-  flex-grow: 1;
   width: 300px;
   height: 400px;
-  object-fit: contain;
+  object-fit: cover;
   object-position: left;
   z-index: -1;
 }
