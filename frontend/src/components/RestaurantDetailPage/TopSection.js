@@ -94,7 +94,9 @@ const TopSection = ({ restaurantDetail }) => {
               See All Photos
             </>
           }
-          modalComponent={<ImageModal />}
+          modalComponent={
+            <ImageModal currResImges={currResImges} name={name} />
+          }
         />
       </div>
     </div>

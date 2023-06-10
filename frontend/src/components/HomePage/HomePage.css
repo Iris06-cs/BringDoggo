@@ -1,0 +1,32 @@
+.homepage-container {
+  background-image: url("../../image/dogbeach.JPG");
+  background-size: cover;
+  background-position: bottom;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  position: fixed;
+  margin-top: 12px;
+  left: 0;
+  z-index: -1;
+}
+
+.homepage-content {
+  text-align: center;
+  color: white;
+  position: absolute;
+  bottom: 550px;
+  text-shadow: 2px 2px 4px rgba(107, 103, 103, 0.8);
+}
+
+.homepage-content h1 {
+  font-size: 45px;
+  margin-bottom: 16px;
+}
+
+.homepage-content h2 {
+  font-size: 26px;
+  padding-top: 30px;
+}
