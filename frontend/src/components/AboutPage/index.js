@@ -1,6 +1,6 @@
 import "./AboutPage.css";
-import profile from "../../image/pic_profile.JPG";
-import dogs from "../../image/dogs-sd.jpg";
+import profile from "../../image/pic-profile.webp";
+import dogs from "../../image/dogs-sd.webp";
 import sublogo from "../../image/sublogo.jpeg";
 const AboutPage = () => {
   return (
