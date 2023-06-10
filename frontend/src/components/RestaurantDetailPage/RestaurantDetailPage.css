@@ -193,9 +193,10 @@
   display: none;
 }
 .image-container {
+  height: 400px;
   display: flex;
   overflow: hidden;
-  background-color: rgba(213, 212, 212, 0.3);
+  background-color: rgba(90, 89, 89, 0.3);
   align-items: flex-start;
   justify-content: flex-start;
 }
