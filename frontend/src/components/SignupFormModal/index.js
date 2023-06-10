@@ -2,11 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBone,
+  faCircleExclamation,
+  faSquareXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import { signUp } from "../../store/session";
 import "./SignupForm.css";
-import sublogo from "../../image/sublogo.png";
-import haru from "../../image/haru.png";
-import douding from "../../image/douding.png";
+import sublogo from "../../image/sublogo.jpeg";
+import haru from "../../image/haru.jpeg";
+import douding from "../../image/douding.jpeg";
 import validateInput from "../../utils/validateInput";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
@@ -90,7 +95,7 @@ function SignupFormModal() {
         <div className="title-container">
           <button onClick={closeModal} className="close-modal-button">
             <FontAwesomeIcon
-              icon="fa-solid fa-square-xmark"
+              icon={faSquareXmark}
               className="close-modal-btn-icon"
             />
           </button>
@@ -108,7 +113,6 @@ function SignupFormModal() {
                   value={firstname}
                   onChange={(e) => setFirstname(e.target.value)}
                   placeholder="Firstname"
-                  // required
                 />
                 <label className={inputLabel} htmlFor="firstname">
                   Firstname
@@ -121,7 +125,6 @@ function SignupFormModal() {
                   value={lastname}
                   onChange={(e) => setLastname(e.target.value)}
                   placeholder="Lastname"
-                  // required
                 />
                 <label className={inputLabel} htmlFor="lastname">
                   Lastname
@@ -136,7 +139,6 @@ function SignupFormModal() {
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   placeholder="Username"
-                  // required
                 />
                 <label className={inputLabel} htmlFor="username">
                   Username
@@ -149,7 +151,6 @@ function SignupFormModal() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Email"
-                  // required
                 />
                 <label className={inputLabel} htmlFor="signup-email">
                   Email
@@ -164,7 +165,6 @@ function SignupFormModal() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Password"
-                  // required
                 />
                 <label className={inputLabel} htmlFor="signup-password">
                   Password
@@ -177,7 +177,6 @@ function SignupFormModal() {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder="Confirm Password"
-                  // required
                 />
                 <label className={inputLabel} htmlFor="confirm-password">
                   Confirm Password
@@ -190,7 +189,7 @@ function SignupFormModal() {
               inputValidate.map((error, idx) => (
                 <li key={idx}>
                   <span style={{ color: "#dd0a35", padding: "5px" }}>
-                    <FontAwesomeIcon icon="fa-solid fa-circle-exclamation" />
+                    <FontAwesomeIcon icon={faCircleExclamation} />
                   </span>
                   {error}
                 </li>
@@ -199,7 +198,7 @@ function SignupFormModal() {
               errors.map((error, idx) => (
                 <li key={idx}>
                   <span style={{ color: "#dd0a35", padding: "5px" }}>
-                    <FontAwesomeIcon icon="fa-solid fa-circle-exclamation" />
+                    <FontAwesomeIcon icon={faCircleExclamation} />
                   </span>
                   {error}
                 </li>
@@ -208,7 +207,7 @@ function SignupFormModal() {
 
           <button type="submit" className="login-signup-btn">
             <span id="login-text">Submit</span>
-            <FontAwesomeIcon icon="fa-solid fa-bone" />
+            <FontAwesomeIcon icon={faBone} />
           </button>
         </form>
         <div className="signup-confirm-text">

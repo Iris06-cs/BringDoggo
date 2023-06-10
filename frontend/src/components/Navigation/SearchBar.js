@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -7,6 +7,7 @@ import {
   submitSearch,
 } from "../../store/restaurants";
 import { useHistory } from "react-router-dom";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 // import {
 //   GoogleMap,
 //   useJsApiLoader,
@@ -19,13 +20,13 @@ const SearchBar = () => {
   //   libraries: ["places"],
   // });
   const dispatch = useDispatch();
-  const searchSuggestion = useSelector(
-    (state) => state.restaurants.searchResults
-  );
+  // const searchSuggestion = useSelector(
+  //   (state) => state.restaurants.searchResults
+  // );
   const searchRecommend = useSelector(
     (state) => state.restaurants.searchRecommend
   );
-  const locationInputRef = useRef(null);
+  // const locationInputRef = useRef(null);
   const [keyword, setKeyword] = useState("");
   // const [location, setLocation] = useState("");
   const [isFocusKeyword, setIsFocusKeyword] = useState(false);
@@ -130,7 +131,7 @@ const SearchBar = () => {
           />
         </div> */}
         <button type="submit" id="searchbar-btn" className="general-button">
-          <FontAwesomeIcon icon="fa-solid fa-magnifying-glass" />
+          <FontAwesomeIcon icon={faMagnifyingGlass} />
         </button>
       </form>
       {keyword && (

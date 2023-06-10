@@ -12,7 +12,6 @@ import { NavLink } from "react-router-dom";
 const UserReviews = ({ setIsDeleted }) => {
   const dispatch = useDispatch();
   const allRestaurants = useSelector((state) => state.restaurants.restaurants);
-  //   const currUser = useSelector((state) => state.session.user);
   const userReviews = useSelector((state) => selectCurrentUserReviews(state));
   useEffect(() => {
     dispatch(getAllReviews());

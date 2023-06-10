@@ -16,7 +16,7 @@ import LoadingSpinner from "../LoadingSpinner";
 const AllRestaurantsPage = () => {
   const dispatch = useDispatch();
   const allRestaurants = useSelector((state) => state.restaurants.restaurants);
-  const filteredRestaurants = useSelector((state) => state.filteredRestaurants);
+  // const filteredRestaurants = useSelector((state) => state.filteredRestaurants);
   const displayedRestaurants = useSelector(
     (state) => state.restaurants.displayRestaurants
   );

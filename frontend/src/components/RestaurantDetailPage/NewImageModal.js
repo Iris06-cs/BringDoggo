@@ -98,7 +98,6 @@ const NewImageModal = ({ restaurantId }) => {
             type="file"
             accept="image/*"
             onChange={(e) => setImage(e.target.files[0])}
-            // value={image}
           />
         </div>
         <div className="radio-btn-container">

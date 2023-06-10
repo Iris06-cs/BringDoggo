@@ -1,6 +1,7 @@
 import React from "react";
 import { useModal } from "../../context/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBone } from "@fortawesome/free-solid-svg-icons";
 
 function OpenModalButton({
   modalComponent, // component to render inside the modal
@@ -20,7 +21,7 @@ function OpenModalButton({
   return (
     <button className="open-modal-btn" onClick={onClick}>
       {buttonText}
-      <FontAwesomeIcon icon="fa-solid fa-bone" />
+      <FontAwesomeIcon icon={faBone} />
     </button>
   );
 }

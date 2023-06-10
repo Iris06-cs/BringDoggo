@@ -1,6 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBone,
+  faCameraRetro,
+  faHeart,
+} from "@fortawesome/free-solid-svg-icons";
+
 import { useHistory, useParams } from "react-router-dom";
 import OpenModalButton from "../OpenModalButton";
 import SignupFormModal from "../SignupFormModal";
@@ -40,19 +46,13 @@ const FunctionBtns = ({
       buttonText={
         <>
           {buttonText === "Write a review" && (
-            <FontAwesomeIcon icon="fa-solid fa-bone" className="display-bone" />
+            <FontAwesomeIcon icon={faBone} className="display-bone" />
           )}
           {buttonText.includes("Favorite") && (
-            <FontAwesomeIcon
-              icon="fa-solid fa-heart"
-              className="display-bone"
-            />
+            <FontAwesomeIcon icon={faHeart} className="display-bone" />
           )}
           {buttonText === "Add photo" && (
-            <FontAwesomeIcon
-              icon="fa-solid fa-camera-retro"
-              className="display-bone"
-            />
+            <FontAwesomeIcon icon={faCameraRetro} className="display-bone" />
           )}
 
           {buttonText}
@@ -68,20 +68,17 @@ const FunctionBtns = ({
         renderOpenModalButton("Write a review", <SignupFormModal />)}
       {currentUser && !hasReview && (
         <button className="write-review-btn" onClick={handleCreateReview}>
-          <FontAwesomeIcon icon="fa-solid fa-bone" />
+          <FontAwesomeIcon icon={faBone} />
           Write a review
         </button>
       )}
       {hasReview && (
         <button className="write-review-btn" onClick={handleUpdateReview}>
-          <FontAwesomeIcon icon="fa-solid fa-bone" />
+          <FontAwesomeIcon icon={faBone} />
           Update review
         </button>
       )}
 
-      {/* no login user，on click login popup */}
-      {/* user logged in, has not added to fav, onclick popup add to/create collection popup */}
-      {/* user logged in,already added to fav,button added fav, onclick remove or change to other collection, or create new collection */}
       {!currentUser && renderOpenModalButton("Favorite", <SignupFormModal />)}
       {isFav &&
         renderOpenModalButton(
@@ -95,25 +92,6 @@ const FunctionBtns = ({
       {currentUser &&
         !isFav &&
         !Object.values(currUserFavs).length &&
-        // <OpenModalButton
-        //   buttonText={
-        //     <>
-        //       <FontAwesomeIcon
-        //         icon="fa-solid fa-heart"
-        //         className="display-bone"
-        //       />
-        //       Favorite
-        //     </>
-        //   }
-        //   modalComponent={
-        //     <NewFavoriteCollectionForm
-        //       restaurantId={restaurantId}
-        //       setIsFav={setIsFav}
-        //     />
-
-        //     )
-        //   }
-        // />
         renderOpenModalButton(
           "Favorite",
           <NewFavoriteCollectionForm
@@ -126,10 +104,7 @@ const FunctionBtns = ({
         <OpenModalButton
           buttonText={
             <>
-              <FontAwesomeIcon
-                icon="fa-solid fa-heart"
-                className="display-bone"
-              />
+              <FontAwesomeIcon icon={faHeart} className="display-bone" />
               Favorite
             </>
           }

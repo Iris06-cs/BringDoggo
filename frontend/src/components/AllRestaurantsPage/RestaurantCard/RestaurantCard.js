@@ -26,48 +26,34 @@ const RestaurantCard = ({ restaurant, idx, currentHover, setCurrentHover }) => {
   useEffect(() => {
     const googleAPI = process.env.REACT_APP_GOOGLE_MAPS_API;
     const getNeighborhood = async (lat, lng) => {
-      console.log(typeof lat, lng);
-
       const response = await fetch(
         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${googleAPI}`
       );
-      console.log(
-        "Status:",
-        response.status,
-        "Status Text:",
-        response.statusText
-      );
-      if (!response.ok) {
-        const data = await response.json();
-        console.log("Error:", data.error_message || "Unknown error");
-      } else {
-        const data = await response.json();
-        console.log(data);
-        const results = data.results;
-        console.log(results, "19");
-        if (results[0]) {
-          const addressComponents = results[0].address_components;
-          const neighborhood = addressComponents.find((component) =>
-            component.types.includes("neighborhood")
-          );
 
-          if (neighborhood) {
-            return neighborhood.long_name;
-          }
-          const locality = addressComponents.find((component) =>
-            component.types.includes("administrative_area_level_2")
-          );
+      const data = await response.json();
+      const results = data.results;
+      if (results[0]) {
+        const addressComponents = results[0].address_components;
+        const neighborhood = addressComponents.find((component) =>
+          component.types.includes("neighborhood")
+        );
 
-          if (locality) {
-            return locality.long_name;
-          }
+        if (neighborhood) {
+          return neighborhood.long_name;
         }
+        const locality = addressComponents.find((component) =>
+          component.types.includes("administrative_area_level_2")
+        );
+
+        if (locality) {
+          return locality.long_name;
+        }
+
         return address;
       }
     };
     getNeighborhood(lat, lng).then((data) => setNeighborhood(data));
   }, [lat, lng, address]);
-  console.log(neighborhood);
   const history = useHistory();
 
   const handleCardClick = () => {

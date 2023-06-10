@@ -15,9 +15,6 @@
   border-radius: 50%;
   border-top-color: #000;
   animation: spin 1s ease-in-out infinite;
-  /* position: relative;
-  left: calc((100%-50px) / 2);
-  top: 45%; */
 }
 
 @keyframes spin {

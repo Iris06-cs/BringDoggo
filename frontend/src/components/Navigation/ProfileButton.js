@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faArrowRightFromBracket,
+  faBone,
+} from "@fortawesome/free-solid-svg-icons";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
@@ -34,7 +38,6 @@ function ProfileButton({ user }) {
   }, [showMenu]);
 
   useEffect(() => {
-    // after user login make sure drop down menu close
     if (user) setShowMenu(false);
   }, [user]);
 
@@ -92,7 +95,7 @@ function ProfileButton({ user }) {
             </li>
             <li id="logout-btn-container">
               <button onClick={handleLogout} id="logout-btn">
-                <FontAwesomeIcon icon="fa-solid fa-arrow-right-from-bracket" />
+                <FontAwesomeIcon icon={faArrowRightFromBracket} />
                 Log Out
               </button>
             </li>
@@ -118,7 +121,7 @@ function ProfileButton({ user }) {
             <li className="button-container">
               <button className="modalButton" onClick={demoUserLogin}>
                 Demo
-                <FontAwesomeIcon icon="fa-solid fa-bone" />
+                <FontAwesomeIcon icon={faBone} />
               </button>
             </li>
           </ul>

@@ -1,56 +1,47 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Switch } from "react-router-dom";
-// import { useSelector } from "react-redux";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { fas } from "@fortawesome/free-solid-svg-icons";
-import SignupFormPage from "./components/SignupFormPage";
-import LoginFormPage from "./components/LoginFormPage";
+// import { library } from "@fortawesome/fontawesome-svg-core";
+// import { fas } from "@fortawesome/free-solid-svg-icons";
+
 import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import AllRestaurantsPage from "./components/AllRestaurantsPage";
 import Footer from "./components/Footer";
 import RestaurantDetailPage from "./components/RestaurantDetailPage";
 import AddReviewPage from "./components/AddReviewPage";
-// import LoadingSpinner from "./components/LoadingSpinner";
 import UserProfilePage from "./components/UserProfilePage";
 import { getAllRestaurants } from "./store/restaurants";
 import { getAllRestaurantImages } from "./store/restaurantImage";
 import AboutPage from "./components/AboutPage";
-// import UserReviews from "./components/UserProfilePage/UserReviews";
-// import UserFavorites from "./components/UserProfilePage/UserFavorites";
+import HomePage from "./components/HomePage";
 
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
-  // const runLoader = useSelector((state) => state.loader.loading);
+
   useEffect(() => {
     dispatch(authenticate()).then(() => setIsLoaded(true));
     dispatch(getAllRestaurants());
     dispatch(getAllRestaurantImages());
   }, [dispatch]);
 
-  library.add(fas);
+  // library.add(fas);
   return (
     <>
       <Navigation isLoaded={isLoaded} />
       <main>
-        {/* {runLoader && <LoadingSpinner />} */}
         {isLoaded && (
           <Switch>
-            <Route path="/login">
-              <LoginFormPage />
-            </Route>
-            <Route path="/signup">
-              <SignupFormPage />
-            </Route>
             <Route path="/restaurants/:restaurantId/reviews/new">
               <AddReviewPage />
             </Route>
             <Route path="/restaurants/:restaurantId">
               <RestaurantDetailPage />
             </Route>
-            {/* will add homepage */}
+            <Route exact path="/">
+              <HomePage />
+            </Route>
             <Route
               exact
               path={[
@@ -61,7 +52,7 @@ function App() {
             >
               <UserProfilePage />
             </Route>
-            <Route exact path={["/", "/restaurants"]}>
+            <Route exact path="/restaurants">
               <AllRestaurantsPage />
             </Route>
             <Route exact path="/about">
