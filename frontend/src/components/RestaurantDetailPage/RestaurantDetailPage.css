@@ -209,3 +209,49 @@
   object-position: left;
   z-index: -1;
 }
+.add-img-modal-container {
+  padding: 30px;
+  min-width: 350px;
+  min-height: 260px;
+  box-sizing: border-box;
+}
+
+.add-img-modal-container h2 {
+  margin-top: 0;
+  color: var(--theme-color);
+}
+.add-img-modal-container h2 span {
+  color: var(--content-text-color);
+}
+.add-img-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.add-img-form .radio-btn-container {
+  margin-top: 0;
+}
+.add-img-form .general-button {
+  max-width: 120px;
+  align-self: center;
+  margin-top: 20px;
+}
+.add-img-form label {
+  margin-right: 5px;
+}
+.add-img-form ul {
+  margin: 0;
+  color: #dd0a35;
+  font-size: 14px;
+}
+.caption-container {
+  display: flex;
+  align-items: center;
+}
+#restaurant-img-caption {
+  flex-grow: 1;
+  padding: 12px;
+  border: 1px solid var(--border-light-color);
+  border-radius: 5px;
+  outline-color: var(--button-background-hover-color);
+}
