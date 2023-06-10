@@ -1,5 +1,5 @@
 import Ratings from "../Ratings/Ratings";
-import haruMenu from "../../../image/haru-menu.jpg";
+import haruMenu from "../../../image/haru-menu.webp";
 import "./RestaurantCard.css";
 import { NavLink } from "react-router-dom";
 // import { useEffect, useState } from "react";
