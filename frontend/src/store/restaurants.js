@@ -148,7 +148,6 @@ export const restaurantsSlice = createSlice({
         state.restaurants = res;
         state.displayRestaurants = displayed;
         state.isLoading = false;
-        // state.totalRestaurants = totalResults;
       })
       .addCase(getAllRestaurants.pending, (state, action) => {
         state.error = action.payload;
@@ -171,20 +170,6 @@ export const restaurantsSlice = createSlice({
         state.error = action.payload;
         state.isLoading = false;
       });
-    // .addCase(getFirstPage.pending, (state, action) => {
-    //   state.error = action.payload;
-    //   state.isLoading = true;
-    // })
-    // .addCase(getFirstPage.fulfilled, (state, action) => {
-    //   let res = {};
-    //   action.payload.restaurants.forEach((restaurant) => {
-    //     res[restaurant.id] = restaurant;
-    //   });
-    //   state.restaurants = res;
-    //   state.displayRestaurants = res;
-    //   state.currentPage = 1;
-    //   state.isLoading = false;
-    // });
   },
 });
 export const getAllRestaurants = createAsyncThunk(
@@ -205,16 +190,6 @@ export const getAllRestaurants = createAsyncThunk(
   }
 );
 
-// export const getFirstPage = createAsyncThunk(
-//   "restaurants/getFirstPage",
-//   async (_, { rejectWithValue }) => {
-//     const response = await fetch(`/api/restaurants?page=1`);
-//     const data = await response.json();
-
-//     if (!response.ok) return rejectWithValue(data);
-//     return data;
-//   }
-// );
 export const getRestaurantById = createAsyncThunk(
   "restaurants/getRestaurantById",
   async (restaurantId, { rejectWithValue }) => {

@@ -1,7 +1,7 @@
 import "./AboutPage.css";
 import profile from "../../image/pic_profile.JPG";
 import dogs from "../../image/dogs-sd.jpg";
-import sublogo from "../../image/sublogo.png";
+import sublogo from "../../image/sublogo.jpeg";
 const AboutPage = () => {
   return (
     <div className="about-page">

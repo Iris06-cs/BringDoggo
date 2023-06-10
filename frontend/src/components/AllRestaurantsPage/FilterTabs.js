@@ -1,4 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBone,
+  faCircleXmark,
+  faCheck,
+} from "@fortawesome/free-solid-svg-icons";
 import { useState, useRef, useEffect } from "react";
 
 const FilterTabs = ({
@@ -74,7 +79,7 @@ const FilterTabs = ({
               className="clear-filter-btn"
               onClick={() => setSelectedPrice()}
             >
-              <FontAwesomeIcon icon="fa-solid fa-circle-xmark" />
+              <FontAwesomeIcon icon={faCircleXmark} />
             </button>
           )}
         </div>
@@ -89,7 +94,7 @@ const FilterTabs = ({
                 onClick={() => onClickIcon(5 - idx)}
               >
                 <FontAwesomeIcon
-                  icon="fa-solid fa-bone"
+                  icon={faBone}
                   style={{ transform: "rotate(135deg)" }}
                 />
                 <span className="tooltip-text">{text}</span>
@@ -101,19 +106,12 @@ const FilterTabs = ({
               className="clear-filter-btn"
               onClick={() => setSelectedRating()}
             >
-              <FontAwesomeIcon icon="fa-solid fa-circle-xmark" />
+              <FontAwesomeIcon icon={faCircleXmark} />
             </button>
           )}
         </div>
       </div>
-      {/* <div>
-        <label htmlFor="sort-options">Sort:</label>
-        <select onChange={(e) => setSortBy(e.target.value)} id="sort-options">
-          <option value="">Yelp Popular</option>
-          <option value="mostRated">Most Rated</option>
-          <option value="highestRating">Highest Rating</option>
-        </select>
-      </div> */}
+
       <div className="custom-selection">
         <div className="curr-sort-by" onClick={() => setOption(true)}>
           Sort:
@@ -136,7 +134,7 @@ const FilterTabs = ({
             }}
           >
             Yelp Popular
-            {sortBy === "" && <FontAwesomeIcon icon="fa-solid fa-check" />}
+            {sortBy === "" && <FontAwesomeIcon icon={faCheck} />}
           </div>
           <div
             onClick={() => {
@@ -145,9 +143,7 @@ const FilterTabs = ({
             }}
           >
             Most Rated
-            {sortBy === "mostRated" && (
-              <FontAwesomeIcon icon="fa-solid fa-check" />
-            )}
+            {sortBy === "mostRated" && <FontAwesomeIcon icon={faCheck} />}
           </div>
           <div
             onClick={() => {
@@ -156,9 +152,7 @@ const FilterTabs = ({
             }}
           >
             Highest Rating
-            {sortBy === "highestRating" && (
-              <FontAwesomeIcon icon="fa-solid fa-check" />
-            )}
+            {sortBy === "highestRating" && <FontAwesomeIcon icon={faCheck} />}
           </div>
         </div>
       </div>

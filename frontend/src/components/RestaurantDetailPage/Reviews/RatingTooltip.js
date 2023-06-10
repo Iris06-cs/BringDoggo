@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import { faBone } from "@fortawesome/free-solid-svg-icons";
 import { NavLink, useParams } from "react-router-dom";
 
 const RatingTooltip = ({ restaurantName }) => {
@@ -19,7 +19,7 @@ const RatingTooltip = ({ restaurantName }) => {
               }`}
             >
               <FontAwesomeIcon
-                icon="fa-solid fa-bone"
+                icon={faBone}
                 style={{ transform: "rotate(135deg)" }}
               />
             </NavLink>

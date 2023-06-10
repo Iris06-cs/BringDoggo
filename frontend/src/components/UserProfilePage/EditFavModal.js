@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { updateFav } from "../../store/favorites";
 import { useDispatch } from "react-redux";
+import { faSquareXmark } from "@fortawesome/free-solid-svg-icons";
 const EditFavModal = ({ fav }) => {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
@@ -46,7 +47,7 @@ const EditFavModal = ({ fav }) => {
             className="add-fav-form-close-modal-button"
           >
             <FontAwesomeIcon
-              icon="fa-solid fa-square-xmark"
+              icon={faSquareXmark}
               className="add-fav-form-close-btn"
             />
           </button>

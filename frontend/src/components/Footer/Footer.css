@@ -5,7 +5,6 @@ footer {
   background-color: var(--theme-color);
   color: white;
   font-size: 20px;
-  /* position: relative; */
   height: 300px;
   display: flex;
   flex-direction: column;
@@ -29,4 +28,15 @@ footer {
 .footer-text-container {
   display: flex;
   justify-content: space-between;
+  margin-top: 40px;
+}
+.footer-contact-container {
+  display: flex;
+  align-self: center;
+  gap: 20px;
+}
+.footer-contact-container a,
+.footer-contact-container a svg {
+  color: white;
+  font-size: 25px;
 }

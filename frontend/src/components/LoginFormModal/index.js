@@ -2,11 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBone,
+  faCircleExclamation,
+  faSquareXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import { login } from "../../store/session";
 import "./LoginForm.css";
-import sublogo from "../../image/sublogo.png";
-import haru from "../../image/haru.png";
-import douding from "../../image/douding.png";
+import sublogo from "../../image/sublogo.jpeg";
+import haru from "../../image/haru.jpeg";
+import douding from "../../image/douding.jpeg";
 import validateInput from "../../utils/validateInput";
 
 function LoginFormModal() {
@@ -65,15 +70,14 @@ function LoginFormModal() {
       setErrList("form-error-msg ");
     }
   }, [redLabel]);
-  // const loginlabel = "loginForm-label " + (redLabel ? "red" : "");
-  // const errList = "form-error-msg " + (redLabel ? "red" : "");
+
   return (
     <div className="modal-content-container">
       <div className="modal-content-left-section">
         <div className="title-container">
           <button onClick={closeModal} className="close-modal-button">
             <FontAwesomeIcon
-              icon="fa-solid fa-square-xmark"
+              icon={faSquareXmark}
               className="close-modal-btn-icon"
             />
           </button>
@@ -90,7 +94,6 @@ function LoginFormModal() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email"
-                // required
               />
               <label className={loginlabel} htmlFor="email">
                 Email
@@ -103,7 +106,6 @@ function LoginFormModal() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Password"
-                // required
               />
               <label className={loginlabel} htmlFor="password">
                 Password
@@ -115,7 +117,7 @@ function LoginFormModal() {
               inputValidate.map((error, idx) => (
                 <li key={idx}>
                   <span style={{ color: "#dd0a35", padding: "5px" }}>
-                    <FontAwesomeIcon icon="fa-solid fa-circle-exclamation" />
+                    <FontAwesomeIcon icon={faCircleExclamation} />
                   </span>
                   {error}
                 </li>
@@ -124,7 +126,7 @@ function LoginFormModal() {
               errors.map((error, idx) => (
                 <li key={idx}>
                   <span style={{ color: "#dd0a35", padding: "5px" }}>
-                    <FontAwesomeIcon icon="fa-solid fa-circle-exclamation" />
+                    <FontAwesomeIcon icon={faCircleExclamation} />
                   </span>
                   {error}
                 </li>
@@ -132,7 +134,7 @@ function LoginFormModal() {
           </ul>
           <button type="submit" className="login-signup-btn">
             <span id="login-text">Submit</span>
-            <FontAwesomeIcon icon="fa-solid fa-bone" />
+            <FontAwesomeIcon icon={faBone} />
           </button>
         </form>
       </div>

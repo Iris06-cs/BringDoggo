@@ -5,12 +5,11 @@ import haruMenu from "../../image/haru-menu.jpg";
 import convertTimeFormat from "../../utils/convertTimeFormat";
 import Ratings from "../AllRestaurantsPage/Ratings/Ratings";
 import OpenModalButton from "../OpenModalButton";
-import NewImageModal from "./NewImageModal";
 import ImageModal from "./ImageModal";
 import LoadingSpinner from "../LoadingSpinner";
+import { faCameraRetro } from "@fortawesome/free-solid-svg-icons";
 
 const TopSection = ({ restaurantDetail }) => {
-  // const currentUser = useSelector((state) => state.session.user);
   const images = useSelector((state) => state.restaurantImages.imageById);
   const { name, avgRating, categories, dogReviewCount, price, hours } =
     restaurantDetail;
@@ -80,7 +79,6 @@ const TopSection = ({ restaurantDetail }) => {
             ))}
         </div>
 
-        {/* need to show open/closed + hours, if open show current day open time, if closed show next day open time, as a link to click to the hours section */}
         {openTime && (
           <p>
             <span id="open-tag">{isOpen ? "Open" : "Closed"}</span>
@@ -92,10 +90,7 @@ const TopSection = ({ restaurantDetail }) => {
         <OpenModalButton
           buttonText={
             <>
-              <FontAwesomeIcon
-                icon="fa-solid fa-camera-retro"
-                className="display-bone"
-              />
+              <FontAwesomeIcon icon={faCameraRetro} className="display-bone" />
               See All Photos
             </>
           }

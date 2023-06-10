@@ -128,11 +128,9 @@
 }
 #search-bar input {
   border: none;
-  /* padding: 0;
-  padding-left: 5px; */
   flex-grow: 1;
   font-size: 20px;
-  /* margin: 8px; */
+
   box-sizing: border-box;
   position: relative;
   width: 100%;

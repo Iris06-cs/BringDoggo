@@ -7,16 +7,12 @@
   height: fit-content;
   box-sizing: border-box;
   position: relative;
-  /* background-color: rgba(97, 97, 97, 0.5); */
-  /* background-image: url("../../image/haru-menu.jpg"); */
   background-position: bottom;
   background-size: cover;
-  /* padding-left: 20px; */
 }
 .restaurant-detail-info-container {
   box-sizing: border-box;
   position: absolute;
-  /* z-index: 1; */
   color: white;
   font-weight: bold;
   bottom: 10px;

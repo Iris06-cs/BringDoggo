@@ -4,6 +4,7 @@ import "./NewFavoriteCollectionForm.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDispatch } from "react-redux";
 import { addRestaurantToFav, createFav } from "../../store/favorites";
+import { faSquareXmark } from "@fortawesome/free-solid-svg-icons";
 const NewFavoriteCollectionForm = ({ restaurantId, setIsFav }) => {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
@@ -45,7 +46,7 @@ const NewFavoriteCollectionForm = ({ restaurantId, setIsFav }) => {
             className="add-fav-form-close-modal-button"
           >
             <FontAwesomeIcon
-              icon="fa-solid fa-square-xmark"
+              icon={faSquareXmark}
               className="add-fav-form-close-btn"
             />
           </button>

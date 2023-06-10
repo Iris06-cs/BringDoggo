@@ -8,6 +8,11 @@ import {
 import OpenModalButton from "../OpenModalButton";
 import NewFavoriteCollectionForm from "../NewFavoriteCollectionForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCheck,
+  faHeart,
+  faSquareXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import { useModal } from "../../context/Modal";
 
 const FavoriteCollectionModal = ({ restaurantId, setIsFav }) => {
@@ -48,7 +53,7 @@ const FavoriteCollectionModal = ({ restaurantId, setIsFav }) => {
             className="add-fav-form-close-modal-button"
           >
             <FontAwesomeIcon
-              icon="fa-solid fa-square-xmark"
+              icon={faSquareXmark}
               className="add-fav-form-close-btn"
             />
           </button>
@@ -69,7 +74,7 @@ const FavoriteCollectionModal = ({ restaurantId, setIsFav }) => {
                 </div>
                 {fav.restaurants[restaurantId] ? (
                   <div className="remove-btn-contaner">
-                    <FontAwesomeIcon icon="fa-solid fa-check" />
+                    <FontAwesomeIcon icon={faCheck} />
                     <p>Added</p>
                     <button
                       onClick={(e) => onClickRemove(e, fav.id)}
@@ -93,10 +98,7 @@ const FavoriteCollectionModal = ({ restaurantId, setIsFav }) => {
         <OpenModalButton
           buttonText={
             <>
-              <FontAwesomeIcon
-                icon="fa-solid fa-heart"
-                className="display-bone"
-              />
+              <FontAwesomeIcon icon={faHeart} className="display-bone" />
               Add to New Favorite Collection
             </>
           }

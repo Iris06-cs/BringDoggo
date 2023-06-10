@@ -77,7 +77,7 @@ const RestaurantDetailPage = () => {
         setIsFav(false);
         for (let fav of favs) {
           if (fav.restaurants) {
-            const restaurants = fav.restaurants; //object
+            const restaurants = fav.restaurants;
 
             if (restaurants[restaurantId]) setIsFav(true);
             break;

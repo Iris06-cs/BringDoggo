@@ -1,6 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import convertTimeFormat from "../../utils/convertTimeFormat";
 import LocationMap from "./LocationMap";
+import {
+  faArrowUpRightFromSquare,
+  faPhoneVolume,
+} from "@fortawesome/free-solid-svg-icons";
 const ContactLocationCard = ({ restaurantDetail }) => {
   const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
   return (
@@ -21,7 +25,7 @@ const ContactLocationCard = ({ restaurantDetail }) => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <FontAwesomeIcon icon="fa-solid fa-arrow-up-right-from-square" />
+            <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
           </a>
         </div>
         <div className="contact-card-row-container">
@@ -30,7 +34,7 @@ const ContactLocationCard = ({ restaurantDetail }) => {
               ? restaurantDetail.displayPhone
               : "No Listed Phone"}
           </p>
-          <FontAwesomeIcon icon="fa-solid fa-phone-volume" />
+          <FontAwesomeIcon icon={faPhoneVolume} />
         </div>
       </div>
 

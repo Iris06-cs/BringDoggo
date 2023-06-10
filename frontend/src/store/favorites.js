@@ -78,7 +78,6 @@ export const favoritesSlice = createSlice({
         const newFav = action.payload;
 
         state.favoritesById[newFav.id] = { ...newFav };
-        // console.log(state.favoritesById[newFav.id], "80");
       })
       .addCase(updateFav.rejected, (state, action) => {
         state.error = action.payload;

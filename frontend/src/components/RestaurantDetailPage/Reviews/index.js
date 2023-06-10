@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import dateFormater from "../../../utils/dateFormater";
 import Ratings from "../../AllRestaurantsPage/Ratings/Ratings";
 import "./Reviews.css";
-import placeHolderImg from "../../../image/user-icon.png";
+import placeHolderImg from "../../../image/user-icon.jpeg";
 
 import RatingTooltip from "./RatingTooltip";
 import { deleteReview } from "../../../store/reviews";
@@ -52,7 +52,6 @@ const Reviews = ({ restaurantDetail, setHasReview }) => {
     closeDropdown();
     setHasReview(false);
     await dispatch(deleteReview(reviewId));
-    // fetch updated restaurant
     await dispatch(getRestaurantById(restaurantDetail.id));
   };
   const handleUpdate = async () => {

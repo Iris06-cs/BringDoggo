@@ -1,11 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Route } from "react-router-dom";
 import "./UserProfilePage.css";
-import placeHoderImg from "../../image/user-icon.png";
+import placeHoderImg from "../../image/user-icon.jpeg";
 import UserFavorites from "./UserFavorites";
 import UserReviews from "./UserReviews";
 import { getAllReviews, getCurrentUserReviews } from "../../store/reviews";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBone, faHeart } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import dateFormater from "../../utils/dateFormater";
 import { NavLink } from "react-router-dom";
@@ -30,7 +31,6 @@ const UserProfilePage = () => {
       getCurrentUserFavs();
     }
   }, [dispatch, currUser, isDeleted]);
-  // if (!currUser) return <h1>loading...</h1>;
   if (!currUser || Object.values(allRestaurants).length < 1)
     return <LoadingSpinner />;
   return (
@@ -69,14 +69,11 @@ const UserProfilePage = () => {
               Profile Overview
             </NavLink>
             <NavLink className="tab-link" to="/users/current/reviews">
-              <FontAwesomeIcon icon="fa-solid fa-bone" />
+              <FontAwesomeIcon icon={faBone} />
               Reviews
             </NavLink>
             <NavLink className="tab-link last" to="/users/current/favorites">
-              <FontAwesomeIcon
-                icon="fa-solid fa-heart"
-                className="display-bone"
-              />
+              <FontAwesomeIcon icon={faHeart} className="display-bone" />
               Favorites
             </NavLink>
           </div>
