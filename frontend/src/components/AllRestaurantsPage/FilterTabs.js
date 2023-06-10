@@ -37,10 +37,6 @@ const FilterTabs = ({
   return (
     <div className="filter-sorter-all-container">
       <div className="filter-all-container">
-        {/* <button>Categories</button>
-        <ul className="category-dropdown">
-          <li>Thai</li>
-        </ul> */}
         <div className="price-btn-container">
           <button
             className={

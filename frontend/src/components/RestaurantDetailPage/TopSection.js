@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import haruMenu from "../../image/haru-menu.jpg";
+import haruMenu from "../../image/haru-menu.webp";
 import convertTimeFormat from "../../utils/convertTimeFormat";
 import Ratings from "../AllRestaurantsPage/Ratings/Ratings";
 import OpenModalButton from "../OpenModalButton";
